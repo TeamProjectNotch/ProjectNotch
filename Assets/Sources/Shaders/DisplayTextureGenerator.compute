@@ -1,0 +1,19 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Result;
+
+StructuredBuffer<uint> Data;
+StructuredBuffer<float4> Colors;
+
+int _Width;
+int _Height;
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	uint index = (id.x + id.y*_Width);
+	Result[id.xy] = Colors[(Data[index/8] >> ((index%8)*4))&0xF];
+}

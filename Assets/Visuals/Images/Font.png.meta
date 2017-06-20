@@ -1,0 +1,1381 @@
+fileFormatVersion: 2
+guid: 1f18d996fd4209548811b7bb8fc874ac
+timeCreated: 1495317381
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Font_0
+    21300002: Font_1
+    21300004: Font_2
+    21300006: Font_3
+    21300008: Font_4
+    21300010: Font_5
+    21300012: Font_6
+    21300014: Font_7
+    21300016: Font_8
+    21300018: Font_9
+    21300020: Font_10
+    21300022: Font_11
+    21300024: Font_12
+    21300026: Font_13
+    21300028: Font_14
+    21300030: Font_15
+    21300032: Font_16
+    21300034: Font_17
+    21300036: Font_18
+    21300038: Font_19
+    21300040: Font_20
+    21300042: Font_21
+    21300044: Font_22
+    21300046: Font_23
+    21300048: Font_24
+    21300050: Font_25
+    21300052: Font_26
+    21300054: Font_27
+    21300056: Font_28
+    21300058: Font_29
+    21300060: Font_30
+    21300062: Font_31
+    21300064: Font_32
+    21300066: Font_33
+    21300068: Font_34
+    21300070: Font_35
+    21300072: Font_36
+    21300074: Font_37
+    21300076: Font_38
+    21300078: Font_39
+    21300080: Font_40
+    21300082: Font_41
+    21300084: Font_42
+    21300086: Font_43
+    21300088: Font_44
+    21300090: Font_45
+    21300092: Font_46
+    21300094: Font_47
+    21300096: Font_48
+    21300098: Font_49
+    21300100: Font_50
+    21300102: Font_51
+    21300104: Font_52
+    21300106: Font_53
+    21300108: Font_54
+    21300110: Font_55
+    21300112: Font_56
+    21300114: Font_57
+    21300116: Font_58
+    21300118: Font_59
+    21300120: Font_60
+    21300122: Font_61
+    21300124: Font_62
+    21300126: Font_63
+    21300128: Font_64
+    21300130: Font_65
+    21300132: Font_66
+    21300134: Font_67
+    21300136: Font_68
+    21300138: Font_69
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 1
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Font_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_1
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_2
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_3
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_4
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_5
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: 0}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_6
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_7
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_8
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_9
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_10
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_11
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_12
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_13
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_14
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_15
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -1}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_16
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_17
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_18
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_19
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_20
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_21
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_22
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_23
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_24
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_25
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 88
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_27
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 80
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 2, y: -4}
+        - {x: 2, y: 4}
+        - {x: -2, y: 4}
+        - {x: -2, y: -4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_28
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 80
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_29
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 80
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_30
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -3}
+        - {x: -1, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_31
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 80
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_32
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 80
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_33
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 80
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_34
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_35
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 80
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -3}
+        - {x: -1, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 2, y: -4}
+        - {x: 2, y: 4}
+        - {x: -2, y: 4}
+        - {x: -2, y: -4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_37
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: 0}
+        - {x: 1, y: 0}
+        - {x: 2, y: 1}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_38
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_39
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_40
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_41
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_42
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -1, y: 0}
+        - {x: 2, y: 1}
+        - {x: 2, y: 4}
+        - {x: -2, y: 4}
+        - {x: -2, y: 1}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_43
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -3}
+        - {x: -1, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_44
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_45
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -1, y: 0}
+        - {x: 2, y: 2}
+        - {x: 1, y: 4}
+        - {x: -2, y: 4}
+        - {x: -2, y: 1}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_46
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -1, y: 4}
+        - {x: -2, y: 3}
+        - {x: -2, y: -2}
+        - {x: -1, y: -3}
+        - {x: 0, y: -3}
+        - {x: 2, y: -1}
+        - {x: 2, y: 2}
+        - {x: 0, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_47
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 0, y: 1}
+        - {x: -2, y: -1}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 0}
+        - {x: 1, y: 1}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_48
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 3}
+        - {x: -2, y: -2}
+        - {x: 1, y: -2}
+        - {x: 2, y: -1}
+        - {x: 2, y: 3}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_49
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: -1}
+        - {x: -1, y: 0}
+        - {x: -2, y: -1}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_50
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_51
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: -2}
+        - {x: -1, y: -3}
+        - {x: 2, y: -2}
+        - {x: 2, y: 2}
+        - {x: 0, y: 4}
+        - {x: -2, y: 3}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_52
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 3}
+        - {x: -2, y: -4}
+        - {x: 0, y: -4}
+        - {x: 2, y: -2}
+        - {x: 2, y: 2}
+        - {x: 0, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_53
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -1, y: 4}
+        - {x: -2, y: 3}
+        - {x: -2, y: -2}
+        - {x: 0, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_54
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -3}
+        - {x: 1, y: -3}
+        - {x: 2, y: -2}
+        - {x: 2, y: 3}
+        - {x: 1, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_55
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: -1, y: -4}
+        - {x: 2, y: -1}
+        - {x: 2, y: 2}
+        - {x: 0, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_56
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_57
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_58
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_59
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -3}
+        - {x: -1, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 2}
+        - {x: 1, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_60
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_61
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: 0}
+        - {x: 1, y: 0}
+        - {x: 2, y: 1}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_62
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 0}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 0}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_63
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_64
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 2, y: -4}
+        - {x: 2, y: 4}
+        - {x: -2, y: 4}
+        - {x: -2, y: -4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_65
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_66
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -1, y: 4}
+        - {x: -2, y: 3}
+        - {x: -2, y: -2}
+        - {x: 1, y: -2}
+        - {x: 2, y: -1}
+        - {x: 2, y: 2}
+        - {x: 0, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_67
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 72
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 2, y: -4}
+        - {x: 2, y: 4}
+        - {x: -2, y: 4}
+        - {x: -2, y: -4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_68
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 1, y: -4}
+        - {x: 2, y: -3}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Font_69
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 0
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 4}
+        - {x: -2, y: -4}
+        - {x: 2, y: -4}
+        - {x: 2, y: 4}
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
