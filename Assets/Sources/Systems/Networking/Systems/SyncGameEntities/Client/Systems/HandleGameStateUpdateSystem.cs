@@ -24,6 +24,11 @@ public class HandleGameStateUpdateSystem : ProcessMessageSystem<GameStateUpdateM
 	}
 
 	protected override void Process(GameStateUpdateMessage message, NetworkingEntity source) {
+		
+		Debug.LogFormat("Received game state update from tick {0}, current tick {1}", 
+			message.timestamp, 
+			game.hasCurrentTick ? game.currentTick.value.ToString() : (-1).ToString()
+		);
 
 		message.changes.Each(Apply);
 		Debug.LogFormat("Changes applied this step: {0}", message.changes.Length);

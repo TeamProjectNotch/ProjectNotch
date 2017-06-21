@@ -12,6 +12,8 @@ public class ComposeGameChangeMessageSystem : IExecuteSystem {
 	const int maxNumEntityChangesPerMessage = 5;
 
 	readonly NetworkingContext networking;
+	readonly GameContext game;
+
 	readonly IGroup<NetworkingEntity> clients;
 	readonly IGroup<GameEntity> entitiesToTrack;
 
@@ -21,6 +23,8 @@ public class ComposeGameChangeMessageSystem : IExecuteSystem {
 	public ComposeGameChangeMessageSystem(Contexts contexts) {
 
 		networking = contexts.networking;
+		game = contexts.game;
+
 		entitiesToTrack = contexts.game.GetGroup(GameMatcher.ChangeFlags);
 		clients = networking.GetGroup(
 			NetworkingMatcher.AllOf(NetworkingMatcher.Client, NetworkingMatcher.OutgoingMessages)
@@ -41,7 +45,9 @@ public class ComposeGameChangeMessageSystem : IExecuteSystem {
 
 	INetworkMessage MakeMessage() {
 
-		return new GameStateUpdateMessage(GetMessageChanges());
+		var timestamp = game.currentTick.value;
+		var changes = GetMessageChanges();
+		return new GameStateUpdateMessage(timestamp, changes);
 	}
 
 	EntityChange[] GetMessageChanges() {
