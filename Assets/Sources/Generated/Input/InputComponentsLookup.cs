@@ -9,20 +9,24 @@
 public static class InputComponentsLookup {
 
     public const int Destroy = 0;
-    public const int Jump = 1;
-    public const int MouseMoveInput = 2;
-    public const int MoveInput = 3;
-    public const int Player = 4;
-    public const int PlayerInputs = 5;
-    public const int PressFire = 6;
+    public const int Id = 1;
+    public const int Jump = 2;
+    public const int MouseMoveInput = 3;
+    public const int MoveInput = 4;
+    public const int Owner = 5;
+    public const int Player = 6;
+    public const int PlayerInputs = 7;
+    public const int PressFire = 8;
 
-    public const int TotalComponents = 7;
+    public const int TotalComponents = 9;
 
     public static readonly string[] componentNames = {
         "Destroy",
+        "Id",
         "Jump",
         "MouseMoveInput",
         "MoveInput",
+        "Owner",
         "Player",
         "PlayerInputs",
         "PressFire"
@@ -30,9 +34,11 @@ public static class InputComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(DestroyComponent),
+        typeof(IdComponent),
         typeof(JumpComponent),
         typeof(MouseMoveInput),
         typeof(MoveInputComponent),
+        typeof(OwnerComponent),
         typeof(PlayerComponent),
         typeof(PlayerInputsComponent),
         typeof(PressFireComponent)

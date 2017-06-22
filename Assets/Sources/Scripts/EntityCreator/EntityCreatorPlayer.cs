@@ -3,35 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// UNIFIED-ONLY script!
 /// Creates a player Entity the GameObject of this script would represent.
+/// Sets game.thisPlayerId to the id of the current player.
 public class EntityCreatorPlayer : EntityCreator {
 
 	public override GameEntity CreateEntity(Contexts contexts) {
 
-		// TEMP Need to get the new player id from the server.
-		var playerId = 0;
+		// This part is the reason you should only 
+		// use this script in a unified client-server setup.
+		// On a regular client the player id would come from the server.
+		var playerId = GetPlayerId(contexts);
+		contexts.game.ReplaceThisPlayerId(playerId);
 
-		var rigidbody = GetComponentInChildren<Rigidbody>();
-		if (rigidbody != null && !rigidbody.isKinematic) {
+		var e = contexts.game.CreatePlayer(playerId, transform.GetState());
+		TryAddRigidbodyState(e);
 
-			return contexts.game.CreatePlayer(
-				playerId, 
-				transform.GetState(),
-				rigidbody.GetState()
-			);
-		}
+		return e;
+	}
 
-		return contexts.game.CreatePlayer(
-			playerId, 
-			transform.GetState()
-		);
+	int GetPlayerId(Contexts contexts) {
+
+		var game = contexts.game;
+		return game.hasThisPlayerId ? game.thisPlayerId.value + 1 : 0;
 	}
 
 	void TryAddRigidbodyState(GameEntity e) {
 
 		var rigidbody = GetComponentInChildren<Rigidbody>();
 		if (rigidbody != null && !rigidbody.isKinematic) {
-			e.AddRigidbodyState(rigidbody.GetState());
+			e.ReplaceRigidbodyState(rigidbody.GetState());
 		}
 	}
 }

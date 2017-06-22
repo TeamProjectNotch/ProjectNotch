@@ -10,11 +10,13 @@ public class AssignPlayerIdSystem : ReactiveSystem<NetworkingEntity> {
 
 	readonly NetworkingContext networking;
 	readonly GameContext game;
+	readonly InputContext input;
 
 	public AssignPlayerIdSystem(Contexts contexts) : base(contexts.networking) {
 
 		networking = contexts.networking;
 		game = contexts.game;
+		input = contexts.input;
 	}
 
 	protected override ICollector<NetworkingEntity> GetTrigger(IContext<NetworkingEntity> context) {
@@ -24,18 +26,18 @@ public class AssignPlayerIdSystem : ReactiveSystem<NetworkingEntity> {
 
 	protected override bool Filter(NetworkingEntity entity) {return true;}
 
-	protected override void Execute(List<NetworkingEntity> clients) {
+	protected override void Execute(List<NetworkingEntity> newClients) {
 
 		var nextPlayerId = networking.nextPlayerId.value;
 
-		foreach (var e in clients) {
+		foreach (var client in newClients) {
 
-			var id = nextPlayerId++;
+			var playerId = nextPlayerId++;
 
-			e.AddPlayerId(id);
-			e.EnqueueOutgoingMessage(new PlayerIdAssignmentMessage(id));
+			client.AddPlayer(playerId);
+			client.EnqueueOutgoingMessage(new PlayerIdAssignmentMessage(playerId));
 
-			CreatePlayerWith(id);
+			CreatePlayerWith(playerId);
 		}
 
 		networking.ReplaceNextPlayerId(nextPlayerId);

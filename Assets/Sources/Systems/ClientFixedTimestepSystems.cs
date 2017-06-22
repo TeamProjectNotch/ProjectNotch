@@ -5,6 +5,8 @@ public class ClientFixedTimestepSystems : Feature {
 
 	public ClientFixedTimestepSystems(Contexts contexts) : base("FixedTimestep (Client)") {
 
+		Add(new EnsureInputEntityIdSystem(contexts));
+
 		Add(new ProcessInputSystems(contexts));
 
 		Add(new GameObjectSystems(contexts));

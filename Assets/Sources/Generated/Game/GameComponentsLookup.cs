@@ -21,8 +21,8 @@ public static class GameComponentsLookup {
     public const int Id = 10;
     public const int LookDirection = 11;
     public const int NetworkUpdatePriority = 12;
-    public const int Player = 13;
-    public const int PlayerId = 14;
+    public const int Owner = 13;
+    public const int Player = 14;
     public const int Prefab = 15;
     public const int ProjectileSpeed = 16;
     public const int RigidbodyState = 17;
@@ -46,8 +46,8 @@ public static class GameComponentsLookup {
         "Id",
         "LookDirection",
         "NetworkUpdatePriority",
+        "Owner",
         "Player",
-        "PlayerId",
         "Prefab",
         "ProjectileSpeed",
         "RigidbodyState",
@@ -70,8 +70,8 @@ public static class GameComponentsLookup {
         typeof(IdComponent),
         typeof(LookDirectionComponent),
         typeof(NetworkUpdatePriorityComponent),
+        typeof(OwnerComponent),
         typeof(PlayerComponent),
-        typeof(PlayerIdComponent),
         typeof(PrefabComponent),
         typeof(ProjectileSpeedComponent),
         typeof(RigidbodyStateComponent),

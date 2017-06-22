@@ -6,12 +6,12 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IPlayerId {
+public interface IOwner {
 
-    PlayerIdComponent playerId { get; }
-    bool hasPlayerId { get; }
+    OwnerComponent owner { get; }
+    bool hasOwner { get; }
 
-    void AddPlayerId(int newValue);
-    void ReplacePlayerId(int newValue);
-    void RemovePlayerId();
+    void AddOwner(int newValue);
+    void ReplaceOwner(int newValue);
+    void RemoveOwner();
 }

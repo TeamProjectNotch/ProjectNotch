@@ -2,11 +2,11 @@
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
-/// Stores the id of the player this Entity represents or belongs to.
-[Game, Networking]
-public class PlayerIdComponent : IComponent, IUnifiedSerializable {
+/// The entity belongs to a player. Stores the id of that player.
+[Game, Input, Networking]
+public class OwnerComponent : IComponent, IUnifiedSerializable {
 
-	[PrimaryEntityIndex]
+	[EntityIndex]
 	public int value;
 
 	public void Serialize<T>(T s) where T : IUnifiedSerializer {

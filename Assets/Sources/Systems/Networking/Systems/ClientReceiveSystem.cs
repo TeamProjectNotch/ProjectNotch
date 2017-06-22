@@ -4,7 +4,8 @@ using Entitas;
 using UnityEngine;
 using UnityEngine.Networking;
 
-/// Receives messages over the network and puts them in a queue (networking.incomingMessages).
+// TODO A lot of code here is the same as in ServerReceiveSystem. Should create a single ReceiveSystem which would create things with ConnectionComponent 
+/// Receives messages over the network, deserializes them and puts them into a queue.
 public class ClientReceiveSystem : IExecuteSystem {
 
 	const int messageBufferSize = 1024 * 4;

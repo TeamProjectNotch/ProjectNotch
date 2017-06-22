@@ -10,4 +10,12 @@ public class CharacterInput : MonoBehaviour {
 	public Vector2 mouseMoveAxes {get; set;}
 
 	public bool isJump {get; set;}
+
+	public void Reset() {
+
+		moveAxes = Vector2.zero;
+		mouseMoveAxes = Vector2.zero;
+
+		isJump = false;
+	}
 }

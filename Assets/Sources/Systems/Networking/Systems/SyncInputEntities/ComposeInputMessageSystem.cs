@@ -7,6 +7,7 @@ using Entitas;
 
 /// Composes and enqueues messages with input data to send to the server.
 /// Just sends all the entities in the InputContext.
+/// WARNING: only sends entity and component updates, not removals.
 public class ComposeInputMessageSystem : IExecuteSystem {
 	
 	readonly NetworkingContext networking;
@@ -66,9 +67,8 @@ public class ComposeInputMessageSystem : IExecuteSystem {
 				components[i]
 			);
 		}
-
-		ulong entityId = 0; // Since Input Entities have no id's.
-		return EntityChange.MakeUpdate(entityId, componentChanges);
+			
+		return EntityChange.MakeUpdate(e.id.value, componentChanges);
 	}
 
 	void Enqueue(INetworkMessage message, NetworkingEntity server) {

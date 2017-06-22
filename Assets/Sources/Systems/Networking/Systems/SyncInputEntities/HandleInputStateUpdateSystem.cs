@@ -28,8 +28,20 @@ public class HandleInputStateUpdateSystem : ProcessMessageSystem<InputStateUpdat
 	}
 
 	void Apply(EntityChange change) {
+		
+		var e = input.GetEntityWithId(change.entityId);
+		if (e == null) {
 
-		var entity = input.CreateEntity();
-		change.Apply(entity);
+			if (change.isRemoval) {
+
+				UnityEngine.Debug.Log("Can't apply an EntityChange, since it's Entity doesn't exist.");
+				return;
+			}
+
+			Debug.LogFormat("Entity with id {0} not found. Creating...", change.entityId);
+			e = input.CreateEntity();
+		}
+
+		change.Apply(e);
 	}
 }

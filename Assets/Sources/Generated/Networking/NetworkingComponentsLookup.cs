@@ -14,10 +14,11 @@ public static class NetworkingComponentsLookup {
     public const int IncomingMessages = 3;
     public const int NextPlayerId = 4;
     public const int OutgoingMessages = 5;
-    public const int PlayerId = 6;
-    public const int Server = 7;
+    public const int Owner = 6;
+    public const int Player = 7;
+    public const int Server = 8;
 
-    public const int TotalComponents = 8;
+    public const int TotalComponents = 9;
 
     public static readonly string[] componentNames = {
         "Client",
@@ -26,7 +27,8 @@ public static class NetworkingComponentsLookup {
         "IncomingMessages",
         "NextPlayerId",
         "OutgoingMessages",
-        "PlayerId",
+        "Owner",
+        "Player",
         "Server"
     };
 
@@ -37,7 +39,8 @@ public static class NetworkingComponentsLookup {
         typeof(IncomingMessagesComponent),
         typeof(NextPlayerIdComponent),
         typeof(OutgoingMessagesComponent),
-        typeof(PlayerIdComponent),
+        typeof(OwnerComponent),
+        typeof(PlayerComponent),
         typeof(ServerComponent)
     };
 }

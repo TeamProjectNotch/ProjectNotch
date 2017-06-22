@@ -5,7 +5,7 @@ using System.IO;
 using Entitas;
 using UnityEngine;
 
-/// Applies changes received over the network. 
+/// Applies game changes received over the network. 
 /// Gets them from an incoming message queue on the Entity that represents a connection with the server.
 public class HandleGameStateUpdateSystem : ProcessMessageSystem<GameStateUpdateMessage> {
 

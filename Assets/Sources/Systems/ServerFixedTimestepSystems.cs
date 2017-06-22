@@ -5,6 +5,8 @@ public class ServerFixedTimestepSystems : Feature {
    
 	public ServerFixedTimestepSystems(Contexts contexts) : base("FixedTimestep (server)") {
 
+		Add(new EnsureGameEntityIdSystem(contexts));
+
 		Add(new ProcessInputSystems(contexts));
         Add(new GameLogicSystems(contexts));
         Add(new GameObjectSystems(contexts));

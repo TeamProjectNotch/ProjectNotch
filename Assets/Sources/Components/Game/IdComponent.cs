@@ -4,7 +4,7 @@ using Entitas.CodeGeneration.Attributes;
 
 /// Stores the id of an Entity.
 /// Can be used for quick Entity access like "contexts.game.GetEntityWithId(id)" 
-[Game]
+[Game, Input]
 public class IdComponent : IComponent, IUnifiedSerializable {
 
 	[PrimaryEntityIndex]

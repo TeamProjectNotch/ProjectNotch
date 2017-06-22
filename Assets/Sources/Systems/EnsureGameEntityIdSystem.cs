@@ -2,14 +2,14 @@
 using Entitas;
 
 /// Ensures that all GameEntities have an IdComponent.
-public class EnsureEntityIdSystem : IInitializeSystem {
+public class EnsureGameEntityIdSystem : IInitializeSystem {
 
 	readonly GameContext game;
 
 	// TEMP. A system shouldn't really store state like this. Need a [Unique]Component.
 	ulong nextId = 0;
 
-	public EnsureEntityIdSystem(Contexts contexts) {
+	public EnsureGameEntityIdSystem(Contexts contexts) {
 
 		game = contexts.game;
 	}
@@ -17,12 +17,12 @@ public class EnsureEntityIdSystem : IInitializeSystem {
 	public void Initialize() {
 
 		game.GetEntities().Each(AssignId);
-		game.OnEntityCreated += (context, entity) => AssignId(entity);
+		game.OnEntityCreated += (c, entity) => AssignId(entity);
 	}
 
 	void AssignId(IEntity entity) {
 		
-		var e = (GameEntity)entity;
+		var e = (IId)entity;
 		e.AddId(nextId);
 		nextId += 1;
 	} 

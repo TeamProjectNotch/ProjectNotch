@@ -6,6 +6,8 @@ public class ProcessInputSystems : Feature {
 
 	public ProcessInputSystems(Contexts contexts) : base("ProcessInput") {
 
+		Add(new ResetPlayerInputSystem(contexts));
+
 		Add(new ShootWeaponOnPressFireSystem(contexts));
 		Add(new ProcessPlayerInputSystem(contexts));
 	}

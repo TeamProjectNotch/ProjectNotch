@@ -64,7 +64,8 @@ public partial class Contexts {
 
     public const string Connection = "Connection";
     public const string Id = "Id";
-    public const string PlayerId = "PlayerId";
+    public const string Owner = "Owner";
+    public const string Player = "Player";
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
@@ -73,19 +74,40 @@ public partial class Contexts {
             networking.GetGroup(NetworkingMatcher.Connection),
             (e, c) => ((ConnectionComponent)c).id));
 
+        input.AddEntityIndex(new Entitas.PrimaryEntityIndex<InputEntity, ulong>(
+            Id,
+            input.GetGroup(InputMatcher.Id),
+            (e, c) => ((IdComponent)c).value));
         game.AddEntityIndex(new Entitas.PrimaryEntityIndex<GameEntity, ulong>(
             Id,
             game.GetGroup(GameMatcher.Id),
             (e, c) => ((IdComponent)c).value));
 
+        networking.AddEntityIndex(new Entitas.EntityIndex<NetworkingEntity, int>(
+            Owner,
+            networking.GetGroup(NetworkingMatcher.Owner),
+            (e, c) => ((OwnerComponent)c).value));
+        input.AddEntityIndex(new Entitas.EntityIndex<InputEntity, int>(
+            Owner,
+            input.GetGroup(InputMatcher.Owner),
+            (e, c) => ((OwnerComponent)c).value));
+        game.AddEntityIndex(new Entitas.EntityIndex<GameEntity, int>(
+            Owner,
+            game.GetGroup(GameMatcher.Owner),
+            (e, c) => ((OwnerComponent)c).value));
+
         networking.AddEntityIndex(new Entitas.PrimaryEntityIndex<NetworkingEntity, int>(
-            PlayerId,
-            networking.GetGroup(NetworkingMatcher.PlayerId),
-            (e, c) => ((PlayerIdComponent)c).value));
+            Player,
+            networking.GetGroup(NetworkingMatcher.Player),
+            (e, c) => ((PlayerComponent)c).id));
+        input.AddEntityIndex(new Entitas.PrimaryEntityIndex<InputEntity, int>(
+            Player,
+            input.GetGroup(InputMatcher.Player),
+            (e, c) => ((PlayerComponent)c).id));
         game.AddEntityIndex(new Entitas.PrimaryEntityIndex<GameEntity, int>(
-            PlayerId,
-            game.GetGroup(GameMatcher.PlayerId),
-            (e, c) => ((PlayerIdComponent)c).value));
+            Player,
+            game.GetGroup(GameMatcher.Player),
+            (e, c) => ((PlayerComponent)c).id));
     }
 }
 
@@ -95,16 +117,36 @@ public static class ContextsExtensions {
         return ((Entitas.PrimaryEntityIndex<NetworkingEntity, int>)context.GetEntityIndex(Contexts.Connection)).GetEntity(id);
     }
 
+    public static InputEntity GetEntityWithId(this InputContext context, ulong value) {
+        return ((Entitas.PrimaryEntityIndex<InputEntity, ulong>)context.GetEntityIndex(Contexts.Id)).GetEntity(value);
+    }
+
     public static GameEntity GetEntityWithId(this GameContext context, ulong value) {
         return ((Entitas.PrimaryEntityIndex<GameEntity, ulong>)context.GetEntityIndex(Contexts.Id)).GetEntity(value);
     }
 
-    public static NetworkingEntity GetEntityWithPlayerId(this NetworkingContext context, int value) {
-        return ((Entitas.PrimaryEntityIndex<NetworkingEntity, int>)context.GetEntityIndex(Contexts.PlayerId)).GetEntity(value);
+    public static System.Collections.Generic.HashSet<NetworkingEntity> GetEntitiesWithOwner(this NetworkingContext context, int value) {
+        return ((Entitas.EntityIndex<NetworkingEntity, int>)context.GetEntityIndex(Contexts.Owner)).GetEntities(value);
     }
 
-    public static GameEntity GetEntityWithPlayerId(this GameContext context, int value) {
-        return ((Entitas.PrimaryEntityIndex<GameEntity, int>)context.GetEntityIndex(Contexts.PlayerId)).GetEntity(value);
+    public static System.Collections.Generic.HashSet<InputEntity> GetEntitiesWithOwner(this InputContext context, int value) {
+        return ((Entitas.EntityIndex<InputEntity, int>)context.GetEntityIndex(Contexts.Owner)).GetEntities(value);
+    }
+
+    public static System.Collections.Generic.HashSet<GameEntity> GetEntitiesWithOwner(this GameContext context, int value) {
+        return ((Entitas.EntityIndex<GameEntity, int>)context.GetEntityIndex(Contexts.Owner)).GetEntities(value);
+    }
+
+    public static NetworkingEntity GetEntityWithPlayer(this NetworkingContext context, int id) {
+        return ((Entitas.PrimaryEntityIndex<NetworkingEntity, int>)context.GetEntityIndex(Contexts.Player)).GetEntity(id);
+    }
+
+    public static InputEntity GetEntityWithPlayer(this InputContext context, int id) {
+        return ((Entitas.PrimaryEntityIndex<InputEntity, int>)context.GetEntityIndex(Contexts.Player)).GetEntity(id);
+    }
+
+    public static GameEntity GetEntityWithPlayer(this GameContext context, int id) {
+        return ((Entitas.PrimaryEntityIndex<GameEntity, int>)context.GetEntityIndex(Contexts.Player)).GetEntity(id);
     }
 }
 //------------------------------------------------------------------------------

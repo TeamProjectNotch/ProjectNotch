@@ -5,7 +5,6 @@ public class GameLogicSystems : Feature {
     public GameLogicSystems(Contexts contexts) : base("GameLogic") {
 
 		// Initialize systems
-		Add(new EnsureEntityIdSystem(contexts));
 		Add(new CreatePlayerWeaponSystem(contexts));
 
 		// Execute systems

@@ -1,61 +1,85 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Entitas;
 
-/// Updates the player characters' input with values from InputEntities.
-/// Contains quite a lot of TEMP code as there can currently be just one player at a time.
-/// 13.06.2017
-public class ProcessPlayerInputSystem : IExecuteSystem {
+/// Updates the player characters' input with values from the latest PlayerInputState from its input entity.
+public class ProcessPlayerInputSystem : ReactiveSystem<InputEntity> {
 
+	readonly GameContext game;
 	readonly IGroup<GameEntity> players;
 
-	readonly IGroup<InputEntity> moveInputs;
-	readonly IGroup<InputEntity> mouseInputs;
-	readonly IGroup<InputEntity> jumps;
+	readonly InputContext input;
 
-	public ProcessPlayerInputSystem(Contexts contexts) {
+	public ProcessPlayerInputSystem(Contexts contexts) : base(contexts.input) {
 
-		players = contexts.game.GetGroup(
+		game = contexts.game;
+		players = game.GetGroup(
 			GameMatcher.AllOf(GameMatcher.Player, GameMatcher.GameObject)
 		);
 
-		var input = contexts.input;
-		moveInputs = input.GetGroup(InputMatcher.MoveInput);
-		mouseInputs = input.GetGroup(InputMatcher.MouseMoveInput);
-		jumps = input.GetGroup(InputMatcher.Jump);
+		input = contexts.input;
 	}
 
-	public void Execute() {
+	protected override ICollector<InputEntity> GetTrigger(IContext<InputEntity> context) {
 
-		if (players.count <= 0) return;
+		return context.CreateCollector(InputMatcher.PlayerInputs.Added());
+	}
 
-		// TEMP This assumes that there's just one player. Should match inputs to players via a player id or something like that.
-		var player = players.GetSingleEntity();
-		var gameObject = player.gameObject.value;
+	protected override bool Filter(InputEntity entity) {
+
+		return entity.hasPlayer && entity.hasPlayerInputs;
+	}
+
+	protected override void Execute(List<InputEntity> entities) {
+
+		foreach (var e in entities) Process(e);
+	}
+
+	void Process(InputEntity inputEntity) {
+
+		var playerId = inputEntity.player.id;
+		var gameEntity = game.GetEntityWithPlayer(playerId);
+		if (!gameEntity.hasGameObject) return;
+
+		var gameObject = gameEntity.gameObject.value;
 		var inputManager = gameObject.GetComponent<CharacterInput>();
 
-		// Apply move
-		inputManager.moveAxes = Vector2.zero;
-		foreach (var e in moveInputs.GetEntities()) {
-			
-			inputManager.moveAxes = e.moveInput.axes;
-			e.flagDestroy = true;
+		PlayerInputState inputState;
+		var didGetInput = GetMostRecentInput(inputEntity, out inputState);
+		if (!didGetInput) {
+
+			inputManager.Reset();
+			return;
 		}
 
-		// Apply mouse move
-		inputManager.mouseMoveAxes = Vector2.zero;
-		foreach (var e in mouseInputs.GetEntities()) {
+		inputManager.moveAxes = inputState.moveAxes;
+		inputManager.mouseMoveAxes = inputState.mouseMoveAxes;
+		inputManager.isJump = inputState.buttonPressedJump;
+	}
+
+	bool GetMostRecentInput(InputEntity inputEntity, out PlayerInputState result) {
+
+		result = new PlayerInputState();
+
+		var inputs = inputEntity.playerInputs.inputs;
+		if (inputs.Count <= 0) return false;
+
+		var mostRecentRecord = inputs[inputs.Count - 1];
+		var currentTick = game.currentTick.value;
+		var timestamp = mostRecentRecord.timestamp;
+		if (timestamp > currentTick) { 
 			
-			inputManager.mouseMoveAxes = e.mouseMoveInput.axes;
-			e.flagDestroy = true;
+			throw new Exception(String.Format(
+				"The most recent input record is {0}, which is later than the current tick {1}", 
+				timestamp, 
+				currentTick
+			));
 		}
 
-		// Apply jump
-		inputManager.isJump = false;
-		foreach (var e in jumps.GetEntities()) {
-			
-			inputManager.isJump = true;
-			e.flagDestroy = true;
-		}
+		result = mostRecentRecord.inputState;
+
+		return true;
 	}
 }
