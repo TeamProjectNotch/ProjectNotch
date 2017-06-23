@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using Entitas;
 
 /// The state of a player's input at a particular moment in time.
-public struct PlayerInputRecord : IUnifiedSerializable{
+public class PlayerInputRecord : IUnifiedSerializable{
 
 	public ulong timestamp;
 	public PlayerInputState inputState;
+
+	public PlayerInputRecord() {}
 
 	public PlayerInputRecord(ulong timestamp, PlayerInputState inputState) {
 

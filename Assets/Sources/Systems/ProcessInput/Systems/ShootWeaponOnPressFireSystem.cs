@@ -2,29 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Entitas;
 
 /// Should be a server-side system.
 /// Shoots a bullet out of a player's weapon when they press the fire button.
-public class ShootWeaponOnPressFireSystem : IExecuteSystem {
+/// TEMP Only processes the last of the provided inputs.
+public class ShootWeaponOnPressFireSystem : ProcessInputSystem {
 
 	readonly GameContext game;
-	readonly IGroup<GameEntity> players;
-
-	readonly InputContext input;
-
 	readonly IMatcher<GameEntity> weaponMatcher;
 
 	const float bulletSpeed = 100f;
 
-	public ShootWeaponOnPressFireSystem(Contexts contexts){
+	public ShootWeaponOnPressFireSystem(Contexts contexts) : base(contexts) {
 
 		game = contexts.game;
-		players = game.GetGroup(
-			GameMatcher.AllOf(GameMatcher.Player, GameMatcher.Handheld)
-		);
-
-		input = contexts.input;
 
 		weaponMatcher = GameMatcher.AllOf(
 			GameMatcher.Transform,
@@ -33,59 +26,27 @@ public class ShootWeaponOnPressFireSystem : IExecuteSystem {
 		);
 	}
 
-	public void Execute() {
+	protected override void Process(GameEntity player, List<PlayerInputRecord> inputs) {
 
-		foreach (var player in players.GetEntities()) {
-
-			Process(player);
-		}
-	}
-
-	void Process(GameEntity player) {
-
-		PlayerInputState inputState;
-		bool didGetInput = GetCurrentInput(player, out inputState);
-		if (!didGetInput) return;
-
+		var inputState = inputs[inputs.Count - 1].inputState;
 		if (inputState.buttonPressedFire) {
-			
-			var handheld = game.GetEntityWithId(player.handheld.id);
-			if (handheld == null) return;
-			if (!weaponMatcher.Matches(handheld)) return;
 
-			ShootBulletFrom(handheld);
+			var weapon = GetWeaponOf(player);
+			if (weapon == null) return;
+
+			ShootBulletFrom(weapon);
 		}
 	}
 
-	// TEMP Code duplication! Same method in ProcessPlayerInputSystem
-	bool GetCurrentInput(GameEntity playerEntity, out PlayerInputState result) {
+	GameEntity GetWeaponOf(GameEntity player) {
 
-		result = new PlayerInputState();
+		if (!player.hasHandheld) return null;
 
-		var inputEntity = input.GetEntityWithPlayer(playerEntity.player.id);
-		if (inputEntity == null) return false;
-		if (!inputEntity.hasPlayerInputs) return false;
+		var handheld = game.GetEntityWithId(player.handheld.id);
+		if (handheld == null) return null;
+		if (!weaponMatcher.Matches(handheld)) return null;
 
-		var inputs = inputEntity.playerInputs.inputs;
-		if (inputs.Count <= 0) return false;
-
-		var mostRecentRecord = inputs[inputs.Count - 1];
-
-		var currentTick = game.currentTick.value;
-		var timestamp = mostRecentRecord.timestamp;
-		if (timestamp > currentTick) { 
-
-			throw new Exception(String.Format(
-				"The most recent input record is {0}, which is later than the current tick {1}", 
-				timestamp, 
-				currentTick
-			));
-		}
-		if (timestamp < currentTick) return false;
-
-		result = mostRecentRecord.inputState;
-
-		return true;
+		return handheld;
 	}
 
 	void ShootBulletFrom(GameEntity weapon) {

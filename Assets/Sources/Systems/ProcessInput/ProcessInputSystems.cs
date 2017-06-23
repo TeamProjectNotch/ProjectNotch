@@ -9,7 +9,7 @@ public class ProcessInputSystems : Feature {
 		Add(new ResetPlayerInputSystem(contexts));
 
 		Add(new ShootWeaponOnPressFireSystem(contexts));
-		Add(new ProcessPlayerInputSystem(contexts));
+		Add(new ProcessMovementInputSystem(contexts));
 	}
 }
 
