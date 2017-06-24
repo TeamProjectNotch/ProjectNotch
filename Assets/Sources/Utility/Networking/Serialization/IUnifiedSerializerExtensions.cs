@@ -39,7 +39,7 @@ public static class IUnifiedSerializerExtensions {
 	}
 
 	/// A helper function. Equivalent to serializable.Serialize(s). 
-	/// Exists just so that you could call s.Serialize on non-basic types.
+	/// Exists just so that you could call s.Serialize on non-primitive types.
 	public static void Serialize<T>(this IUnifiedSerializer s, ref T serializable) 
 		where T : IUnifiedSerializable, new() {
 

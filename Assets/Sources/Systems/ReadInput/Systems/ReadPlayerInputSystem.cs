@@ -4,7 +4,7 @@ using Entitas;
 using UnityEngine;
 
 /// Client-side system.
-/// Reads values from UnityEngine.Input and modifies the current PlayerInputState on the player input entity.
+/// Reads values from UnityEngine.Input and adds PlayerInputRecord|s to the player's input entity
 public class ReadPlayerInputSystem : IExecuteSystem {
 
 	readonly GameContext game;
@@ -21,9 +21,7 @@ public class ReadPlayerInputSystem : IExecuteSystem {
 		if (!game.hasThisPlayerId) return;
 		if (!game.hasCurrentTick)  return;
 
-		var playerId = game.thisPlayerId.value;
-		var inputEntity = GetInputEntityBy(playerId);
-
+		var inputEntity = GetInputEntityBy(game.thisPlayerId.value);
 		ReadInputInto(inputEntity);
 	}
 
@@ -43,8 +41,8 @@ public class ReadPlayerInputSystem : IExecuteSystem {
 		var inputs = inputEntity.playerInputs.inputs;
 		inputs.Clear(); // TEMP Past input records are never removed (yet), so we clear them here to prevent clutter. 
 
-		var timestamp = game.currentTick.value;
-		inputs.Add(new PlayerInputRecord(timestamp, inputState));
+		var currentTick = game.currentTick.value;
+		inputs.Add(new PlayerInputRecord(currentTick, inputState));
 		inputEntity.ReplacePlayerInputs(inputs);
 	}
 

@@ -22,7 +22,7 @@ public class HandleInputStateUpdateSystem : ProcessMessageSystem<InputStateUpdat
 	}
 
 	protected override void Process(InputStateUpdateMessage message, NetworkingEntity source) {
-
+		
 		message.changes.Each(Apply);
 		Debug.LogFormat("Num inputs applied this step: {0}", message.changes.Length);
 	}

@@ -8,8 +8,13 @@ public class ProcessInputSystems : Feature {
 
 		Add(new ResetPlayerInputSystem(contexts));
 
+		Add(new MarkAddedInputsForProcessingSystem(contexts));
+
+		// ProcessInputSystem|s
 		Add(new ShootWeaponOnPressFireSystem(contexts));
 		Add(new ProcessMovementInputSystem(contexts));
+
+		Add(new CleanupProcessInputSystem(contexts));
 	}
 }
 

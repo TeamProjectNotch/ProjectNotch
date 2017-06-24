@@ -17,8 +17,9 @@ public static class InputComponentsLookup {
     public const int Player = 6;
     public const int PlayerInputs = 7;
     public const int PressFire = 8;
+    public const int ProcessInputs = 9;
 
-    public const int TotalComponents = 9;
+    public const int TotalComponents = 10;
 
     public static readonly string[] componentNames = {
         "Destroy",
@@ -29,7 +30,8 @@ public static class InputComponentsLookup {
         "Owner",
         "Player",
         "PlayerInputs",
-        "PressFire"
+        "PressFire",
+        "ProcessInputs"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -41,6 +43,7 @@ public static class InputComponentsLookup {
         typeof(OwnerComponent),
         typeof(PlayerComponent),
         typeof(PlayerInputsComponent),
-        typeof(PressFireComponent)
+        typeof(PressFireComponent),
+        typeof(ProcessInputsComponent)
     };
 }

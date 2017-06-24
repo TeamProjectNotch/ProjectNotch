@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Entitas;
@@ -9,14 +10,9 @@ using Entitas;
 /// The second parameter is a non-empty list of input records stretched over a period of time.
 /// The idea is that the client might need to resimulate inputs from a particular 
 /// moment in the past all the way to the current tick.
-/// TEMP The list only contains the last recorded input record.
 public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 
 	readonly GameContext game;
-	readonly InputContext input;
-
-	readonly IGroup<GameEntity> players;
-
 	readonly List<PlayerInputRecord> inputRecordsBuffer = new List<PlayerInputRecord>();
 
 	// TEMP This here is a dirty hack that prevents the system from processing the same input over and over again.
@@ -28,21 +24,16 @@ public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 	public ProcessInputSystem(Contexts contexts) : base(contexts.input) {
 
 		game = contexts.game;
-		input = contexts.input;
-
-		players = game.GetGroup(
-			GameMatcher.AllOf(GameMatcher.Player, GameMatcher.GameObject)
-		);
 	}
 
 	protected override ICollector<InputEntity> GetTrigger(IContext<InputEntity> context) {
 
-		return context.CreateCollector(InputMatcher.PlayerInputs.Added());
+		return context.CreateCollector(InputMatcher.ProcessInputs.Added());
 	}
 
-	protected override bool Filter(InputEntity entity) {
+	protected override bool Filter(InputEntity e) {
 
-		return entity.hasPlayer && entity.hasPlayerInputs;
+		return e.hasPlayer && e.hasPlayerInputs && e.hasProcessInputs;
 	}
 
 	protected override void Execute(List<InputEntity> inputEntities) {
@@ -52,18 +43,19 @@ public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 
 	void Process(InputEntity inputEntity) {
 
-		var mostRecentRecord = GetMostRecentInputRecord(inputEntity);
-		if (mostRecentRecord == null) return;
-		if (mostRecentRecord.timestamp == timestampOfLastProcessedInput) return;
-
 		inputRecordsBuffer.Clear();
-		inputRecordsBuffer.Add(mostRecentRecord);
+
+		var startTick = inputEntity.processInputs.startTick;
+		var inputsToProcess = inputEntity.playerInputs.inputs
+			.Where(inputRecord => inputRecord.timestamp >= startTick); // TEMP Unoptimized.
+
+		inputRecordsBuffer.AddRange(inputsToProcess);
+		if (inputRecordsBuffer.Count == 0) return;
+
+		timestampOfLastProcessedInput = inputRecordsBuffer.Last().timestamp;
 
 		var gameEntity = game.GetEntityWithPlayer(inputEntity.player.id);
-
 		Process(gameEntity, inputRecordsBuffer);
-
-		timestampOfLastProcessedInput = mostRecentRecord.timestamp;
 	}
 
 	PlayerInputRecord GetMostRecentInputRecord(InputEntity inputEntity) {
@@ -87,4 +79,23 @@ public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 	}
 
 	protected abstract void Process(GameEntity player, List<PlayerInputRecord> inputs);
+}
+
+/// Removes ProcessInput components from input entities after they have been processed by various ProcessInputSystem|s.
+public class CleanupProcessInputSystem : ICleanupSystem {
+
+	readonly IGroup<InputEntity> entities;
+
+	public CleanupProcessInputSystem(Contexts contexts) {
+
+		entities = contexts.input.GetGroup(InputMatcher.ProcessInputs);
+	}
+
+	public void Cleanup() {
+
+		foreach (var e in entities.GetEntities()) {
+			
+			e.RemoveProcessInputs();
+		}
+	}
 }

@@ -10,13 +10,11 @@ public class AssignPlayerIdSystem : ReactiveSystem<NetworkingEntity> {
 
 	readonly NetworkingContext networking;
 	readonly GameContext game;
-	readonly InputContext input;
 
 	public AssignPlayerIdSystem(Contexts contexts) : base(contexts.networking) {
 
 		networking = contexts.networking;
 		game = contexts.game;
-		input = contexts.input;
 	}
 
 	protected override ICollector<NetworkingEntity> GetTrigger(IContext<NetworkingEntity> context) {
