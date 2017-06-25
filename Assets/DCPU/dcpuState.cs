@@ -23,6 +23,13 @@ public class dcpuState{
         SP = 0;
         IA = 0;
     }
+
+    public void loadProgram(ushort[] program){
+        for(int i = 0; i < program.Length; i++){
+            memory[i] = program[i];
+        }
+    }
+
     public dcpuState copy(){
         dcpuState newState = new dcpuState();
         for(int i = 0; i < DCPU.MEM_SIZE; i++){
