@@ -3,6 +3,7 @@ using Entitas;
 using UnityEngine;
 using UnityEngine.Networking;
 
+[SystemAvailability(InstanceKind.Client)]
 public class InitializeClientSystem : IInitializeSystem {
 
 	const int maxNumConnections = 16;

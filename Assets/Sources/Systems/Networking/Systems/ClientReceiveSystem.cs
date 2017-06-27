@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 // TODO A lot of code here is the same as in ServerReceiveSystem. Should create a single ReceiveSystem which would create things with ConnectionComponent 
 /// Receives messages over the network, deserializes them and puts them into a queue.
+[SystemAvailability(InstanceKind.Client)]
 public class ClientReceiveSystem : IExecuteSystem {
 
 	const int messageBufferSize = 1024 * 4;
@@ -71,7 +72,7 @@ public class ClientReceiveSystem : IExecuteSystem {
 
 	void OnReceive(int connectionId, int receivedMessageSize) {
 
-		Debug.LogFormat("Received {0} bytes from connectionId {1}", receivedMessageSize, connectionId);
+		//Debug.LogFormat("Received {0} bytes from connectionId {1}", receivedMessageSize, connectionId);
 
 		var e = networking.GetEntityWithConnection(connectionId);
 		if (e == null) return;

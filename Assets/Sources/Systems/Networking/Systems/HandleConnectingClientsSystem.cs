@@ -4,14 +4,15 @@ using Entitas;
 
 /// Server-side system. 
 /// Assigns ids to clients as connections with them are created. 
-/// Sends a PlayerIdAssignmentMessage to each such client.
+/// Sends a ServerConnectionEstablishedMessage to each such client.
 /// Creates a player GameEntity with that id.
-public class AssignPlayerIdSystem : ReactiveSystem<NetworkingEntity> {
+[SystemAvailability(InstanceKind.Server)]
+public class HandleConnectingClientsSystem : ReactiveSystem<NetworkingEntity> {
 
 	readonly NetworkingContext networking;
 	readonly GameContext game;
 
-	public AssignPlayerIdSystem(Contexts contexts) : base(contexts.networking) {
+	public HandleConnectingClientsSystem(Contexts contexts) : base(contexts.networking) {
 
 		networking = contexts.networking;
 		game = contexts.game;
@@ -33,7 +34,11 @@ public class AssignPlayerIdSystem : ReactiveSystem<NetworkingEntity> {
 			var playerId = nextPlayerId++;
 
 			client.AddPlayer(playerId);
-			client.EnqueueOutgoingMessage(new PlayerIdAssignmentMessage(playerId));
+
+			var message = new ServerConnectionEstablishedMessage();
+			message.playerId = playerId;
+			message.currentTick = game.currentTick.value;
+			client.EnqueueOutgoingMessage(message);
 
 			CreatePlayerWith(playerId);
 		}

@@ -28,6 +28,8 @@ public class MarkAddedInputsForProcessingSystem : ReactiveSystem<InputEntity> {
 
 	void Process(InputEntity e) {
 
+		if (e.playerInputs.inputs.Count == 0) return;
+
 		// TEMP Unoptimized
 		var inputRecords = e.playerInputs.inputs
 			.Where(inputRecord => 

@@ -7,7 +7,15 @@ public class ClientFixedTimestepSystems : Feature {
 
 		Add(new EnsureInputEntityIdSystem(contexts));
 
+		Add(new TicksSystem(contexts));
+
+		// Networking. Incoming data processing.
+		Add(new ClientReceiveSystem(contexts));
+		Add(new ClientSyncGameEntitiesSystems(contexts)); 
+		Add(new HandleServerConnectionEstablishedSystem(contexts));
+
 		Add(new ProcessInputSystems(contexts));
+		Add(new VelocitySystem(contexts));
 
 		Add(new GameObjectSystems(contexts));
 		Add(new ClientNetworkingSystems(contexts));

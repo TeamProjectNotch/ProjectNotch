@@ -2,7 +2,8 @@
 using Entitas;
 using UnityEngine;
 
-/// In the beginning of the game, creates a simple weapon and gives it to the player as a handheld item. 
+/// In the beginning of the game, creates a simple weapon and gives it to the player as a handheld item.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Singleplayer)]
 public class CreatePlayerWeaponSystem : IInitializeSystem {
 
 	readonly GameContext game;

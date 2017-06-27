@@ -1,9 +1,9 @@
 ﻿using System;
 
 /// Systems for sending the state of GameEntities to the clients over the network.
-public class ServerSyncGameEntitiesSystems : Feature {
+public class ServerSyncGameEntitiesSystems : MyFeature {
 
-	public ServerSyncGameEntitiesSystems(Contexts contexts) : base("SyncGameEntities (Server)") {
+	public ServerSyncGameEntitiesSystems(Contexts contexts) : base(contexts) {
 
 		Add(new EnsureChangeFlagsSystem(contexts));
 		Add(new UpdateChangeFlagsSystem(contexts));

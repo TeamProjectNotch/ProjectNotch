@@ -23,14 +23,16 @@ public partial class Contexts : Entitas.IContexts {
 
     public EventsContext events { get; set; }
     public GameContext game { get; set; }
+    public GameStateContext gameState { get; set; }
     public InputContext input { get; set; }
     public NetworkingContext networking { get; set; }
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { events, game, input, networking }; } }
+    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { events, game, gameState, input, networking }; } }
 
     public Contexts() {
         events = new EventsContext();
         game = new GameContext();
+        gameState = new GameStateContext();
         input = new InputContext();
         networking = new NetworkingContext();
 
@@ -166,6 +168,7 @@ public partial class Contexts {
         try {
             CreateContextObserver(events);
             CreateContextObserver(game);
+            CreateContextObserver(gameState);
             CreateContextObserver(input);
             CreateContextObserver(networking);
         } catch(System.Exception) {

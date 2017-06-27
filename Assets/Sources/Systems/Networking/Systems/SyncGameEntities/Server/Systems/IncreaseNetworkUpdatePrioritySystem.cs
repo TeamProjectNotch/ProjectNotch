@@ -2,6 +2,7 @@
 using Entitas;
 
 /// Increases the accumulated priority of all Entities with a NetworkUpdatePriorityComponent each simstep.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Client)]
 public class IncreaseNetworkUpdatePrioritySystem : IExecuteSystem {
 
 	readonly IGroup<GameEntity> entities;

@@ -4,7 +4,7 @@ using Entitas.CodeGeneration.Attributes;
 
 [Game]
 [Unique]
-public class CurrentTickComponent : IComponent, IUnifiedSerializable {
+public class CurrentTickComponent : IComponent/*, IUnifiedSerializable*/ {
 	
 	public ulong value;
 

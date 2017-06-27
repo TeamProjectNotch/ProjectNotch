@@ -11,6 +11,8 @@ public class GameObjectSystems : Feature {
 
 		Add(new SyncGameObjectsAndEntitiesSystems(contexts));
 
+		Add(new AttachHandheldToPlayerSystem(contexts));
+
 		Add(new InitializeScreenViewSystem(contexts));
 		Add(new UpdateScreenViewSystem(contexts));
 

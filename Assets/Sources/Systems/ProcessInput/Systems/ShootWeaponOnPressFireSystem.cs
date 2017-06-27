@@ -8,6 +8,7 @@ using Entitas;
 /// Should be a server-side system.
 /// Shoots a bullet out of a player's weapon when they press the fire button.
 /// TEMP Only processes the last of the provided inputs.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Singleplayer)]
 public class ShootWeaponOnPressFireSystem : ProcessInputSystem {
 
 	readonly GameContext game;

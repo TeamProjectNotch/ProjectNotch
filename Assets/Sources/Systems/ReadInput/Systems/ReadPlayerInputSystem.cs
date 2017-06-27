@@ -39,7 +39,7 @@ public class ReadPlayerInputSystem : IExecuteSystem {
 		if (!didReadAny) return;
 
 		var inputs = inputEntity.playerInputs.inputs;
-		inputs.Clear(); // TEMP Past input records are never removed (yet), so we clear them here to prevent clutter. 
+		//inputs.Clear(); // TEMP Past input records are never removed (yet), so we clear them here to prevent clutter. 
 
 		var currentTick = game.currentTick.value;
 		inputs.Add(new PlayerInputRecord(currentTick, inputState));

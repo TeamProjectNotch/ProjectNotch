@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 /// Sets the context-global IdsComponent. The host id and channel ids.
+[SystemAvailability(InstanceKind.Server)]
 public class InitializeServerSystem : IInitializeSystem {
 	
 	const int maxNumConnections = 16;

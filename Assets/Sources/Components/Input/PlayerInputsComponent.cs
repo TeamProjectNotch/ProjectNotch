@@ -32,6 +32,26 @@ public class PlayerInputsComponent : IComponent, IUnifiedSerializable {
 
 	public void Serialize<T>(T s) where T : IUnifiedSerializer {
 
-		s.Serialize(ref inputs);
+		bool isEmpty = s.isWriting ? (inputs.Count == 0) : false;
+		s.Serialize(ref isEmpty);
+
+		if (s.isWriting) {
+
+			if (!isEmpty) {
+				
+				var record = inputs[inputs.Count - 1];
+				s.Serialize(ref record);
+			}
+		} else {
+
+			inputs = new List<PlayerInputRecord>();
+
+			if (!isEmpty) {
+
+				var record = new PlayerInputRecord();
+				s.Serialize(ref record);
+				inputs.Add(record);
+			}
+		}
 	}
 }

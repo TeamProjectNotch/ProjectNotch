@@ -2,6 +2,7 @@
 using Entitas;
 
 /// Cleans up collision entities that must've been processed already.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Singleplayer)]
 public class CleanupCollisionSystem : ICleanupSystem {
 
 	readonly IGroup<EventsEntity> collisions;

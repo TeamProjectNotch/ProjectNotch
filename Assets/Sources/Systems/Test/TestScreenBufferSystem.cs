@@ -2,6 +2,7 @@
 using UnityEngine;
 
 /// Tests screens by modifying the screen buffers on entities.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Singleplayer)]
 public class TestScreenBufferSystem : IExecuteSystem {
 
 	readonly IGroup<GameEntity> screens;

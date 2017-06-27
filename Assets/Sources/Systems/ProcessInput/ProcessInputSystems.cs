@@ -11,8 +11,8 @@ public class ProcessInputSystems : Feature {
 		Add(new MarkAddedInputsForProcessingSystem(contexts));
 
 		// ProcessInputSystem|s
-		Add(new ShootWeaponOnPressFireSystem(contexts));
 		Add(new ProcessMovementInputSystem(contexts));
+		Add(new ShootWeaponOnPressFireSystem(contexts));
 
 		Add(new CleanupProcessInputSystem(contexts));
 	}

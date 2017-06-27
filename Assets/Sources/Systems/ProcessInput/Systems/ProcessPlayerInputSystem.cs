@@ -15,12 +15,6 @@ public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 	readonly GameContext game;
 	readonly List<PlayerInputRecord> inputRecordsBuffer = new List<PlayerInputRecord>();
 
-	// TEMP This here is a dirty hack that prevents the system from processing the same input over and over again.
-	// The issue exists because input entities are not synced between clients and servers properly. 
-	// See ComposeInputMessageSystem. Can be solved by creating 
-	// a generic abstract system that would compose messages to send over the network for any given context.
-	ulong? timestampOfLastProcessedInput;
-
 	public ProcessInputSystem(Contexts contexts) : base(contexts.input) {
 
 		game = contexts.game;
@@ -49,12 +43,17 @@ public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 		var inputsToProcess = inputEntity.playerInputs.inputs
 			.Where(inputRecord => inputRecord.timestamp >= startTick); // TEMP Unoptimized.
 
-		inputRecordsBuffer.AddRange(inputsToProcess);
-		if (inputRecordsBuffer.Count == 0) return;
+		//Debug.LogFormat("Processing input since tick {0} to tick {1}", startTick, game.currentTick.value);
 
-		timestampOfLastProcessedInput = inputRecordsBuffer.Last().timestamp;
+		inputRecordsBuffer.AddRange(inputsToProcess);
+		if (inputRecordsBuffer.Count == 0) {
+			//Debug.Log("No inputs to process.");
+			return;
+		}
 
 		var gameEntity = game.GetEntityWithPlayer(inputEntity.player.id);
+		if (gameEntity == null) return;
+
 		Process(gameEntity, inputRecordsBuffer);
 	}
 

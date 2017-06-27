@@ -4,6 +4,7 @@ using Entitas;
 /// Server-side system.
 /// Initializes the tick counter. 
 /// Increments it on Execute.
+[SystemAvailability(InstanceKind.All)]
 public class TicksSystem : IInitializeSystem, IExecuteSystem {
 
 	readonly GameContext game;

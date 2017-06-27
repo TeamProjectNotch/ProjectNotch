@@ -2,6 +2,7 @@
 using Entitas;
 
 /// Ensures that all GameEntities in the GameContext have a ChangeFlagsComponent.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Client)]
 public class EnsureChangeFlagsSystem : IInitializeSystem {
 
 	readonly GameContext game;

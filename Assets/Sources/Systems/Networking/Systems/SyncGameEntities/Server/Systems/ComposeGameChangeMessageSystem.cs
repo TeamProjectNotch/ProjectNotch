@@ -6,6 +6,7 @@ using System.IO;
 
 /// Creates messages with game context changes to send to the clients. 
 /// TEMP Currently makes just one message for all clients.
+[SystemAvailability(InstanceKind.Server)]
 public class ComposeGameChangeMessageSystem : IExecuteSystem {
 
 	const int preferredNumBytesPerMessage = 1024;

@@ -10,7 +10,6 @@ public class GameLogicSystems : Feature {
 		// Execute systems
 		Add(new ProcessBulletCollisionSystem(contexts));
 		Add(new DestroyWhenHealthZeroSystem(contexts));
-		Add(new AttachHandheldToPlayerSystem(contexts));
 
 		Add(new TicksSystem(contexts));
 

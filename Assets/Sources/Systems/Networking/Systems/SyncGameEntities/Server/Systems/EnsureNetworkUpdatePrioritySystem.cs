@@ -2,6 +2,7 @@
 using Entitas;
 
 /// Ensures that all GameEntities in the GameContext have a NetworkUpdatePriorityComponent.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Client)]
 public class EnsureNetworkUpdatePrioritySystem : IInitializeSystem {
 
 	readonly GameContext game;

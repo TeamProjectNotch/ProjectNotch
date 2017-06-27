@@ -8,6 +8,7 @@ using Entitas;
 /// Composes and enqueues messages with input data to send to the server.
 /// Just sends all the entities in the InputContext.
 /// WARNING: only sends entity and component updates, not removals.
+[SystemAvailability(InstanceKind.Client)]
 public class ComposeInputMessageSystem : IExecuteSystem {
 	
 	readonly NetworkingContext networking;

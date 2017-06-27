@@ -3,12 +3,14 @@ using System.Linq;
 using Entitas;
 
 /// Ensures that all GameEntities have an IdComponent.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Singleplayer)]
 public class EnsureGameEntityIdSystem : EnsureEntityIdSystem<GameEntity> {
 
 	public EnsureGameEntityIdSystem(Contexts contexts) : base(contexts.game) {}
 }
 
 /// Ensures that all InputEntities have an IdComponent.
+[SystemAvailability(InstanceKind.Client | InstanceKind.Singleplayer)]
 public class EnsureInputEntityIdSystem : EnsureEntityIdSystem<InputEntity> {
 
 	public EnsureInputEntityIdSystem(Contexts contexts) : base(contexts.input) {}
@@ -16,7 +18,7 @@ public class EnsureInputEntityIdSystem : EnsureEntityIdSystem<InputEntity> {
 
 /// An abstract System which ensures that all Entities of given type have an IdComponent, 
 /// provided a Context of those Entities.
-public abstract class EnsureEntityIdSystem<TEntity> : IInitializeSystem 
+public abstract class EnsureEntityIdSystem<TEntity> : IInitializeSystem
 	where TEntity : class, IEntity, IId  {
 
 	readonly IContext<TEntity> context;

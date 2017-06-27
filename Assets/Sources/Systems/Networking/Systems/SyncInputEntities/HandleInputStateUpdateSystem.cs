@@ -5,6 +5,7 @@ using System.IO;
 using Entitas;
 using UnityEngine;
 
+[SystemAvailability(InstanceKind.Server)]
 public class HandleInputStateUpdateSystem : ProcessMessageSystem<InputStateUpdateMessage> {
 	
 	readonly InputContext input;

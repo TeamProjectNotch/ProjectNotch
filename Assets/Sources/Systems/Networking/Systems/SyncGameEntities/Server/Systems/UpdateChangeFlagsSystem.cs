@@ -5,6 +5,7 @@ using Entitas;
 
 /// Makes sure that whenever the components of an Entity are changed,
 /// its ChangeFlagsComponent is updated accordingly.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Client)]
 public class UpdateChangeFlagsSystem : IInitializeSystem {
 
 	// The indices of components that shouldn't be tracked.

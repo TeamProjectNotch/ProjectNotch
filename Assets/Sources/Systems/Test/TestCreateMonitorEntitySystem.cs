@@ -4,6 +4,7 @@ using Entitas;
 using UnityEngine;
 
 /// Tries to create a monitor entity.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Singleplayer)]
 public class TestCreateMonitorEntitySystem : IInitializeSystem {
 
 	readonly GameContext game;

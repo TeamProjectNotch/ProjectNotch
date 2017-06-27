@@ -8,6 +8,9 @@ public class ServerFixedTimestepSystems : Feature {
 		Add(new EnsureGameEntityIdSystem(contexts));
 
 		Add(new ProcessInputSystems(contexts));
+
+		Add(new VelocitySystem(contexts));
+
         Add(new GameLogicSystems(contexts));
         Add(new GameObjectSystems(contexts));
 		Add(new ServerNetworkingSystems(contexts));

@@ -9,7 +9,7 @@ public class ServerNetworkingSystems : Feature {
 
 		Add(new ServerReceiveSystem(contexts));
 
-		Add(new AssignPlayerIdSystem(contexts));
+		Add(new HandleConnectingClientsSystem(contexts));
 
 		Add(new ServerSyncGameEntitiesSystems(contexts));
 		Add(new HandleInputStateUpdateSystem(contexts));

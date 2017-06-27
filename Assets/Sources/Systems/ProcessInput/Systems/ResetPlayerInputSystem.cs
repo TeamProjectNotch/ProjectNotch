@@ -20,6 +20,8 @@ public class ResetPlayerInputSystem : IExecuteSystem {
 
 			var gameObject = e.gameObject.value;
 			var inputManager = gameObject.GetComponent<CharacterInput>();
+			if (inputManager == null) return;
+
 			inputManager.Reset();
 		}
 	}

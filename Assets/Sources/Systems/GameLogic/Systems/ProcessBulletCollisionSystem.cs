@@ -4,6 +4,7 @@ using UnityEngine;
 using Entitas;
 
 /// Currenly destroys the bullet when it hits anything.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Singleplayer)]
 public class ProcessBulletCollisionSystem : ReactiveSystem<EventsEntity> {
 
 	readonly GameContext game;

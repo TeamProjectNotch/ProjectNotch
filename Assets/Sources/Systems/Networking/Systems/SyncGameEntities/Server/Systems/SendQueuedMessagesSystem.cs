@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 /// Cycles through all connections with an outgoing message queue. 
 /// Sends one message from each queue every simstep.
+[SystemAvailability(InstanceKind.Server | InstanceKind.Client)]
 public class SendQueuedMessagesSystem : IExecuteSystem {
 
 	readonly NetworkingContext networking;

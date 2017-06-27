@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 /// Receives messages over the network and puts them in a queue (networking.incomingMessages).
 /// Also registers connecting clients.
+[SystemAvailability(InstanceKind.Server)]
 public class ServerReceiveSystem : IExecuteSystem {
 
 	const int messageBufferSize = 1024 * 4;
