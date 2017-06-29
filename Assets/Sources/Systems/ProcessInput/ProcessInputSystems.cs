@@ -2,7 +2,7 @@
 using Entitas;
 
 /// Systems that process InputEntities in InputContexts.
-public class ProcessInputSystems : Feature {
+public class ProcessInputSystems : MyFeature {
 
 	public ProcessInputSystems(Contexts contexts) : base("ProcessInput") {
 

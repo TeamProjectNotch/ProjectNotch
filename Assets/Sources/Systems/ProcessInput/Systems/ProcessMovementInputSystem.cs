@@ -7,6 +7,7 @@ using Entitas;
 
 /// Updates the player characters' input with values from the latest PlayerInputState from its input entity.
 /// TEMP Only processes the last input.
+[SystemAvailability(InstanceKind.All)]
 public class ProcessMovementInputSystem : ProcessInputSystem {
 
 	readonly GameContext game;

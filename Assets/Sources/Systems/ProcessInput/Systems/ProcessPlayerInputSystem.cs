@@ -81,6 +81,7 @@ public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 }
 
 /// Removes ProcessInput components from input entities after they have been processed by various ProcessInputSystem|s.
+[SystemAvailability(InstanceKind.All)]
 public class CleanupProcessInputSystem : ICleanupSystem {
 
 	readonly IGroup<InputEntity> entities;

@@ -2,7 +2,7 @@
 using Entitas;
 using System.Linq;
 
-[SystemAvailability(InstanceKind.Server | InstanceKind.Singleplayer)]
+[SystemAvailability(InstanceKind.ServerAndSingleplayer)]
 public class DestroyWhenHealthZeroSystem : ReactiveSystem<GameEntity> {
 	
     public DestroyWhenHealthZeroSystem(Contexts contexts) : base(contexts.game) {}

@@ -8,13 +8,13 @@ public class GameControllerFull : GameControllerBase {
 
 	void Awake() {
 
-		Contexts.sharedInstance.gameState.SetProgramInstanceKind(thisInstanceKind);
+		ProgramInstance.thisInstanceKind = thisInstanceKind;
 	}
 
 	protected override void CreateSystems(Contexts contexts) {
 
 		// TEMP. This configuration happens to contain all systems. For now. Should create them differently.
-		systemsFixedUpdate = new Feature("On FixedUpdate").Add(new AllFixedTimestepSystems(contexts));
-		systemsUpdate = new Feature("On Update").Add(new ClientPerFrameSystems(contexts));
+		systemsFixedUpdate = new OnFixedUpdateSystems(contexts);
+		systemsUpdate = new OnUpdateSystems(contexts);
 	}
 }

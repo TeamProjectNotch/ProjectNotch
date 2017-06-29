@@ -9,25 +9,18 @@ using Entitas.VisualDebugging.Unity;
 [SystemAvailability(InstanceKind.Server | InstanceKind.Client | InstanceKind.Singleplayer)]
 public class MyDebugSystems : DebugSystems {
 
-	const bool tolerateNoAvailabilityAttribute = true;
+	public bool tolerateNoAvailabilityAttribute = true;
+	public bool logMessageWhenNoAvailabilityAttribute = true;
 
-	InstanceKind programInstanceKind;
+	public MyDebugSystems(string name) : base(name) {}
 
-	public MyDebugSystems(Contexts contexts, string name) : base(name) {
-
-		programInstanceKind = contexts.gameState.programInstanceKind.value;
-	}
-
-	public MyDebugSystems(Contexts contexts, bool noInit) : base(noInit) {
-
-		programInstanceKind = contexts.gameState.programInstanceKind.value;
-	}
+	public MyDebugSystems(bool noInit) : base(noInit) {}
 
 	public override Systems Add(ISystem system) {
 
 		var availableInstanceKinds = GetAvailability(system);
 
-		if ((this.programInstanceKind & availableInstanceKinds) == 0) {
+		if ((ProgramInstance.thisInstanceKind & availableInstanceKinds) == 0) {
 
 			// The system is not available on this program instance kind. Don't add it.
 			return this;
@@ -43,7 +36,10 @@ public class MyDebugSystems : DebugSystems {
 
 			if (tolerateNoAvailabilityAttribute) {
 
-				Debug.LogWarningFormat("System {0} has no SystemAvailabilityAttribute. Defaulting to InstanceKind.All", system);
+				if (logMessageWhenNoAvailabilityAttribute) {
+					Debug.LogWarningFormat("System {0} has no SystemAvailabilityAttribute. Defaulting to InstanceKind.All", system);
+				}
+
 				return InstanceKind.All;
 			} 
 

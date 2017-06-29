@@ -3,6 +3,7 @@ using Entitas;
 
 /// Resets the character input manager on a player's entity so it's doesn't run on past inputs.
 /// This system is TEMP until input processing is not MonoBehaviour-dependent.
+[SystemAvailability(InstanceKind.All)]
 public class ResetPlayerInputSystem : IExecuteSystem {
 
 	readonly IGroup<GameEntity> players;

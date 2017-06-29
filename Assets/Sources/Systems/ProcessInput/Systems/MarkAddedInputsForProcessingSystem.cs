@@ -5,6 +5,7 @@ using Entitas;
 
 /// When PlayerInputsComponent is updated with input records, marks those input records 
 /// to be processed using ProcessInputComponent.
+[SystemAvailability(InstanceKind.All)]
 public class MarkAddedInputsForProcessingSystem : ReactiveSystem<InputEntity> {
 
 	ulong? timestampOfLastProcessedRecord;

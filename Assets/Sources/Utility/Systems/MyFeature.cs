@@ -1,12 +1,12 @@
 ﻿
 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
-// /
+/// Just like Feature, but uses MySystems and MyDebugSystems instead of Systems and DebugSystems.
 public class MyFeature : MyDebugSystems {
 
-	public MyFeature(Contexts contexts, string name) : base(contexts, name) {}
+	public MyFeature(string name) : base(name) {}
 
-	public MyFeature(Contexts contexts) : base(contexts, true) {
+	public MyFeature() : base(noInit: true) {
 		
 		var typeName = Entitas.Utils.TypeSerializationExtension.ToCompilableString(GetType());
 		var shortType = Entitas.Utils.TypeSerializationExtension.ShortTypeName(typeName);
@@ -20,9 +20,9 @@ public class MyFeature : MyDebugSystems {
 
 public class MyFeature : MySystems {
 
-	public MyFeature(Contexts contexts, string name) : base(contexts) {}
+	public MyFeature(string name) : base() {}
 
-	public MyFeature(Contexts contexts) : base(contexts) {}
+	public MyFeature() : base() {}
 }
 
 #endif

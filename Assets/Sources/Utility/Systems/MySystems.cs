@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,35 +16,19 @@ public class SystemAvailabilityAttribute : Attribute {
 	}
 }
 
-/// The different kinds of thing the program instance can be. E.G. server, client etc.
-public enum InstanceKind {
-
-	None = 0,
-	
-	Server = 1,
-	Client = 2,
-	Singleplayer = 4,
-
-	All = 7
-}
-
-[SystemAvailability(InstanceKind.Server | InstanceKind.Client | InstanceKind.Singleplayer)]
+/// Same as Entitas.Systems, but only adds a given system if it is available with the current program instance kind.
+/// Checks the SystemAvailability of a given system.
+[SystemAvailability(InstanceKind.All)]
 public class MySystems : Systems {
 
-	const bool tolerateNoAvailabilityAttribute = true;
-
-	InstanceKind programInstanceKind;
-
-	public MySystems(Contexts contexts) : base() {
-
-		programInstanceKind = contexts.gameState.programInstanceKind.value;
-	}
+	public bool tolerateNoAvailabilityAttribute = true;
+	public bool logMessageWhenNoAvailabilityAttribute = true;
 
 	public override Systems Add(ISystem system) {
 
 		var availableInstanceKinds = GetAvailability(system);
 
-		if ((this.programInstanceKind & availableInstanceKinds) == 0) {
+		if ((ProgramInstance.thisInstanceKind & availableInstanceKinds) == 0) {
 
 			// The system is not available on this program instance kind. Don't add it.
 			return this;
@@ -59,14 +44,16 @@ public class MySystems : Systems {
 
 			if (tolerateNoAvailabilityAttribute) {
 
-				Debug.LogWarningFormat("System {0} has no SystemAvailabilityAttribute. Defaulting to InstanceKind.All", system);
+				if (logMessageWhenNoAvailabilityAttribute) {
+					Debug.LogWarningFormat("System {0} has no SystemAvailabilityAttribute. Defaulting to InstanceKind.All", system);
+				}
 				return InstanceKind.All;
 			} 
 
 			throw new Exception(String.Format("System {0} has no SystemAvailabilityAttribute!", system));
 		}
 
-		var availabilityAttribute = (SystemAvailabilityAttribute)attributes[0];
+		var availabilityAttribute = (SystemAvailabilityAttribute)attributes.Last();
 		return availabilityAttribute.programInstanceKind;
 	}
 }
