@@ -2,7 +2,7 @@
 A space game inspired by Notch's cancelled "0x10c"
 
 # Links
-[Discord chat](https://discordapp.com/channels/313490609778327552/324963888221126656)
+[Discord chat](https://discord.gg/xhBDmgc)
 
 ECS & Entitas resources:
 - [Wikipedia article on Entity-Component-System](http://www.wikiwand.com/en/Entity%E2%80%93component%E2%80%93system)
