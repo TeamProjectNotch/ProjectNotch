@@ -6,7 +6,7 @@ using Entitas;
 using UnityEngine;
 
 [SystemAvailability(InstanceKind.Server)]
-public class HandleInputStateUpdateSystem : ProcessMessageSystem<InputStateUpdateMessage> {
+public class HandleInputStateUpdateSystem : HandleMessageSystem<InputStateUpdateMessage> {
 	
 	readonly InputContext input;
 
@@ -25,7 +25,7 @@ public class HandleInputStateUpdateSystem : ProcessMessageSystem<InputStateUpdat
 	protected override void Process(InputStateUpdateMessage message, NetworkingEntity source) {
 		
 		message.changes.Each(Apply);
-		Debug.LogFormat("Num inputs applied this step: {0}", message.changes.Length);
+		Debug.LogFormat("Num inputs received this step: {0}", message.changes.Length);
 	}
 
 	void Apply(EntityChange change) {

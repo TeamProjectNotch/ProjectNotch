@@ -4,7 +4,7 @@ using UnityEngine;
 /// Moves the character contoller based on inputs in the provided CharacterInput.
 /// **Very** roughly based on UnityStandardAssets.Characters.FirstPerson.FirstPersonController.
 [Serializable]
-public class CharacterMover : MonoBehaviour {
+public class CharacterMover : MonoBehaviour, ICharacterBehaviour {
 
 	public float walkSpeed = 8f;
 	public float runSpeed = 16f;
@@ -13,24 +13,24 @@ public class CharacterMover : MonoBehaviour {
 	public float gravityMultiplier = 5f;
 	public float stickToGroundForce = 10f;
 
-	public CharacterInput input;
 	public CharacterController characterController;
+
+	PlayerInputState inputState;
 
 	Vector3 currentMotion;
 	CollisionFlags characterControllerCollisionFlag;
 
 	void Start() {
 
-		input = input ?? GetComponent<CharacterInput>();
-		Debug.Assert(input != null);
-
 		characterController = characterController ?? GetComponent<CharacterController>();
 		Debug.Assert(characterController != null);	
 	}
 
-	void FixedUpdate() {
+	public void SimulateStep(PlayerInputState inputState) {
+
+		this.inputState = inputState;
 		
-		Vector3 desiredMotion = GetDesiredMotion(input.moveAxes);
+		Vector3 desiredMotion = GetDesiredMotion(inputState.moveAxes);
 		UpdateCurrentMotion(desiredMotion);
 
 		characterControllerCollisionFlag = characterController.Move(currentMotion * Time.fixedDeltaTime);
@@ -70,7 +70,7 @@ public class CharacterMover : MonoBehaviour {
 		
 		if (characterController.isGrounded) {
 
-			return input.isJump ? jumpSpeed : -stickToGroundForce;
+			return inputState.buttonPressedJump ? jumpSpeed : -stickToGroundForce;
 
 		} else {
 

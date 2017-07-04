@@ -14,9 +14,9 @@ public class OnFixedUpdateSystems : MyFeature {
 		Add(new EnsureGameEntityIdSystem(contexts));
 		Add(new EnsureInputEntityIdSystem(contexts));
 
-		Add(new NetworkingSystems(contexts));
-		Add(new AllGameLogicSystems(contexts));
-		Add(new SendQueuedMessagesSystem(contexts));
+		Add(new EarlyNetworkSystems(contexts));
+		Add(new GameLogicSystems(contexts));
+		Add(new LateNetworkSystems(contexts));
 
 		Add(new DestroySystem(contexts));
 		Add(new TicksSystem(contexts));

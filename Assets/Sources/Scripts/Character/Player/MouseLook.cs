@@ -4,7 +4,7 @@ using UnityEngine;
 /// A mouse look script roughly based on UnityStandardAssets.Characters.FirstPerson.MouseLook.
 /// Based on mouse move input found in CharacterInput, rotates the camera (up-down) and the character (left-right).
 [Serializable]
-public class MouseLook : MonoBehaviour {
+public class MouseLook : MonoBehaviour, ICharacterBehaviour {
 	
 	public Vector2 sensitivity = new Vector2(2f, 2f);
 
@@ -14,17 +14,18 @@ public class MouseLook : MonoBehaviour {
 	public bool clampVerticalRotation = true;
 	public RangeFloat verticalRotationRange = new RangeFloat(-90f, 90f);
 
-	[SerializeField] CharacterInput input;
 	[SerializeField] Transform characterTransform;
 	[SerializeField] Transform cameraTransform;
 
 	Quaternion characterTargetRotation;
 	Quaternion cameraTargetRotation;
 
-	void Start() {
+	public void SimulateStep(PlayerInputState inputState) {
 
-		input = input ?? GetComponentInParent<CharacterInput>();
-		Debug.Assert(input != null);
+		HandleMouseMove(inputState.mouseMoveAxes);
+	}
+
+	void Start() {
 
 		characterTransform = characterTransform ?? transform;
 		Debug.Assert(characterTransform != null);
@@ -33,11 +34,6 @@ public class MouseLook : MonoBehaviour {
 		Debug.Assert(cameraTransform != null);
 
 		InitTargetRotations();
-	}
-
-	void Update() {
-
-		HandleMouseMove(input.mouseMoveAxes);
 	}
 
 	void InitTargetRotations() {
@@ -93,7 +89,7 @@ public class MouseLook : MonoBehaviour {
 		return Quaternion.Slerp(
 			characterTransform.localRotation, 
 			characterTargetRotation, 
-			smoothingFactor * Time.deltaTime
+			smoothingFactor * Time.fixedDeltaTime
 		);
 	}
 
@@ -102,7 +98,7 @@ public class MouseLook : MonoBehaviour {
 		return Quaternion.Slerp(
 			cameraTransform.localRotation, 
 			cameraTargetRotation,
-			smoothingFactor * Time.deltaTime
+			smoothingFactor * Time.fixedDeltaTime
 		);
 	}
 }

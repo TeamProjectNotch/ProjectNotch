@@ -2,12 +2,14 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Entitas;
 
 /// An abstract system.
-/// Processes inputs of a player.
+/// Processes inputs of a player. Processes only those inputs that are older that the timestamp 
+/// specified in the ProcessInputsComponent of the entity.
 /// To use, override Process(GameEntity playerGameEntity, List<PlayerInputRecord> inputs).
-/// The second parameter is a non-empty list of input records stretched over a period of time.
+/// The second parameter is a possibly empty list of input records stretched over a period of time.
 /// The idea is that the client might need to resimulate inputs from a particular 
 /// moment in the past all the way to the current tick.
 public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
@@ -37,6 +39,10 @@ public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 
 	void Process(InputEntity inputEntity) {
 
+		var gameEntity = game.GetEntityWithPlayer(inputEntity.player.id);
+		Assert.IsNotNull(gameEntity);
+		if (gameEntity == null) return;
+
 		inputRecordsBuffer.Clear();
 
 		var startTick = inputEntity.processInputs.startTick;
@@ -46,35 +52,7 @@ public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 		//Debug.LogFormat("Processing input since tick {0} to tick {1}", startTick, game.currentTick.value);
 
 		inputRecordsBuffer.AddRange(inputsToProcess);
-		if (inputRecordsBuffer.Count == 0) {
-			//Debug.Log("No inputs to process.");
-			return;
-		}
-
-		var gameEntity = game.GetEntityWithPlayer(inputEntity.player.id);
-		if (gameEntity == null) return;
-
 		Process(gameEntity, inputRecordsBuffer);
-	}
-
-	PlayerInputRecord GetMostRecentInputRecord(InputEntity inputEntity) {
-
-		var inputs = inputEntity.playerInputs.inputs;
-		if (inputs.Count <= 0) return null;
-
-		var mostRecentRecord = inputs[inputs.Count - 1];
-		var currentTick = game.currentTick.value;
-		var timestamp = mostRecentRecord.timestamp;
-		if (timestamp > currentTick) { 
-
-			throw new Exception(String.Format(
-				"The most recent input record is {0}, which is later than the current tick {1}", 
-				timestamp, 
-				currentTick
-			));
-		}
-
-		return mostRecentRecord;
 	}
 
 	protected abstract void Process(GameEntity player, List<PlayerInputRecord> inputs);

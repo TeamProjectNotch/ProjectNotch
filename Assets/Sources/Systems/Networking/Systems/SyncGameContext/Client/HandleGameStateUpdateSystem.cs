@@ -9,7 +9,7 @@ using UnityEngine;
 /// Applies game changes received over the network. 
 /// Gets them from an incoming message queue on the Entity that represents a connection with the server.
 [SystemAvailability(InstanceKind.Client)]
-public class HandleGameStateUpdateSystem : ProcessMessageSystem<GameStateUpdateMessage> {
+public class HandleGameStateUpdateSystem : HandleMessageSystem<GameStateUpdateMessage> {
 
 	readonly GameContext game;
 	readonly InputContext input;
@@ -37,13 +37,13 @@ public class HandleGameStateUpdateSystem : ProcessMessageSystem<GameStateUpdateM
 			
 		foreach (var change in message.changes) {
 			
-			Apply(message, change);
+			Process(source, message, change);
 		}
 
 		//Debug.LogFormat("Changes applied this step: {0}", message.changes.Length);
 	}
 
-	void Apply(GameStateUpdateMessage message, EntityChange change) {
+	void Process(NetworkingEntity source, GameStateUpdateMessage message, EntityChange change) {
 
 		var e = game.GetEntityWithId(change.entityId);
 		if (e == null) {
@@ -59,7 +59,7 @@ public class HandleGameStateUpdateSystem : ProcessMessageSystem<GameStateUpdateM
 		}
 
 		change.Apply(e);
-		OnDidApply(message, change, e);
+		OnDidApply(source, message, change, e);
 	}
 
 	// TODO Make this a protected virtual method inheritors would override.
@@ -68,10 +68,11 @@ public class HandleGameStateUpdateSystem : ProcessMessageSystem<GameStateUpdateM
 	/// changes the ProcessInputsComponent on that player's input entity so that
 	/// all inputs, starting with the tick the message was sent, will be reprocessed.
 	/// </summary>
+	/// <param name="source">The connection entity the message came from.</param>
 	/// <param name="message">The message the applied entity change was part of.</param>
 	/// <param name="change">The entity change that was applied.</param>
 	/// <param name="e">The game entity the change was applied to.</param>
-	void OnDidApply(GameStateUpdateMessage message, EntityChange change, GameEntity e) {
+	void OnDidApply(NetworkingEntity source, GameStateUpdateMessage message, EntityChange change, GameEntity e) {
 
 		if (!e.hasPlayer) return;
 		if (!game.hasThisPlayerId) return;
@@ -82,12 +83,20 @@ public class HandleGameStateUpdateSystem : ProcessMessageSystem<GameStateUpdateM
 			var inputEntity = input.GetEntityWithPlayer(playerId);
 			if (inputEntity == null) return;
 
-			inputEntity.ReplaceProcessInputs(message.timestamp);
-			//Debug.LogFormat("Will reprocess inputs since tick {0}", message.timestamp);
+			var messageDelay = source.hasLatency ? source.latency.ticks : 0;
+			// It's not just message.timestamp because at message.timestamp the
+			// server only had received inputs from message.timestamp - messageDelay.
+			var inputProcessTick = message.timestamp - messageDelay;
+			if (inputEntity.hasProcessInputs) {
+
+				inputProcessTick = Math.Min(inputProcessTick, inputEntity.processInputs.startTick);
+			}
+			inputEntity.ReplaceProcessInputs(inputProcessTick);
+			Debug.LogFormat("Will reprocess inputs since tick {0}, now is {1}, msg delay is {2}", inputProcessTick, game.currentTick.value, messageDelay);
 
 			// Delete input records earlier than message timestamp.
 			var inputs = inputEntity.playerInputs.inputs;
-			inputs.RemoveAll(record => record.timestamp < message.timestamp);
+			inputs.RemoveAll(record => record.timestamp < inputProcessTick);
 			inputEntity.ReplacePlayerInputs(inputs);
 		}
 	}

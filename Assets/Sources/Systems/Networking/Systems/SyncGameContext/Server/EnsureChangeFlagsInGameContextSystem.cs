@@ -3,11 +3,11 @@ using Entitas;
 
 /// Ensures that all GameEntities in the GameContext have a ChangeFlagsComponent.
 [SystemAvailability(InstanceKind.Server)]
-public class EnsureChangeFlagsSystem : IInitializeSystem {
+public class EnsureChangeFlagsInGameContextSystem : IInitializeSystem {
 
 	readonly GameContext game;
 
-	public EnsureChangeFlagsSystem(Contexts contexts) {
+	public EnsureChangeFlagsInGameContextSystem(Contexts contexts) {
 
 		game = contexts.game;
 	}

@@ -3,47 +3,60 @@ using System.Linq;
 using System.Collections.Generic;
 using Entitas;
 
-/// When PlayerInputsComponent is updated with input records, marks those input records 
-/// to be processed using ProcessInputComponent.
+/// Commands a player input entity to process inputs added since last Execute.
+/// Does so by adding a `ProcessInputComponent`.
 [SystemAvailability(InstanceKind.All)]
-public class MarkAddedInputsForProcessingSystem : ReactiveSystem<InputEntity> {
+public class MarkAddedInputsForProcessingSystem : IExecuteSystem {
+
+	readonly GameContext game;
+	readonly IGroup<InputEntity> playerInputEntities;
 
 	ulong? timestampOfLastProcessedRecord;
 
-	public MarkAddedInputsForProcessingSystem(Contexts contexts) : base(contexts.input) {}
+	public MarkAddedInputsForProcessingSystem(Contexts contexts) {
 
-	protected override ICollector<InputEntity> GetTrigger(IContext<InputEntity> context) {
+		game = contexts.game;
 
-		return context.CreateCollector(InputMatcher.PlayerInputs.Added());
+		playerInputEntities = contexts.input.GetGroup(
+			InputMatcher.AllOf(InputMatcher.Player, InputMatcher.PlayerInputs)
+		);
 	}
 
-	protected override bool Filter(InputEntity e) {
+	public void Execute() {
 
-		return e.hasPlayerInputs;
-	}
+		foreach (var e in playerInputEntities.GetEntities()) {
 
-	protected override void Execute(List<InputEntity> entities) {
-
-		foreach (var e in entities) Process(e);
+			Process(e);
+		}
 	}
 
 	void Process(InputEntity e) {
 
-		if (e.playerInputs.inputs.Count == 0) return;
+		var inputRecords = GetUnprocessedInputRecords(e.playerInputs.inputs);
+		bool recordsAvailable = (inputRecords.Count() > 0);
 
-		// TEMP Unoptimized
-		var inputRecords = e.playerInputs.inputs
-			.Where(inputRecord => 
-				inputRecord.timestamp > (timestampOfLastProcessedRecord.HasValue ? timestampOfLastProcessedRecord : 0)
-			);
-		if (inputRecords.Count() == 0) return;
+		var earliestUnprocessedRecordTick = recordsAvailable ? inputRecords.First().timestamp : game.currentTick.value;
 
-		var earliestUnprocessedRecordTick = inputRecords.First().timestamp;
-		timestampOfLastProcessedRecord = inputRecords.Last().timestamp;
+		if (recordsAvailable) {
+			timestampOfLastProcessedRecord = inputRecords.Last().timestamp;
+		}
 
 		if (!e.hasProcessInputs || e.processInputs.startTick > earliestUnprocessedRecordTick) {
 
 			e.ReplaceProcessInputs(earliestUnprocessedRecordTick);
 		}
+
+		//UnityEngine.Debug.LogFormat("earliestUnprocessedRecordTick: {0}", earliestUnprocessedRecordTick);
+	}
+
+	IEnumerable<PlayerInputRecord> GetUnprocessedInputRecords(List<PlayerInputRecord> records) {
+		
+		// TEMP unoptimized.
+		var inputRecords = records
+			.Where(inputRecord => 
+				inputRecord.timestamp > timestampOfLastProcessedRecord.GetValueOrDefault(0)
+			);
+
+		return inputRecords;
 	}
 }

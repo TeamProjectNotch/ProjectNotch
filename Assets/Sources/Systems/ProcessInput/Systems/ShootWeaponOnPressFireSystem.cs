@@ -29,7 +29,9 @@ public class ShootWeaponOnPressFireSystem : ProcessInputSystem {
 
 	protected override void Process(GameEntity player, List<PlayerInputRecord> inputs) {
 
-		var inputState = inputs[inputs.Count - 1].inputState;
+		if (inputs.Count == 0) return;
+
+ 		var inputState = inputs[inputs.Count - 1].inputState;
 		if (inputState.buttonPressedFire) {
 
 			var weapon = GetWeaponOf(player);

@@ -83,15 +83,17 @@ public class ServerReceiveSystem : IExecuteSystem {
 		var connectionEntity = networking.GetEntityWithConnection(connectionId);
 		if (connectionEntity == null) return;
 
-		var message = NetworkMessageSerializer.Deserialize(bytes);
-		Enqueue(message, connectionEntity);
+		var messages = NetworkMessageSerializer.Deserialize(bytes);
+		foreach (var message in messages) {
+
+			EnqueueIncomingMessage(message, connectionEntity);
+		}
 	}
 
-	void Enqueue(INetworkMessage message, NetworkingEntity e) {
+	void EnqueueIncomingMessage(INetworkMessage message, NetworkingEntity e) {
 
 		var queue = e.hasIncomingMessages ? e.incomingMessages.queue : new Queue<INetworkMessage>();
 		queue.Enqueue(message);
 		e.ReplaceIncomingMessages(queue);
 	}
-
 }

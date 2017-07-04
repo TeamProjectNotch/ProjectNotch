@@ -6,7 +6,7 @@ using UnityEngine;
 /// Handles the HandleServerConnectionEstablishedMessage coming from the server.
 /// Sets game state values like thisPlayerId and currentTick.
 [SystemAvailability(InstanceKind.Client)]
-public class HandleServerConnectionEstablishedSystem : ProcessMessageSystem<ServerConnectionEstablishedMessage> {
+public class HandleServerConnectionEstablishedSystem : HandleMessageSystem<ServerConnectionEstablishedMessage> {
 
 	readonly GameContext game;
 
@@ -24,8 +24,11 @@ public class HandleServerConnectionEstablishedSystem : ProcessMessageSystem<Serv
 
 	protected override void Process(ServerConnectionEstablishedMessage message, NetworkingEntity source) {
 
-		Debug.LogFormat("Set: player id: {0}, currentTick: {1}", message.playerId, message.currentTick);
 		game.ReplaceThisPlayerId(message.playerId);
-		game.ReplaceCurrentTick(message.currentTick);
+
+		var messageDelay = source.hasLatency ? source.latency.ticks : 0;
+		game.ReplaceCurrentTick(message.currentTick + messageDelay);
+
+		Debug.LogFormat("Set: player id: {0}, currentTick: {1}", game.thisPlayerId, game.currentTick);
 	}
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class AllGameLogicSystems : MyFeature {
+public class GameLogicSystems : MyFeature {
 
-	public AllGameLogicSystems(Contexts contexts) : base("All game logic systems") {
+	public GameLogicSystems(Contexts contexts) : base("Game logic systems") {
 
 		// Initialize systems
 		Add(new CreatePlayerWeaponSystem(contexts));

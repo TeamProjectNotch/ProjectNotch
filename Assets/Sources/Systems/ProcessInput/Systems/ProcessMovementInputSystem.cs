@@ -22,78 +22,38 @@ public class ProcessMovementInputSystem : ProcessInputSystem {
 		if (!player.hasGameObject) return;
 
 		var gameObject = player.gameObject.value;
-		var characterInput = gameObject.GetComponent<CharacterInput>();
-		Assert.IsNotNull(characterInput);
+		var characterBehaviour = gameObject.GetComponent<Character>();
+		Assert.IsNotNull(characterBehaviour);
 
-		var inputState = inputRecords.Last().inputState;
+		gameObject.transform.SetState(player.transform.state);
 
-		characterInput.moveAxes = inputState.moveAxes;
-		characterInput.mouseMoveAxes = inputState.mouseMoveAxes;
-		characterInput.isJump = inputState.buttonPressedJump;
-	}
+		var numRecords = inputRecords.Count;
+		if (numRecords == 0) {
+			
+			characterBehaviour.SimulateStep();
+			player.ReplaceTransform(gameObject.transform.GetState());
+			return;
+		}
 
-	// WIP! Frozen until I rework the system hierarchy.
-	/*
-	protected override void Process(GameEntity player, List<PlayerInputRecord> inputRecords) {
-
-		if (!player.hasGameObject) return;
-
-		var gameObject = player.gameObject.value;
-		var transform = gameObject.transform;
-		var rb = gameObject.GetComponent<Rigidbody>();
-
-		//var totalTicksToSimulate = game.currentTick.value - inputRecords[0].timestamp + 1;
-		//Debug.LogFormat("Simulating {0} ticks", totalTicksToSimulate);
-		Debug.LogFormat("Simulating {0} input records", inputRecords.Count);
-
-		var trState = player.transform.state;
-		var rbState = player.rigidbodyState.state;
-
-		for (int i = 0; i < inputRecords.Count; ++i) {
+		ulong counter = 0;
+		for (int i = 0; i < numRecords; ++i) {
 
 			var inputRecord = inputRecords[i];
 			var startTick = inputRecord.timestamp;
 			var endTick = (i + 1 < inputRecords.Count) ? inputRecords[i + 1].timestamp : game.currentTick.value;
 			var numTicksToSimulate = endTick - startTick + 1;
 
-			//Debug.LogFormat("Simulating {0} ticks", numTicksToSimulate);
-
-			var speed = 8f;
-			var surfaceNormal = transform.up; // TEMP
-			var ticksToSeconds = Time.fixedDeltaTime;
-			var secondsToTicks = 1f / ticksToSeconds;
-			var numSecondsToSimulate = numTicksToSimulate * ticksToSeconds;
+			characterBehaviour.SimulateStep(inputRecord.inputState);
+			for (ulong tick = 1; tick < numTicksToSimulate; ++tick) {
 				
-			// Stuff beyond this point goes into a separate method/methods.
-			
-			// Flat motion processing
-			var moveAxes = inputRecord.inputState.moveAxes;
-			var desiredDirection = transform.right * moveAxes.x + transform.forward * moveAxes.y;
-			desiredDirection = Vector3.ProjectOnPlane(desiredDirection, surfaceNormal).normalized;
-
-			// Not multiplied by `numTicksToSimulate` since movement on the plane is instantaneous, i.e. one input press per tick.
-			trState.position += new Vector3D(desiredDirection * speed * (1f * ticksToSeconds));
-
-			// Jump processing
-			if (inputRecord.inputState.buttonPressedJump) {
-
-				var jumpSpeed = 10f;
-				var g = 9.81f;
-
-				var heightChange = jumpSpeed * numSecondsToSimulate - g * numSecondsToSimulate * numSecondsToSimulate / 2f;
-				heightChange = Math.Max(heightChange, 0f);
-				trState.position += new Vector3D(transform.up * heightChange);
-
-				var maxJumpTime = (2f * jumpSpeed / g);
-				var verticalSpeedChange = numSecondsToSimulate <= maxJumpTime ? jumpSpeed - g * numSecondsToSimulate : 0f;
-				var velocityChange = transform.up * verticalSpeedChange;
-
-				rbState.velocity += new Vector3D(velocityChange);
+				characterBehaviour.SimulateStep();
 			}
+
+			counter += numTicksToSimulate;
 		}
-			
-		//rb.position = rb.position + motion;
-		player.ReplaceTransform(trState);
-		player.ReplaceRigidbodyState(rbState);
-	}*/
+
+		player.ReplaceTransform(gameObject.transform.GetState());
+
+		//Debug.LogFormat("Simulated {0} ticks of character movement", counter);
+	}
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 /// Client-side system.
 /// Reads values from UnityEngine.Input and adds PlayerInputRecord|s to the player's input entity
+[SystemAvailability(InstanceKind.CleintAndSingleplayer)]
 public class ReadPlayerInputSystem : IExecuteSystem {
 
 	readonly GameContext game;
@@ -39,7 +40,6 @@ public class ReadPlayerInputSystem : IExecuteSystem {
 		if (!didReadAny) return;
 
 		var inputs = inputEntity.playerInputs.inputs;
-		//inputs.Clear(); // TEMP Past input records are never removed (yet), so we clear them here to prevent clutter. 
 
 		var currentTick = game.currentTick.value;
 		inputs.Add(new PlayerInputRecord(currentTick, inputState));

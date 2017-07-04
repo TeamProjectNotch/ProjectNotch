@@ -21,8 +21,8 @@ public class SystemAvailabilityAttribute : Attribute {
 [SystemAvailability(InstanceKind.All)]
 public class MySystems : Systems {
 
-	public bool tolerateNoAvailabilityAttribute = true;
-	public bool logMessageWhenNoAvailabilityAttribute = true;
+	public bool throwExceptionWhenNoAvailabilityAttribute = false;
+	public bool logMessageWhenNoAvailabilityAttribute = false;
 
 	public override Systems Add(ISystem system) {
 
@@ -42,15 +42,16 @@ public class MySystems : Systems {
 		var attributes = system.GetType().GetCustomAttributes(typeof(SystemAvailabilityAttribute), inherit: true);
 		if (attributes.Length == 0) {
 
-			if (tolerateNoAvailabilityAttribute) {
+			if (throwExceptionWhenNoAvailabilityAttribute) {
 
-				if (logMessageWhenNoAvailabilityAttribute) {
-					Debug.LogWarningFormat("System {0} has no SystemAvailabilityAttribute. Defaulting to InstanceKind.All", system);
-				}
-				return InstanceKind.All;
+				throw new Exception(String.Format("System {0} has no SystemAvailabilityAttribute!", system));
 			} 
 
-			throw new Exception(String.Format("System {0} has no SystemAvailabilityAttribute!", system));
+			if (logMessageWhenNoAvailabilityAttribute) {
+				Debug.LogWarningFormat("System {0} has no SystemAvailabilityAttribute. Defaulting to InstanceKind.All", system);
+			}
+
+			return InstanceKind.All;
 		}
 
 		var availabilityAttribute = (SystemAvailabilityAttribute)attributes.Last();

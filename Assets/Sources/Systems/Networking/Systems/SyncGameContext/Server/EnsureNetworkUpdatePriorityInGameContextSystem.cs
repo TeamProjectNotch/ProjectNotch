@@ -3,13 +3,13 @@ using Entitas;
 
 /// Ensures that all GameEntities in the GameContext have a NetworkUpdatePriorityComponent.
 [SystemAvailability(InstanceKind.Server)]
-public class EnsureNetworkUpdatePrioritySystem : IInitializeSystem {
+public class EnsureNetworkUpdatePriorityInGameContextSystem : IInitializeSystem {
 
 	readonly GameContext game;
 
 	const int defaultUpdatePriority = 1;
 
-	public EnsureNetworkUpdatePrioritySystem(Contexts contexts) {
+	public EnsureNetworkUpdatePriorityInGameContextSystem(Contexts contexts) {
 
 		game = contexts.game;
 	}

@@ -6,7 +6,7 @@ using Entitas;
 /// Makes sure that whenever the components of an Entity are changed,
 /// its ChangeFlagsComponent is updated accordingly.
 [SystemAvailability(InstanceKind.Server)]
-public class UpdateChangeFlagsSystem : IInitializeSystem {
+public class UpdateChangeFlagsInGameContextSystem : IInitializeSystem {
 
 	// The indices of components that shouldn't be tracked.
 	readonly int[] excludedComponentIndices = {
@@ -17,7 +17,7 @@ public class UpdateChangeFlagsSystem : IInitializeSystem {
 
 	readonly GameContext game;
 
-	public UpdateChangeFlagsSystem(Contexts contexts) {
+	public UpdateChangeFlagsInGameContextSystem(Contexts contexts) {
 		
 		game = contexts.game;
 	}

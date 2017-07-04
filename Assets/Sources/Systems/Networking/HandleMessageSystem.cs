@@ -4,12 +4,12 @@ using UnityEngine;
 
 /// An abstract system to inherit from if you want to create a system for handling messages.
 /// Similar to ReactiveSystem.
-public abstract class ProcessMessageSystem<TMessage> : IExecuteSystem 
+public abstract class HandleMessageSystem<TMessage> : IExecuteSystem 
 	where TMessage : class, INetworkMessage {
 
 	readonly IGroup<NetworkingEntity> messageSources;
 
-	protected ProcessMessageSystem(IContext<NetworkingEntity> context) {
+	protected HandleMessageSystem(IContext<NetworkingEntity> context) {
 
 		messageSources = GetMessageSources(context);
 	}

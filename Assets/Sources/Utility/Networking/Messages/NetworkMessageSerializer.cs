@@ -11,31 +11,57 @@ public static class NetworkMessageSerializer {
 	public static readonly string[] messageTypeNames;
 	public static readonly Dictionary<Type, byte> messageTypeIndices = new Dictionary<Type, byte>();
 
-	public static byte[] Serialize(INetworkMessage message) {
+	public static byte[] Serialize(IEnumerable<INetworkMessage> messages) {
 
-		var stream = new MemoryStream();
-		using (var writer = new MyWriter(stream)) {
+		var outputStream = new MemoryStream();
+		using (var writer = new MyWriter(outputStream)) {
 
-			byte typeIndex = GetTypeIndexOf(message.GetType());
-			writer.Serialize(ref typeIndex);
+			foreach (var message in messages) {
 
-			message.Serialize(writer);
-			return stream.ToArray();
+				Serialize(message, writer);
+			}
 		}
+
+		return outputStream.ToArray();
 	}
 
-	public static INetworkMessage Deserialize(byte[] bytes) {
-		
+	public static INetworkMessage[] Deserialize(byte[] bytes) {
+
+		var messages = new List<INetworkMessage>();
+
 		using (var reader = new MyReader(new MemoryStream(bytes))) {
 
-			byte typeIndex = 0;
-			reader.Serialize(ref typeIndex);
-			var type = GetTypeBy(typeIndex);
+			while (reader.BaseStream.Position < reader.BaseStream.Length) {
 
-			var message = (INetworkMessage)Activator.CreateInstance(type);
-			message.Serialize(reader);
-			return message;
+				messages.Add(Deserialize(reader));
+			}
 		}
+
+		return messages.ToArray();
+	}
+
+	public static byte[] Serialize(INetworkMessage message) {
+
+		return Serialize(new []{message});
+	}
+
+	static void Serialize(INetworkMessage message, MyWriter writer) {
+
+		byte typeIndex = GetTypeIndexOf(message.GetType());
+		writer.Serialize(ref typeIndex);
+	
+		message.Serialize(writer);
+	}
+
+	static INetworkMessage Deserialize(MyReader reader) {
+
+		byte typeIndex = 0;
+		reader.Serialize(ref typeIndex);
+		var type = GetTypeBy(typeIndex);
+
+		var message = (INetworkMessage)Activator.CreateInstance(type);
+		message.Serialize(reader);
+		return message;
 	}
 
 	static NetworkMessageSerializer() {

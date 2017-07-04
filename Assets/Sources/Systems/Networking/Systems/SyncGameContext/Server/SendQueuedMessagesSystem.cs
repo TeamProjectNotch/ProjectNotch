@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 /// Cycles through all connections with an outgoing message queue. 
-/// Sends one message from each queue every simstep.
+/// Sends all messages from each queue every simstep.
 [SystemAvailability(InstanceKind.Server | InstanceKind.Client)]
 public class SendQueuedMessagesSystem : IExecuteSystem {
 
@@ -32,18 +32,19 @@ public class SendQueuedMessagesSystem : IExecuteSystem {
 	void Process(NetworkingEntity e) {
 
 		var queue = e.outgoingMessages.queue;
-		if (queue.Count <= 0) return;
-		var message = queue.Dequeue();
-		e.ReplaceOutgoingMessages(queue);
-
-		byte[] bytes = NetworkMessageSerializer.Serialize(message);
+		var bytes = NetworkMessageSerializer.Serialize(queue);
 		Send(bytes, e.connection.id);
+
+		queue.Clear();
+		e.ReplaceOutgoingMessages(queue);
 	}
 
 	void Send(byte[] bytes, int connectionId) {
 
+		var channelId = ClientServerConnectionConfig.reliableFragmentedChannelId;
+
 		byte errorCode;
-		NetworkTransport.Send(ids.host, connectionId, ids.channelReliableFragmented, bytes, bytes.Length, out errorCode);
+		NetworkTransport.Send(ids.host, connectionId, channelId, bytes, bytes.Length, out errorCode);
 
 		var error = (NetworkError)errorCode;
 		if (error != NetworkError.Ok) {

@@ -3,11 +3,11 @@ using Entitas;
 
 /// Increases the accumulated priority of all Entities with a NetworkUpdatePriorityComponent each simstep.
 [SystemAvailability(InstanceKind.Server)]
-public class IncreaseNetworkUpdatePrioritySystem : IExecuteSystem {
+public class IncreaseNetworkUpdatePriorityInGameContextSystem : IExecuteSystem {
 
 	readonly IGroup<GameEntity> entities;
 
-	public IncreaseNetworkUpdatePrioritySystem(Contexts contexts) {
+	public IncreaseNetworkUpdatePriorityInGameContextSystem(Contexts contexts) {
 
 		entities = contexts.game.GetGroup(GameMatcher.NetworkUpdatePriority);
 	}

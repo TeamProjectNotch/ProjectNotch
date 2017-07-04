@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 /// Handles the bob of a handheld item when the character holding it walks.
 [System.Serializable]
-public class HandheldItemBobManager : MonoBehaviour {
+public class HandheldItemBobManager : MonoBehaviour, ICharacterBehaviour {
 
-	public CharacterInput input;
 	public CharacterController characterController;
 	public Transform handleTransform;
 
@@ -18,13 +18,12 @@ public class HandheldItemBobManager : MonoBehaviour {
 	Vector3 defaultHandlePosition;
 	Quaternion defaultHandleRotation;
 
+	PlayerInputState inputState;
+
 	void Start () {
 
-		input = input ?? GetComponentInParent<CharacterInput>();
-		Debug.Assert(input != null);
-
 		characterController = characterController ?? GetComponentInParent<CharacterController>();
-		Debug.Assert(characterController != null);
+		Assert.IsNotNull(characterController);
 
 		defaultHandlePosition = handleTransform.localPosition - new Vector3(0, 0.05f, 0);
 		defaultHandleRotation = handleTransform.rotation;
@@ -33,21 +32,23 @@ public class HandheldItemBobManager : MonoBehaviour {
 		StartCoroutine(bobY());
 	}
 
-	void Update () {
+	public void SimulateStep(PlayerInputState inputState) {
 
-		if (Input.GetMouseButtonDown(0)) {
+		this.inputState = inputState;
+
+		if (inputState.buttonPressedFire) {
 			StartCoroutine(kick());
 		}
 
-		if (input.moveAxes == Vector2.zero) {
+		if (inputState.moveAxes == Vector2.zero) {
 			bobOffset = Vector2.zero;
 		}
 
-		var mouseMove = input.mouseMoveAxes * Time.deltaTime;
+		var mouseMove = inputState.mouseMoveAxes * Time.deltaTime;
 
 		var newHandlePosition = defaultHandlePosition 
 			+ (Vector3)mouseMove
-			- (Vector3)input.moveAxes / 20f
+			- (Vector3)inputState.moveAxes / 20f
 			- new Vector3(0, characterController.velocity.y / 150);
 
 		handleTransform.localPosition = Vector3.Lerp(
@@ -65,7 +66,7 @@ public class HandheldItemBobManager : MonoBehaviour {
 
 	IEnumerator kick() {
 
-		while (Input.GetMouseButton(0)) {
+		while (inputState.buttonPressedFire) {
 
 			recoil = -0.02f;
 			yield return new WaitForSeconds(0.05f);

@@ -19,14 +19,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4308263221738706}
-  - component: {fileID: 114029438992923560}
+  - component: {fileID: 114723577821018538}
   - component: {fileID: 143489840875463348}
   - component: {fileID: 54968531056954722}
   - component: {fileID: 114910332050969812}
   - component: {fileID: 114033004949831758}
   - component: {fileID: 114883686476002846}
-  - component: {fileID: 114652265857179028}
   - component: {fileID: 114923040515038428}
+  - component: {fileID: 114156194903873704}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 20786974271194762}
   - component: {fileID: 81141863181446096}
   - component: {fileID: 124426503298764932}
-  - component: {fileID: 114311819309577758}
   - component: {fileID: 114027914472698182}
   m_Layer: 0
   m_Name: Camera
@@ -209,17 +208,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profile: {fileID: 11400000, guid: 4dcacbee4109387449f4794c2aae0ac0, type: 2}
---- !u!114 &114029438992923560
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1141753621326754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00a5c6351bb99ed4aa6c372cd1d591e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114033004949831758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -235,21 +223,9 @@ MonoBehaviour:
   isRotationSmooth: 0
   smoothingFactor: 5
   clampVerticalRotation: 1
-  input: {fileID: 114029438992923560}
   characterTransform: {fileID: 4308263221738706}
   cameraTransform: {fileID: 4759297670095990}
---- !u!114 &114311819309577758
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1506077052429530}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114652265857179028
+--- !u!114 &114156194903873704
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -258,6 +234,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e93fb4c7cc14a9f40b4d46d856c7542e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114723577821018538
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1141753621326754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa6ee12246a418488e2fe66600ff5e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114883686476002846
@@ -271,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ba897a87b3f874da596cbe2f8c9277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 114029438992923560}
+  input: {fileID: 0}
   characterController: {fileID: 143489840875463348}
   handleTransform: {fileID: 4873770515927756}
   bobRange: {x: 0.0015, y: 0.0025}
@@ -292,7 +279,6 @@ MonoBehaviour:
   jumpSpeed: 8
   gravityMultiplier: 5
   stickToGroundForce: 10
-  input: {fileID: 114029438992923560}
   characterController: {fileID: 143489840875463348}
 --- !u!114 &114923040515038428
 MonoBehaviour:

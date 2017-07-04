@@ -74,15 +74,18 @@ public class ClientReceiveSystem : IExecuteSystem {
 
 		//Debug.LogFormat("Received {0} bytes from connectionId {1}", receivedMessageSize, connectionId);
 
-		var e = networking.GetEntityWithConnection(connectionId);
-		if (e == null) return;
+		var connectionEntity = networking.GetEntityWithConnection(connectionId);
+		if (connectionEntity == null) return;
 
 		// TODO Pool these message arrays to avoid tons of allocations and GC.
 		var bytes = new byte[receivedMessageSize]; 
 		Array.Copy(messageBuffer, bytes, receivedMessageSize);
 
-		var message = NetworkMessageSerializer.Deserialize(bytes);
-		EnqueueIncomingMessage(message, e);
+		var messages = NetworkMessageSerializer.Deserialize(bytes);
+		foreach (var message in messages) {
+
+			EnqueueIncomingMessage(message, connectionEntity);
+		}
 	}
 
 	void EnqueueIncomingMessage(INetworkMessage message, NetworkingEntity e) {
