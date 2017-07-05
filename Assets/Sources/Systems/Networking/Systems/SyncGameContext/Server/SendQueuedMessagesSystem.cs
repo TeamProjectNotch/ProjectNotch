@@ -41,7 +41,7 @@ public class SendQueuedMessagesSystem : IExecuteSystem {
 
 	void Send(byte[] bytes, int connectionId) {
 
-		var channelId = ClientServerConnectionConfig.reliableFragmentedChannelId;
+		var channelId = ClientServerConnectionConfig.unreliableFragmentedChannelId;
 
 		byte errorCode;
 		NetworkTransport.Send(ids.host, connectionId, channelId, bytes, bytes.Length, out errorCode);

@@ -27,7 +27,8 @@ public class HandleServerConnectionEstablishedSystem : HandleMessageSystem<Serve
 		game.ReplaceThisPlayerId(message.playerId);
 
 		var messageDelay = source.hasLatency ? source.latency.ticks : 0;
-		game.ReplaceCurrentTick(message.currentTick + messageDelay);
+		var messageDelayTicks = (ulong)Math.Round(messageDelay);
+		game.ReplaceCurrentTick(message.currentTick + messageDelayTicks);
 
 		Debug.LogFormat("Set: player id: {0}, currentTick: {1}", game.thisPlayerId, game.currentTick);
 	}

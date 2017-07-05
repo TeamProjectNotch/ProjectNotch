@@ -23,7 +23,8 @@ public class HandleTickUpdateSystem : HandleMessageSystem<TickUpdateMessage> {
 	protected override void Process(TickUpdateMessage message, NetworkingEntity source) {
 
 		var messageDelay = source.hasLatency ? source.latency.ticks : 0;
-		var currentTick = message.tick + messageDelay;
+		var messageDelayTicks = (ulong)Math.Round(messageDelay);
+		var currentTick = message.tick + messageDelayTicks;
 
 		game.ReplaceCurrentTick(currentTick);
 	}

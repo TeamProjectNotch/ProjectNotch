@@ -54,7 +54,7 @@ public partial class NetworkingEntity {
         var component = CreateComponent<IdsComponent>(index);
         component.host = newHost;
         component.channelReliableFragmented = newChannelReliableFragmented;
-        component.channelUnreliable = newChannelUnreliable;
+        component.channelUnreliableFragmented = newChannelUnreliable;
         AddComponent(index, component);
     }
 
@@ -63,7 +63,7 @@ public partial class NetworkingEntity {
         var component = CreateComponent<IdsComponent>(index);
         component.host = newHost;
         component.channelReliableFragmented = newChannelReliableFragmented;
-        component.channelUnreliable = newChannelUnreliable;
+        component.channelUnreliableFragmented = newChannelUnreliable;
         ReplaceComponent(index, component);
     }
 

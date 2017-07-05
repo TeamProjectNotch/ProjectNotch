@@ -14,10 +14,11 @@ public class CharacterMover : MonoBehaviour, ICharacterBehaviour {
 	public float stickToGroundForce = 10f;
 
 	public CharacterController characterController;
+	public Vector3 velocity {get; set;}
 
 	PlayerInputState inputState;
+	Vector3 groundNormal;
 
-	Vector3 currentMotion;
 	CollisionFlags characterControllerCollisionFlag;
 
 	void Start() {
@@ -26,23 +27,52 @@ public class CharacterMover : MonoBehaviour, ICharacterBehaviour {
 		Debug.Assert(characterController != null);	
 	}
 
+	void FixedUpdate() {
+
+		groundNormal = GetGroundNormal();
+	}
+
 	public void SimulateStep(PlayerInputState inputState) {
 
 		this.inputState = inputState;
-		
-		Vector3 desiredMotion = GetDesiredMotion(inputState.moveAxes);
-		UpdateCurrentMotion(desiredMotion);
 
-		characterControllerCollisionFlag = characterController.Move(currentMotion * Time.fixedDeltaTime);
+		var dt = Time.fixedDeltaTime;
+		velocity = GetNewVelocity(inputState);
+
+		var deltaPosition = velocity * dt + 0.5f * Physics.gravity * dt * dt;
+		characterControllerCollisionFlag = characterController.Move(deltaPosition);
+
+		velocity += Physics.gravity * dt;
+
+		Debug.Log(velocity);
+	}
+
+	Vector3 GetNewVelocity(PlayerInputState inputState) {
+		
+		var desiredVelocity = GetDesiredMotion(inputState.moveAxes) * walkSpeed;
+		desiredVelocity.y = velocity.y;
+
+		if (characterController.isGrounded) {
+			
+			desiredVelocity.y = inputState.buttonPressedJump ? jumpSpeed : -stickToGroundForce;
+		}
+
+		return desiredVelocity;
 	}
 
 	Vector3 GetDesiredMotion(Vector2 moveAxes) {
 		
 		var desiredMove = transform.forward * moveAxes.y + transform.right * moveAxes.x;
 
-		// get a normal for the surface that is being touched to move along it
+		desiredMove = Vector3.ProjectOnPlane(desiredMove, groundNormal).normalized;
+
+		return desiredMove;
+	}
+
+	Vector3 GetGroundNormal() {
+
 		RaycastHit hitInfo;
-		Physics.SphereCast(transform.position, 
+		bool didCollide = Physics.SphereCast(transform.position, 
 			characterController.radius, 
 			Vector3.down,
 			out hitInfo,
@@ -50,32 +80,8 @@ public class CharacterMover : MonoBehaviour, ICharacterBehaviour {
 			Physics.AllLayers, 
 			QueryTriggerInteraction.Ignore
 		);
-		desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
 
-		return desiredMove;
-	}
-
-	Vector3 UpdateCurrentMotion(Vector3 desiredMotion) {
-		
-		var speed = walkSpeed;
-
-		currentMotion.x = desiredMotion.x * speed;
-		currentMotion.z = desiredMotion.z * speed;
-		currentMotion.y = GetVerticalMotionComponent();
-
-		return currentMotion;
-	}
-
-	float GetVerticalMotionComponent() {
-		
-		if (characterController.isGrounded) {
-
-			return inputState.buttonPressedJump ? jumpSpeed : -stickToGroundForce;
-
-		} else {
-
-			return currentMotion.y + Physics.gravity.y * gravityMultiplier * Time.fixedDeltaTime;
-		}
+		return didCollide ? hitInfo.normal : Vector3.up;
 	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {

@@ -20,18 +20,21 @@ public class ProcessMovementInputSystem : ProcessInputSystem {
 	protected override void Process(GameEntity player, List<PlayerInputRecord> inputRecords) {
 
 		if (!player.hasGameObject) return;
-
 		var gameObject = player.gameObject.value;
+
 		var characterBehaviour = gameObject.GetComponent<Character>();
 		Assert.IsNotNull(characterBehaviour);
+		var mover = gameObject.GetComponent<CharacterMover>();
+		Assert.IsNotNull(mover);
 
 		gameObject.transform.SetState(player.transform.state);
+		mover.velocity = (Vector3)player.rigidbodyState.state.velocity;
 
 		var numRecords = inputRecords.Count;
 		if (numRecords == 0) {
 			
 			characterBehaviour.SimulateStep();
-			player.ReplaceTransform(gameObject.transform.GetState());
+			SyncPosAndVelocity(player, gameObject.transform.GetState(), mover.velocity);
 			return;
 		}
 
@@ -52,8 +55,17 @@ public class ProcessMovementInputSystem : ProcessInputSystem {
 			counter += numTicksToSimulate;
 		}
 
-		player.ReplaceTransform(gameObject.transform.GetState());
-
 		//Debug.LogFormat("Simulated {0} ticks of character movement", counter);
+
+		SyncPosAndVelocity(player, gameObject.transform.GetState(), mover.velocity);
+	}
+
+	void SyncPosAndVelocity(GameEntity player, TransformState trState, Vector3 velocity) {
+
+		player.ReplaceTransform(trState);
+
+		var rbState = player.rigidbodyState.state;
+		rbState.velocity = new Vector3D(velocity);
+		player.ReplaceRigidbodyState(rbState);
 	}
 }

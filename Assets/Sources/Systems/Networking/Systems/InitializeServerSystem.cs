@@ -36,7 +36,7 @@ public class InitializeServerSystem : IInitializeSystem {
 		networking.SetIds(
 			hostId,
 			ClientServerConnectionConfig.reliableFragmentedChannelId,
-			ClientServerConnectionConfig.unreliableChannelId
+			ClientServerConnectionConfig.unreliableFragmentedChannelId
 		);
 	}
 }

@@ -80,24 +80,24 @@ public class HandleGameStateUpdateSystem : HandleMessageSystem<GameStateUpdateMe
 		var playerId = e.player.id;
 		if (playerId == game.thisPlayerId.value) {
 
-			var inputEntity = input.GetEntityWithPlayer(playerId);
-			if (inputEntity == null) return;
+			var playerInputEntity = input.GetEntityWithPlayer(playerId);
+			if (playerInputEntity == null) return;
 
-			var messageDelay = source.hasLatency ? source.latency.ticks : 0;
+			var messageDelay = source.hasLatency ? (ulong)Math.Ceiling(source.latency.ticks) : 0;
 			// It's not just message.timestamp because at message.timestamp the
 			// server only had received inputs from message.timestamp - messageDelay.
-			var inputProcessTick = message.timestamp - messageDelay;
-			if (inputEntity.hasProcessInputs) {
+			var inputProcessTick = message.timestamp - messageDelay + 1;
+			if (playerInputEntity.hasProcessInputs) {
 
-				inputProcessTick = Math.Min(inputProcessTick, inputEntity.processInputs.startTick);
+				inputProcessTick = Math.Min(inputProcessTick, playerInputEntity.processInputs.startTick);
 			}
-			inputEntity.ReplaceProcessInputs(inputProcessTick);
+			playerInputEntity.ReplaceProcessInputs(inputProcessTick);
 			Debug.LogFormat("Will reprocess inputs since tick {0}, now is {1}, msg delay is {2}", inputProcessTick, game.currentTick.value, messageDelay);
 
 			// Delete input records earlier than message timestamp.
-			var inputs = inputEntity.playerInputs.inputs;
+			var inputs = playerInputEntity.playerInputs.inputs;
 			inputs.RemoveAll(record => record.timestamp < inputProcessTick);
-			inputEntity.ReplacePlayerInputs(inputs);
+			playerInputEntity.ReplacePlayerInputs(inputs);
 		}
 	}
 }

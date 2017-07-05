@@ -8,5 +8,5 @@ using Entitas.CodeGeneration.Attributes;
 public class IdsComponent : IComponent {
 
 	public int host = 0;
-	public int channelReliableFragmented, channelUnreliable;
+	public int channelReliableFragmented, channelUnreliableFragmented;
 }

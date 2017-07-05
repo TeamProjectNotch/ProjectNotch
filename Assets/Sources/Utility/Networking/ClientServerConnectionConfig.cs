@@ -7,12 +7,12 @@ public static class ClientServerConnectionConfig {
 	public static readonly ConnectionConfig config;
 
 	public static readonly byte reliableFragmentedChannelId;
-	public static readonly byte unreliableChannelId;
+	public static readonly byte unreliableFragmentedChannelId;
 
 	static ClientServerConnectionConfig() {
 		
 		config = new ConnectionConfig();
 		reliableFragmentedChannelId = config.AddChannel(QosType.ReliableFragmented);
-		unreliableChannelId = config.AddChannel(QosType.Unreliable);
+		unreliableFragmentedChannelId = config.AddChannel(QosType.UnreliableFragmented);
 	}
 }

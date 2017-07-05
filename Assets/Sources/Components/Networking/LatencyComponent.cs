@@ -8,11 +8,11 @@ public class LatencyComponent : IComponent {
 
 	public int ms;
 
-	public ulong ticks {
+	public float ticks {
 		get {
 			
 			var numTicksPerSecond = 1f / Time.fixedDeltaTime;
-			return (ulong)Math.Ceiling(ms * numTicksPerSecond / 1000f);
+			return ms * numTicksPerSecond / 1000f;
 		}
 	}
 }
