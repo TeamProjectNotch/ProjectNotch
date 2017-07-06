@@ -1,5 +1,6 @@
 ﻿using System;
 using Entitas;
+using UnityEngine;
 
 using NM = NetworkingMatcher;
 
@@ -24,8 +25,15 @@ public class HandleTickUpdateSystem : HandleMessageSystem<TickUpdateMessage> {
 
 		var messageDelay = source.hasLatency ? source.latency.ticks : 0;
 		var messageDelayTicks = (ulong)Math.Round(messageDelay);
-		var currentTick = message.tick + messageDelayTicks;
+		var newCurrentTick = message.tick + messageDelayTicks;
 
-		game.ReplaceCurrentTick(currentTick);
+		if (game.currentTick.value <= newCurrentTick) {
+			Debug.LogFormat("Server is {0} ticks ahead of client", newCurrentTick - game.currentTick.value);
+		} else {
+			Debug.LogFormat("Server is {0} ticks behind client", game.currentTick.value - newCurrentTick);
+		}
+		//Debug.LogFormat("Replacing currentTick {0} with {1}.", game.currentTick.value, newCurrentTick);
+
+		game.ReplaceCurrentTick(newCurrentTick);
 	}
 }

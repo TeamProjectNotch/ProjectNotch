@@ -44,7 +44,7 @@ public class CharacterMover : MonoBehaviour, ICharacterBehaviour {
 
 		velocity += Physics.gravity * dt;
 
-		Debug.Log(velocity);
+		//Debug.LogFormat("Character velocity: {0}", velocity);
 	}
 
 	Vector3 GetNewVelocity(PlayerInputState inputState) {

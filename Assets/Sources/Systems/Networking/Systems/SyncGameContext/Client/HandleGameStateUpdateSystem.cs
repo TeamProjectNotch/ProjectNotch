@@ -92,7 +92,7 @@ public class HandleGameStateUpdateSystem : HandleMessageSystem<GameStateUpdateMe
 				inputProcessTick = Math.Min(inputProcessTick, playerInputEntity.processInputs.startTick);
 			}
 			playerInputEntity.ReplaceProcessInputs(inputProcessTick);
-			Debug.LogFormat("Will reprocess inputs since tick {0}, now is {1}, msg delay is {2}", inputProcessTick, game.currentTick.value, messageDelay);
+			//Debug.LogFormat("Will reprocess inputs since tick {0}, now is {1}, msg delay is {2}", inputProcessTick, game.currentTick.value, messageDelay);
 
 			// Delete input records earlier than message timestamp.
 			var inputs = playerInputEntity.playerInputs.inputs;

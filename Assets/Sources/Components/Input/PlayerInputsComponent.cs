@@ -32,6 +32,9 @@ public class PlayerInputsComponent : IComponent, IUnifiedSerializable {
 
 	public void Serialize<T>(T s) where T : IUnifiedSerializer {
 
+		s.Serialize(ref inputs);
+
+		/*
 		bool isEmpty = s.isWriting ? (inputs.Count == 0) : false;
 		s.Serialize(ref isEmpty);
 
@@ -52,6 +55,6 @@ public class PlayerInputsComponent : IComponent, IUnifiedSerializable {
 				s.Serialize(ref record);
 				inputs.Add(record);
 			}
-		}
+		}*/
 	}
 }

@@ -44,15 +44,14 @@ public class ProcessMovementInputSystem : ProcessInputSystem {
 			var inputRecord = inputRecords[i];
 			var startTick = inputRecord.timestamp;
 			var endTick = (i + 1 < inputRecords.Count) ? inputRecords[i + 1].timestamp : game.currentTick.value;
-			var numTicksToSimulate = endTick - startTick + 1;
 
 			characterBehaviour.SimulateStep(inputRecord.inputState);
-			for (ulong tick = 1; tick < numTicksToSimulate; ++tick) {
+			counter++;
+			for (ulong tick = startTick + 1; tick < endTick; ++tick) {
 				
 				characterBehaviour.SimulateStep();
+				counter++;
 			}
-
-			counter += numTicksToSimulate;
 		}
 
 		//Debug.LogFormat("Simulated {0} ticks of character movement", counter);

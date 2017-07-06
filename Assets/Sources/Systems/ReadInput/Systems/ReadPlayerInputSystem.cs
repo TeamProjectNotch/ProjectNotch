@@ -33,17 +33,16 @@ public class ReadPlayerInputSystem : IExecuteSystem {
 			input.CreatePlayerInputEntity(playerId);
 	}
 
-	void ReadInputInto(InputEntity inputEntity) {
+	void ReadInputInto(InputEntity playerInputEntity) {
 
 		var inputState = new PlayerInputState();
 		var didReadAny = ReadPlayerInputStateInto(ref inputState); 
 		if (!didReadAny) return;
 
-		var inputs = inputEntity.playerInputs.inputs;
-
 		var currentTick = game.currentTick.value;
-		inputs.Add(new PlayerInputRecord(currentTick, inputState));
-		inputEntity.ReplacePlayerInputs(inputs);
+		var newRecord = new PlayerInputRecord(currentTick, inputState);
+
+		InsertNewInputRecord(playerInputEntity, newRecord);
 	}
 
 	bool ReadPlayerInputStateInto(ref PlayerInputState result) {
@@ -102,6 +101,22 @@ public class ReadPlayerInputSystem : IExecuteSystem {
 		}
 
 		return false;
+	}
+
+	void InsertNewInputRecord(InputEntity playerInputEntity, PlayerInputRecord newInputRecord) {
+		
+		var inputs = playerInputEntity.playerInputs.inputs;
+
+		var indexToInsert = inputs.FindLastIndex(record => record.timestamp < newInputRecord.timestamp) + 1;
+
+		// If a record with the same timestamp exists, replace it. Otherwise insert.
+		if (indexToInsert < inputs.Count && inputs[indexToInsert].timestamp == newInputRecord.timestamp) {
+			inputs[indexToInsert] = newInputRecord;
+		} else {
+			inputs.Insert(indexToInsert, newInputRecord);
+		}
+
+		playerInputEntity.ReplacePlayerInputs(inputs);
 	}
 }
 

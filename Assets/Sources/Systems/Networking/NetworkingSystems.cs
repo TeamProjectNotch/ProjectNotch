@@ -15,9 +15,9 @@ public class EarlyNetworkSystems : MyFeature {
 
 		Add(new UpdateConnectionLatencySystem(contexts));
 
-		Add(new HandleConnectingClientsSystem(contexts));
-		Add(new HandleTickUpdateSystem(contexts));
-		Add(new HandleServerConnectionEstablishedSystem(contexts));
+		Add(new HandleConnectingClientsSystem(contexts)); // Server
+		Add(new HandleServerConnectionEstablishedSystem(contexts)); // Client
+		Add(new HandleTickUpdateSystem(contexts)); // Client
 
 		Add(new HandleInputStateUpdateSystem(contexts)); // Server
 		Add(new HandleGameStateUpdateSystem(contexts));  // Client
