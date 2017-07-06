@@ -55524,7 +55524,7 @@ GameObject:
   - component: {fileID: 2002273055}
   - component: {fileID: 2002273054}
   m_Layer: 0
-  m_Name: GameController (Full)
+  m_Name: GameController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55538,7 +55538,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2002273053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 435130f9ea3af7547b96bd8bbe523c1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c46053823a439e4c9abbd8b21231a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thisInstanceKind: 1
