@@ -8,18 +8,24 @@
 //------------------------------------------------------------------------------
 public static class EventsComponentsLookup {
 
-    public const int Collision = 0;
-    public const int Destroy = 1;
+    public const int ChangeFlags = 0;
+    public const int Collision = 1;
+    public const int Destroy = 2;
+    public const int NetworkUpdatePriority = 3;
 
-    public const int TotalComponents = 2;
+    public const int TotalComponents = 4;
 
     public static readonly string[] componentNames = {
+        "ChangeFlags",
         "Collision",
-        "Destroy"
+        "Destroy",
+        "NetworkUpdatePriority"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(ChangeFlagsComponent),
         typeof(CollisionComponent),
-        typeof(DestroyComponent)
+        typeof(DestroyComponent),
+        typeof(NetworkUpdatePriorityComponent)
     };
 }

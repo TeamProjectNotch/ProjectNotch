@@ -12,22 +12,22 @@ public partial class NetworkingContext {
     public IdsComponent ids { get { return idsEntity.ids; } }
     public bool hasIds { get { return idsEntity != null; } }
 
-    public NetworkingEntity SetIds(int newHost, int newChannelReliableFragmented, int newChannelUnreliable) {
+    public NetworkingEntity SetIds(int newHost, int newChannelReliableFragmented, int newChannelUnreliableFragmented) {
         if (hasIds) {
             throw new Entitas.EntitasException("Could not set Ids!\n" + this + " already has an entity with IdsComponent!",
                 "You should check if the context already has a idsEntity before setting it or use context.ReplaceIds().");
         }
         var entity = CreateEntity();
-        entity.AddIds(newHost, newChannelReliableFragmented, newChannelUnreliable);
+        entity.AddIds(newHost, newChannelReliableFragmented, newChannelUnreliableFragmented);
         return entity;
     }
 
-    public void ReplaceIds(int newHost, int newChannelReliableFragmented, int newChannelUnreliable) {
+    public void ReplaceIds(int newHost, int newChannelReliableFragmented, int newChannelUnreliableFragmented) {
         var entity = idsEntity;
         if (entity == null) {
-            entity = SetIds(newHost, newChannelReliableFragmented, newChannelUnreliable);
+            entity = SetIds(newHost, newChannelReliableFragmented, newChannelUnreliableFragmented);
         } else {
-            entity.ReplaceIds(newHost, newChannelReliableFragmented, newChannelUnreliable);
+            entity.ReplaceIds(newHost, newChannelReliableFragmented, newChannelUnreliableFragmented);
         }
     }
 
@@ -49,21 +49,21 @@ public partial class NetworkingEntity {
     public IdsComponent ids { get { return (IdsComponent)GetComponent(NetworkingComponentsLookup.Ids); } }
     public bool hasIds { get { return HasComponent(NetworkingComponentsLookup.Ids); } }
 
-    public void AddIds(int newHost, int newChannelReliableFragmented, int newChannelUnreliable) {
+    public void AddIds(int newHost, int newChannelReliableFragmented, int newChannelUnreliableFragmented) {
         var index = NetworkingComponentsLookup.Ids;
         var component = CreateComponent<IdsComponent>(index);
         component.host = newHost;
         component.channelReliableFragmented = newChannelReliableFragmented;
-        component.channelUnreliableFragmented = newChannelUnreliable;
+        component.channelUnreliableFragmented = newChannelUnreliableFragmented;
         AddComponent(index, component);
     }
 
-    public void ReplaceIds(int newHost, int newChannelReliableFragmented, int newChannelUnreliable) {
+    public void ReplaceIds(int newHost, int newChannelReliableFragmented, int newChannelUnreliableFragmented) {
         var index = NetworkingComponentsLookup.Ids;
         var component = CreateComponent<IdsComponent>(index);
         component.host = newHost;
         component.channelReliableFragmented = newChannelReliableFragmented;
-        component.channelUnreliableFragmented = newChannelUnreliable;
+        component.channelUnreliableFragmented = newChannelUnreliableFragmented;
         ReplaceComponent(index, component);
     }
 

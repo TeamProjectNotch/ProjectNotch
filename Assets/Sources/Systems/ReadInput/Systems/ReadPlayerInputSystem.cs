@@ -5,7 +5,7 @@ using UnityEngine;
 
 /// Client-side system.
 /// Reads values from UnityEngine.Input and adds PlayerInputRecord|s to the player's input entity
-[SystemAvailability(InstanceKind.CleintAndSingleplayer)]
+[SystemAvailability(InstanceKind.ClientAndSingleplayer)]
 public class ReadPlayerInputSystem : IExecuteSystem {
 
 	readonly GameContext game;

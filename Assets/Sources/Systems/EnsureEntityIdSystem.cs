@@ -29,32 +29,13 @@ public abstract class EnsureEntityIdSystem<TEntity> : IInitializeSystem
 	protected EnsureEntityIdSystem(IContext<TEntity> context) {
 
 		this.context = context;
-
-		idComponentIndex = FindIdComponentIndex(context);
+		idComponentIndex = context.FindIndexOfComponent<IdComponent>();
 	}
 
 	public void Initialize() {
 
 		SetNextIdBasedOnExistingEntities(); 
 		EnsureIn(context);
-	}
-
-	int FindIdComponentIndex(IContext<TEntity> context) {
-
-		var types = context.contextInfo.componentTypes;
-		var idComponentType = typeof(IdComponent);
-		var index = types.IndexOf(idComponentType);
-
-		if (index == -1) {
-
-			throw new Exception(String.Format(
-				"The context {0} does not have a component {1}", 
-				context,
-				idComponentType
-			));
-		}
-
-		return index;
 	}
 
 	// This lets the system successfully initialize even 
