@@ -31,10 +31,12 @@ public class LateNetworkSystems : MyFeature {
 
 		// Server
 		Add(new ComposeTickUpdateSystem(contexts));
-		Add(new SendGameContextUpdatesSystems(contexts));
+		//Add(new SendGameContextUpdatesSystems(contexts));
 
 		// Client
-		Add(new SendInputContextUpdatesSystems(contexts));
+		//Add(new SendInputContextUpdatesSystems(contexts));
+
+		Add(new NetworkStateUpdatesSystems(contexts));
 
 		Add(new SendQueuedMessagesSystem(contexts));
 	}

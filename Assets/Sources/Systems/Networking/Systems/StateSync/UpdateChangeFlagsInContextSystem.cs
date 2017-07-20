@@ -3,16 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using Entitas;
 
+public enum NetworkSyncTargets {
+
+	None = 0,
+
+	Client = 1,
+	Server = 2,
+
+	All = Client | Server
+}
+
 [AttributeUsage(AttributeTargets.Class)]
 public class NetworkSyncAttribute : Attribute {
 
-	public bool toClient;
-	public bool toServer;
+	public NetworkSyncTargets targets;
 
-	public NetworkSyncAttribute(bool toClient, bool toServer) {
+	public bool toClient {get {return (targets & NetworkSyncTargets.Client) != 0;}}
+	public bool toServer {get {return (targets & NetworkSyncTargets.Server) != 0;}}
 
-		this.toClient = toClient;
-		this.toServer = toServer;
+	public NetworkSyncAttribute(NetworkSyncTargets targets) {
+
+		this.targets = targets;
 	}
 }
 

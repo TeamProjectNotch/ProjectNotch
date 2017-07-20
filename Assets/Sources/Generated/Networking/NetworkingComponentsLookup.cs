@@ -8,22 +8,20 @@
 //------------------------------------------------------------------------------
 public static class NetworkingComponentsLookup {
 
-    public const int ChangeFlags = 0;
-    public const int Client = 1;
-    public const int Connection = 2;
-    public const int Ids = 3;
-    public const int IncomingMessages = 4;
-    public const int Latency = 5;
-    public const int NextPlayerId = 6;
-    public const int OutgoingMessages = 7;
-    public const int Owner = 8;
-    public const int Player = 9;
-    public const int Server = 10;
+    public const int Client = 0;
+    public const int Connection = 1;
+    public const int Ids = 2;
+    public const int IncomingMessages = 3;
+    public const int Latency = 4;
+    public const int NextPlayerId = 5;
+    public const int OutgoingMessages = 6;
+    public const int Owner = 7;
+    public const int Player = 8;
+    public const int Server = 9;
 
-    public const int TotalComponents = 11;
+    public const int TotalComponents = 10;
 
     public static readonly string[] componentNames = {
-        "ChangeFlags",
         "Client",
         "Connection",
         "Ids",
@@ -37,7 +35,6 @@ public static class NetworkingComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(ChangeFlagsComponent),
         typeof(ClientComponent),
         typeof(ConnectionComponent),
         typeof(IdsComponent),

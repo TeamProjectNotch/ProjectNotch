@@ -8,21 +8,23 @@
 //------------------------------------------------------------------------------
 public static class InputComponentsLookup {
 
-    public const int Destroy = 0;
-    public const int Id = 1;
-    public const int Jump = 2;
-    public const int MouseMoveInput = 3;
-    public const int MoveInput = 4;
-    public const int NetworkUpdatePriority = 5;
-    public const int Owner = 6;
-    public const int Player = 7;
-    public const int PlayerInputs = 8;
-    public const int PressFire = 9;
-    public const int ProcessInputs = 10;
+    public const int ChangeFlags = 0;
+    public const int Destroy = 1;
+    public const int Id = 2;
+    public const int Jump = 3;
+    public const int MouseMoveInput = 4;
+    public const int MoveInput = 5;
+    public const int NetworkUpdatePriority = 6;
+    public const int Owner = 7;
+    public const int Player = 8;
+    public const int PlayerInputs = 9;
+    public const int PressFire = 10;
+    public const int ProcessInputs = 11;
 
-    public const int TotalComponents = 11;
+    public const int TotalComponents = 12;
 
     public static readonly string[] componentNames = {
+        "ChangeFlags",
         "Destroy",
         "Id",
         "Jump",
@@ -37,6 +39,7 @@ public static class InputComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(ChangeFlagsComponent),
         typeof(DestroyComponent),
         typeof(IdComponent),
         typeof(JumpComponent),

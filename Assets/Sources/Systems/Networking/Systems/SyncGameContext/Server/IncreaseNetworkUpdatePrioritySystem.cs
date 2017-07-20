@@ -16,6 +16,8 @@ public class IncreaseNetworkUpdatePriorityInGameContextSystem : IExecuteSystem {
 
 		foreach (var e in entities.GetEntities()) {
 
+			//if (e.hasChangeFlags && !e.changeFlags.HasAnyFlagsSet) return;
+
 			var p = e.networkUpdatePriority;
 			e.ReplaceNetworkUpdatePriority(p.basePriority, p.accumulated + p.basePriority);
 		}
