@@ -46,7 +46,7 @@ public static class IUnifiedSerializerExtensions {
 		serializable.Serialize(s);
 	}
 
-	/// Serialization function for an array of IUnifiedSerializable. 
+	/// Serialization function for an array of IUnifiedSerializable|s. 
 	/// T must have an public parameterless constructor.
 	public static void Serialize<T>(this IUnifiedSerializer s, ref T[] array) 
 		where T : IUnifiedSerializable, new() {

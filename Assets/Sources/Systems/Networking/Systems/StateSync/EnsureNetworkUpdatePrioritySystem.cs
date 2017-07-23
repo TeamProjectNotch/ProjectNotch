@@ -3,31 +3,16 @@ using Entitas;
 
 /// Ensures that all entities have a NetworkUpdatePriorityComponent.
 [SystemAvailability(InstanceKind.Networked)]
-public class EnsureNetworkUpdatePrioritySystem : IInitializeSystem {
+public class EnsureNetworkUpdatePrioritySystem : AllEntitiesSystem<INetworkableEntity> {
 
 	const int defaultUpdatePriority = 1;
 
-	readonly IContext<INetworkableEntity>[] networkableContexts;
+	readonly IContext[] networkableContexts;
 
-	public EnsureNetworkUpdatePrioritySystem(Contexts contexts) {
+	public EnsureNetworkUpdatePrioritySystem(Contexts contexts) : base(contexts) {}
 
-		this.networkableContexts = contexts.GetNetworkableContexts();
-	}
+	protected override void Execute(INetworkableEntity e) {
 
-	public void Initialize() {
-
-		foreach (var context in networkableContexts) {
-
-			// Add to all existing entities...
-			context.GetEntities().Each(AddChangeFlags);
-			// ...And all future ones.
-			context.OnEntityCreated += (c, entity) => AddChangeFlags(entity);
-		}
-	}
-
-	void AddChangeFlags(IEntity entity) {
-
-		var e = (INetworkableEntity)entity;
 		if (!e.hasNetworkUpdatePriority) {
 
 			e.AddNetworkUpdatePriority(defaultUpdatePriority, newAccumulated: 0);

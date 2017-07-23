@@ -40,7 +40,6 @@ public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 	void Process(InputEntity inputEntity) {
 
 		var gameEntity = game.GetEntityWithPlayer(inputEntity.player.id);
-		Assert.IsNotNull(gameEntity);
 		if (gameEntity == null) return;
 
 		inputRecordsBuffer.Clear();

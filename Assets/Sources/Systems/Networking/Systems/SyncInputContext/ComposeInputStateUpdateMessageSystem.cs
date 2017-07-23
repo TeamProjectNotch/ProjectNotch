@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Entitas;
-
+/*
 /// Composes and enqueues messages with input data to send to the server.
 /// Just sends all the entities in the InputContext.
 /// WARNING: only sends entity and component updates, not removals.
@@ -78,4 +78,4 @@ public class ComposeInputStateUpdateMessageSystem : IExecuteSystem {
 		queue.Enqueue(message);
 		server.ReplaceOutgoingMessages(queue);
 	}
-}
+}*/

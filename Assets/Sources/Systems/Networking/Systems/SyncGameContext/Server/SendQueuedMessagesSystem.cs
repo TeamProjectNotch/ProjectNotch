@@ -32,8 +32,11 @@ public class SendQueuedMessagesSystem : IExecuteSystem {
 	void Process(NetworkingEntity e) {
 
 		var queue = e.outgoingMessages.queue;
+		if (queue.Count == 0) return;
+
 		var bytes = NetworkMessageSerializer.Serialize(queue);
 		Send(bytes, e.connection.id);
+
 
 		queue.Clear();
 		e.ReplaceOutgoingMessages(queue);
@@ -45,6 +48,8 @@ public class SendQueuedMessagesSystem : IExecuteSystem {
 
 		byte errorCode;
 		NetworkTransport.Send(ids.host, connectionId, channelId, bytes, bytes.Length, out errorCode);
+
+		Debug.LogFormat("Sending {0} bytes to connection {1}", bytes.Length, connectionId);
 
 		var error = (NetworkError)errorCode;
 		if (error != NetworkError.Ok) {

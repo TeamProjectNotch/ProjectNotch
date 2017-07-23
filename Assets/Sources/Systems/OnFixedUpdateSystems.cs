@@ -11,8 +11,7 @@ public class OnFixedUpdateSystems : MyFeature {
 
 	public OnFixedUpdateSystems(Contexts contexts) : base("On FixedUpdate systems") {
 
-		Add(new EnsureGameEntityIdSystem(contexts));
-		Add(new EnsureInputEntityIdSystem(contexts));
+		Add(new EnsureAllEntityIdSystem(contexts));
 
 		Add(new EarlyNetworkSystems(contexts));
 		Add(new GameLogicSystems(contexts));

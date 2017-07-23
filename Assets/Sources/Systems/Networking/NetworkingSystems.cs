@@ -17,10 +17,10 @@ public class EarlyNetworkSystems : MyFeature {
 
 		Add(new HandleConnectingClientsSystem(contexts)); // Server
 		Add(new HandleServerConnectionEstablishedSystem(contexts)); // Client
+
 		Add(new HandleTickUpdateSystem(contexts)); // Client
 
-		Add(new HandleInputStateUpdateSystem(contexts)); // Server
-		Add(new HandleGameStateUpdateSystem(contexts));  // Client
+		Add(new HandleStateUpdateSystem(contexts));
 	}
 }
 
@@ -29,14 +29,8 @@ public class LateNetworkSystems : MyFeature {
 
 	public LateNetworkSystems(Contexts contexts) : base("LateNetwork systems") {
 
-		// Server
-		Add(new ComposeTickUpdateSystem(contexts));
-		//Add(new SendGameContextUpdatesSystems(contexts));
-
-		// Client
-		//Add(new SendInputContextUpdatesSystems(contexts));
-
-		Add(new NetworkStateUpdatesSystems(contexts));
+		Add(new ComposeTickUpdateSystem(contexts)); // Server
+		Add(new SendStateUpdatesSystems(contexts));
 
 		Add(new SendQueuedMessagesSystem(contexts));
 	}

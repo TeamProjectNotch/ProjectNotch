@@ -8,55 +8,63 @@ using Entitas;
 [SystemAvailability(InstanceKind.Networked)]
 public class UpdateChangeFlagsSystem : IInitializeSystem {
 
-	readonly IContext<INetworkableEntity>[] networkableContexts;
+	readonly Contexts contexts;
+	readonly IContext[] networkableContexts;
 	readonly bool[][] shouldSyncComponent;
 
 	// One per context.
-	readonly EntityComponentChanged [] componentAddedHandlers;
-	readonly EntityComponentReplaced[] componentReplacedHandlers;
-	readonly EntityComponentChanged [] componentRemovedHandlers;
+	EntityComponentChanged [] componentAddedHandlers;
+	EntityComponentReplaced[] componentReplacedHandlers;
+	EntityComponentChanged [] componentRemovedHandlers;
 
 	public UpdateChangeFlagsSystem(Contexts contexts) {
 
+		this.contexts = contexts;
 		networkableContexts = contexts.GetNetworkableContexts();
 		shouldSyncComponent = ContextSyncInfo.shouldSyncComponent;
+	}
+		
+	public void Initialize() {
 
-		var numContexts = networkableContexts.Length;
+		var allContexts = contexts.allContexts;
+		var numContexts = allContexts.Length;
+
 		componentAddedHandlers    = new EntityComponentChanged [numContexts];
 		componentReplacedHandlers = new EntityComponentReplaced[numContexts];
 		componentRemovedHandlers  = new EntityComponentChanged [numContexts];
+
+		for (int contextIndex = 0; contextIndex < numContexts; ++contextIndex) {
+
+			var context = allContexts[contextIndex];
+			if (!context.IsNetworkable()) continue;
+
+			InitializeEntityEventsHandlersFor(contextIndex);
+
+			// Copy the variable as a way force lambda to capture it by value.
+			int contextIndexCopy = contextIndex;
+			context.GetEntities<INetworkableEntity>().Each(entity => SubscribeToEntityEvents(entity, context, contextIndexCopy));
+			context.OnEntityCreated += (ctx, entity) => SubscribeToEntityEvents(entity, ctx, contextIndexCopy);
+		}
 	}
 
-	/// Makes sure that all current *and* future Entities are kept track of.
-	public void Initialize() {
+	void InitializeEntityEventsHandlersFor(int contextIndex) {
 
-		var numContexts = networkableContexts.Length;
-		for (int contextIndex = 0; contextIndex < numContexts; ++contextIndex) {
-			
-			var context = networkableContexts[contextIndex];
+		componentAddedHandlers[contextIndex] = 
+			(e, componentIndex, c) => OnComponentAdded(contextIndex, e, componentIndex);
 
-			context.GetEntities().Each(entity => SubscribeToEntityEvents(entity, context, contextIndex));
-			context.OnEntityCreated += (ctx, entity) => SubscribeToEntityEvents(entity, ctx, contextIndex);
-		}
+		componentReplacedHandlers[contextIndex] = 
+			(e, componentIndex, pc, nc) => OnComponentReplaced(contextIndex, e, componentIndex);
+
+		componentRemovedHandlers[contextIndex] = 
+			(e, componentIndex, c) => OnComponentRemoved(contextIndex, e, componentIndex);
 	}
 
 	/// Makes sure that whenever the given Entity has a component added, replaced, or removed, the changes are recorded.
 	void SubscribeToEntityEvents(IEntity entity, IContext context, int contextIndex) {
-
-		EntityComponentChanged onComponentAdded = (e, componentIndex, component) => 
-			OnComponentAdded(contextIndex, e, componentIndex);
-		componentAddedHandlers[contextIndex] = onComponentAdded;
-		entity.OnComponentAdded += onComponentAdded;
-
-		EntityComponentReplaced onComponentReplaced = (e, componentIndex, previousComponent, newComponent) => 
-			OnComponentReplaced(contextIndex, e, componentIndex);
-		componentReplacedHandlers[contextIndex] = onComponentReplaced;
-		entity.OnComponentReplaced += onComponentReplaced;
-
-		EntityComponentChanged onComponentRemoved = (e, componentIndex, component) => 
-			OnComponentRemoved(contextIndex, e, componentIndex);
-		componentRemovedHandlers[contextIndex] = onComponentRemoved;
-		entity.OnComponentRemoved += onComponentRemoved;
+		
+		entity.OnComponentAdded    += componentAddedHandlers   [contextIndex];
+		entity.OnComponentReplaced += componentReplacedHandlers[contextIndex];
+		entity.OnComponentRemoved  += componentRemovedHandlers [contextIndex];
 
 		context.OnEntityWillBeDestroyed += (c, e) => OnEntityWillBeDestroyed(contextIndex, e);
 	}

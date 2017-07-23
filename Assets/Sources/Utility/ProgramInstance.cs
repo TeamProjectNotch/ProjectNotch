@@ -15,7 +15,7 @@ public enum InstanceKind {
 	// Shortcuts
 	ServerAndSingleplayer = Server | Singleplayer,
 	ClientAndSingleplayer = Client | Singleplayer,
-	/// Server and Client
+	/// Server | Client
 	Networked = Server | Client,
 
 	All = Server | Client | Singleplayer

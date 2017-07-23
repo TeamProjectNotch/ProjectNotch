@@ -14,28 +14,29 @@ using fNbt;
 [Serializable]
 public class EntityChange : IUnifiedSerializable {
 
+	public int contextIndex;
 	public ulong entityId;
-	public bool isRemoval;
-
 	public ComponentChange[] componentChanges;
 
-	public static EntityChange MakeRemoval(ulong entityId) {
+	public bool isRemoval {get {return componentChanges == null;}}
+
+	public static EntityChange MakeRemoval(int contextId, ulong entityId) {
 
 		var change = new EntityChange();
 
+		change.contextIndex = contextId;
 		change.entityId = entityId;
-		change.isRemoval = true;
 
 		return change;
 	}
 
-	public static EntityChange MakeUpdate(ulong entityId, ComponentChange[] componentChanges) {
+	public static EntityChange MakeUpdate(int contextId, ulong entityId, ComponentChange[] componentChanges) {
 		
 		var change = new EntityChange();
 
+		change.contextIndex = contextId;
 		change.entityId = entityId;
 		change.componentChanges = componentChanges;
-		change.isRemoval = false;
 
 		return change;
 	}
@@ -70,9 +71,11 @@ public class EntityChange : IUnifiedSerializable {
 
 		bool hasComponentChanges = s.isWriting ? !isRemoval : false;
 		s.Serialize(ref hasComponentChanges);
-		isRemoval = !hasComponentChanges;
 
 		if (hasComponentChanges) {
+
+			// TODO Use this insead of the following code.
+			//s.Serialize(ref componentChanges);
 
 			int numComponentChanges = s.isWriting ? componentChanges.Length : 0;
 			s.Serialize(ref numComponentChanges);

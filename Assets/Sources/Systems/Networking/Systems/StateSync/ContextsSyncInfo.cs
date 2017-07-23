@@ -17,17 +17,18 @@ public static class ContextSyncInfo {
 
 	static void InitializeSyncMap() {
 
-		var contexts = GetNetworkableContexts();
+		var allContexts = Contexts.sharedInstance.allContexts;
 
-		var numContexts = contexts.Length;
+		var numContexts = allContexts.Length;
 		shouldSyncComponent = new bool[numContexts][];
 		for (int contextIndex = 0; contextIndex < numContexts; ++contextIndex) {
 
-			var context = contexts[contextIndex];
+			var context = allContexts[contextIndex];
 			var numComponents = context.totalComponents;
 			shouldSyncComponent[contextIndex] = new bool[numComponents];
-			var componentTypes = context.contextInfo.componentTypes;
+			if (!context.IsNetworkable()) continue;
 
+			var componentTypes = context.contextInfo.componentTypes;
 			for (int componentIndex = 0; componentIndex < numComponents; ++componentIndex) {
 
 				var componentType = componentTypes[componentIndex];
@@ -37,7 +38,7 @@ public static class ContextSyncInfo {
 		}
 	}
 
-	static IContext<INetworkableEntity>[] GetNetworkableContexts() {
+	static IContext[] GetNetworkableContexts() {
 
 		return Contexts.sharedInstance.GetNetworkableContexts();
 	}

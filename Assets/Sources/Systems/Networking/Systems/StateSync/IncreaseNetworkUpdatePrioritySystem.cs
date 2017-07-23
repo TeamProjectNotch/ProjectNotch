@@ -1,53 +1,32 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Entitas;
 
-/// Increases the accumulated priority of all entities with a NetworkUpdatePriorityComponent each simstep.
+/// Increases the accumulated priority of all entities with a NetworkUpdatePriorityComponent every simstep.
 [SystemAvailability(InstanceKind.Networked)]
-public class IncreaseNetworkUpdatePrioritySystem : MultiReactiveSystem<INetworkableEntity, Contexts> {
-	
-	readonly IGroup<GameEntity> entities;
+public class IncreaseNetworkUpdatePrioritySystem : IExecuteSystem {
 
-	public IncreaseNetworkUpdatePrioritySystem(Contexts contexts) : base(contexts) {
+	readonly IContext[] networkableContexts;
 
-		entities = contexts.game.GetGroup(GameMatcher.NetworkUpdatePriority);
-	}
-
-	protected override ICollector[] GetTrigger(Contexts contexts) {
-
-		var collectors = new List<ICollector>();
-
-		var networkableContexts = contexts.GetNetworkableContexts();
-		foreach (var context in networkableContexts) {
-
-			var componentIndex = context.FindIndexOfComponent<ChangeFlagsComponent>();
-			var matcher = Matcher<INetworkableEntity>.AllOf(componentIndex);
-
-			var collector = context.CreateCollector(matcher.Added());
-			collectors.Add(collector);
+	IEnumerable<INetworkableEntity> entities {
+		get {
+			
+			return networkableContexts.SelectMany(context => context.GetEntities<INetworkableEntity>());
 		}
-
-		return collectors.ToArray();
 	}
 
-	protected override bool Filter(INetworkableEntity e) {
+	public IncreaseNetworkUpdatePrioritySystem(Contexts contexts) {
 
-		return e.hasNetworkUpdatePriority && e.hasChangeFlags && e.changeFlags.HasAnyFlagsSet;
+		networkableContexts = contexts.GetNetworkableContexts();
 	}
 
 	public void Execute() {
 
-		foreach (var e in entities.GetEntities()) {
-			
-			var p = e.networkUpdatePriority;
-			e.ReplaceNetworkUpdatePriority(p.basePriority, p.accumulated + p.basePriority);
-		}
-	}
-
-	protected override void Execute(List<INetworkableEntity> entities) {
-		
 		foreach (var e in entities) {
 
+			if (e.changeFlags.HasAnyFlagsSet) return;
+			
 			var p = e.networkUpdatePriority;
 			e.ReplaceNetworkUpdatePriority(p.basePriority, p.accumulated + p.basePriority);
 		}
