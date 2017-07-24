@@ -6,6 +6,7 @@ public class MyReader : IUnifiedSerializer {
 	BinaryReader reader;
 
 	public bool isWriting {get{return false;}}
+	public bool isReading {get{return true ;}}
 
 	public Stream BaseStream {get {return reader.BaseStream;}}
 

@@ -9,7 +9,6 @@ using Entitas;
 public class UpdateChangeFlagsSystem : IInitializeSystem {
 
 	readonly Contexts contexts;
-	readonly IContext[] networkableContexts;
 	readonly bool[][] shouldSyncComponent;
 
 	// One per context.
@@ -20,7 +19,6 @@ public class UpdateChangeFlagsSystem : IInitializeSystem {
 	public UpdateChangeFlagsSystem(Contexts contexts) {
 
 		this.contexts = contexts;
-		networkableContexts = contexts.GetNetworkableContexts();
 		shouldSyncComponent = ContextSyncInfo.shouldSyncComponent;
 	}
 		

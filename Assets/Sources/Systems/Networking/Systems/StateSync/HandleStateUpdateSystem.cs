@@ -63,7 +63,13 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
 
 	void Process(EntityChange change) {
 
-		processors[change.contextIndex].Process(change);
+		var contextIndex = change.contextIndex;
+		var processor = processors[change.contextIndex];
+		if (processor == null) {
+			throw new NullReferenceException(String.Format("Can't find entity change processor for contextIndex {0}", contextIndex));
+		}
+
+		processor.Process(change);
 	}
 
 	interface IEntityChangeProcessor {

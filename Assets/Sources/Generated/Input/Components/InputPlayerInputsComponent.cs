@@ -14,14 +14,14 @@ public partial class InputEntity {
     public void AddPlayerInputs(System.Collections.Generic.List<PlayerInputRecord> newInputs) {
         var index = InputComponentsLookup.PlayerInputs;
         var component = CreateComponent<PlayerInputsComponent>(index);
-        component.inputs = newInputs;
+        component.inputRecords = newInputs;
         AddComponent(index, component);
     }
 
     public void ReplacePlayerInputs(System.Collections.Generic.List<PlayerInputRecord> newInputs) {
         var index = InputComponentsLookup.PlayerInputs;
         var component = CreateComponent<PlayerInputsComponent>(index);
-        component.inputs = newInputs;
+        component.inputRecords = newInputs;
         ReplaceComponent(index, component);
     }
 

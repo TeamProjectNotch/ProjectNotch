@@ -5,16 +5,16 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 /// Receives messages over the network and puts them in a queue (networking.incomingMessages).
-/// Also registers connecting clients.
-[SystemAvailability(InstanceKind.Server)]
-public class ServerReceiveSystem : IExecuteSystem {
+/// Also registers connecting clients/servers.
+[SystemAvailability(InstanceKind.Networked)]
+public class NetworkReceiveSystem : IExecuteSystem {
 
 	const int messageBufferSize = 1024 * 4;
 	byte[] messageBuffer = new byte[messageBufferSize];
 
 	readonly NetworkingContext networking;
 
-	public ServerReceiveSystem(Contexts contexts) {
+	public NetworkReceiveSystem(Contexts contexts) {
 
 		networking = contexts.networking;
 	}
@@ -35,9 +35,7 @@ public class ServerReceiveSystem : IExecuteSystem {
 			);
 
 			var error = (NetworkError)errorCode;
-			if (error != NetworkError.Ok) {
-				Debug.LogError(error);
-			}
+			if (error != NetworkError.Ok) Debug.LogError(error);
 
 			switch (eventType) {
 				case NetworkEventType.Nothing: 
@@ -62,7 +60,16 @@ public class ServerReceiveSystem : IExecuteSystem {
 
 		Debug.LogFormat("ConnectEvent: connectionId: {0}", connectionId);
 
-		networking.CreateClientConnection(connectionId);
+		switch (ProgramInstance.thisInstanceKind) {
+			case InstanceKind.Server:
+				networking.CreateClientConnection(connectionId);
+				break;
+			case InstanceKind.Client:
+				networking.CreateServerConnection(connectionId);
+				break;
+			default: 
+				break;
+		}
 	}
 
 	// Destroys client connection Entities on disconnect.

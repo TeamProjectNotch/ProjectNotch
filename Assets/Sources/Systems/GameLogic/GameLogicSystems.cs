@@ -2,7 +2,7 @@
 
 public class GameLogicSystems : MyFeature {
 
-	public GameLogicSystems(Contexts contexts) : base("Game logic systems") {
+	public GameLogicSystems(Contexts contexts) : base("GameLogic systems") {
 
 		// Initialize systems
 		Add(new CreatePlayerWeaponSystem(contexts));

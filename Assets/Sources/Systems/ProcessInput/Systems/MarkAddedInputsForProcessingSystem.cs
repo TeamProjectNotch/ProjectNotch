@@ -32,7 +32,7 @@ public class MarkAddedInputsForProcessingSystem : IExecuteSystem {
 
 	void Process(InputEntity e) {
 
-		var inputRecords = GetUnprocessedInputRecords(e.playerInputs.inputs);
+		var inputRecords = GetUnprocessedInputRecords(e.playerInputs.inputRecords);
 		bool recordsAvailable = (inputRecords.Count() > 0);
 
 		var earliestUnprocessedRecordTick = recordsAvailable ? inputRecords.First().timestamp : game.currentTick.value;

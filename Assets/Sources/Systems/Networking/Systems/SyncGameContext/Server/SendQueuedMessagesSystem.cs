@@ -32,13 +32,15 @@ public class SendQueuedMessagesSystem : IExecuteSystem {
 	void Process(NetworkingEntity e) {
 
 		var queue = e.outgoingMessages.queue;
-		if (queue.Count == 0) return;
+		while (queue.Count > 0) {
 
-		var bytes = NetworkMessageSerializer.Serialize(queue);
-		Send(bytes, e.connection.id);
+			var message = queue.Dequeue();
+			var bytes = NetworkMessageSerializer.Serialize(message);
 
+			//Debug.LogFormat("Message {0} takes up {1} bytes", message, bytes.Length);
+			Send(bytes, e.connection.id);
+		}
 
-		queue.Clear();
 		e.ReplaceOutgoingMessages(queue);
 	}
 

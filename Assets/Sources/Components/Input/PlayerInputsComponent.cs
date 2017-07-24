@@ -28,33 +28,12 @@ public class PlayerInputRecord : IUnifiedSerializable{
 [Input]
 public class PlayerInputsComponent : IComponent, IUnifiedSerializable {
 	
-	public List<PlayerInputRecord> inputs;
+	public List<PlayerInputRecord> inputRecords;
 
 	public void Serialize<T>(T s) where T : IUnifiedSerializer {
 
-		s.Serialize(ref inputs);
+		s.Serialize(ref inputRecords);
 
-		/*
-		bool isEmpty = s.isWriting ? (inputs.Count == 0) : false;
-		s.Serialize(ref isEmpty);
-
-		if (s.isWriting) {
-
-			if (!isEmpty) {
-				
-				var record = inputs[inputs.Count - 1];
-				s.Serialize(ref record);
-			}
-		} else {
-
-			inputs = new List<PlayerInputRecord>();
-
-			if (!isEmpty) {
-
-				var record = new PlayerInputRecord();
-				s.Serialize(ref record);
-				inputs.Add(record);
-			}
-		}*/
+		//UnityEngine.Debug.LogFormat("Serialized {0} input records", inputRecords.Count);
 	}
 }

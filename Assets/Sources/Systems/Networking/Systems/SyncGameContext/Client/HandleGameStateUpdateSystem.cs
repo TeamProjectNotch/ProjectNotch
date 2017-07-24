@@ -95,7 +95,7 @@ public class HandleGameStateUpdateSystem : HandleMessageSystem<GameStateUpdateMe
 			//Debug.LogFormat("Will reprocess inputs since tick {0}, now is {1}, msg delay is {2}", inputProcessTick, game.currentTick.value, messageDelay);
 
 			// Delete input records earlier than message timestamp.
-			var inputs = playerInputEntity.playerInputs.inputs;
+			var inputs = playerInputEntity.playerInputs.inputRecords;
 			inputs.RemoveAll(record => record.timestamp < inputProcessTick);
 			playerInputEntity.ReplacePlayerInputs(inputs);
 		}

@@ -105,7 +105,7 @@ public class ReadPlayerInputSystem : IExecuteSystem {
 
 	void InsertNewInputRecord(InputEntity playerInputEntity, PlayerInputRecord newInputRecord) {
 		
-		var inputs = playerInputEntity.playerInputs.inputs;
+		var inputs = playerInputEntity.playerInputs.inputRecords;
 
 		var indexToInsert = inputs.FindLastIndex(record => record.timestamp < newInputRecord.timestamp) + 1;
 

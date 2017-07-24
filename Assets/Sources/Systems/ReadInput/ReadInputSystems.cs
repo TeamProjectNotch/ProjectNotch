@@ -6,5 +6,6 @@ public class ReadInputSystems : MyFeature {
     public ReadInputSystems(Contexts contexts) : base("ReadInput systems") {
 
 		Add(new ReadPlayerInputSystem(contexts));
+		Add(new PreventTooManyInputRecordsSystem(contexts));
     }
 }

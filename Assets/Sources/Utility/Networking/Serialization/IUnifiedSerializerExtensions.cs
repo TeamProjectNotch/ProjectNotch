@@ -38,10 +38,13 @@ public static class IUnifiedSerializerExtensions {
 		s.Serialize(ref value.w);
 	}
 
-	/// A helper function. Equivalent to serializable.Serialize(s). 
-	/// Exists just so that you could call s.Serialize on non-primitive types.
+	/// A helper function. Serializes/deserializes objects of non-primitive types.
 	public static void Serialize<T>(this IUnifiedSerializer s, ref T serializable) 
 		where T : IUnifiedSerializable, new() {
+
+		if (s.isReading) {
+			serializable = new T();
+		}
 
 		serializable.Serialize(s);
 	}
@@ -54,21 +57,13 @@ public static class IUnifiedSerializerExtensions {
 		int numElements = s.isWriting ? array.Length : 0;
 		s.Serialize(ref numElements);
 
-		if (s.isWriting) {
-
-			for (int i = 0; i < numElements; ++i) {
-
-				array[i].Serialize(s);
-			}
-
-		} else {
-
+		if (s.isReading) {
 			array = new T[numElements];
-			for (int i = 0; i < numElements; ++i) {
+		}
 
-				array[i] = new T();
-				array[i].Serialize(s);
-			}
+		for (int i = 0; i < numElements; ++i) {
+
+			s.Serialize(ref array[i]);
 		}
 	}
 
@@ -94,7 +89,7 @@ public static class IUnifiedSerializerExtensions {
 
 				var element = new T();
 				element.Serialize(s);
-				list.Add(element);
+				list[i] = element;
 			}
 		}
 	}

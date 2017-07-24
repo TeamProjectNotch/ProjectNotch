@@ -67,34 +67,15 @@ public class EntityChange : IUnifiedSerializable {
 
 	public void Serialize<T>(T s) where T : IUnifiedSerializer {
 
+		s.Serialize(ref contextIndex);
 		s.Serialize(ref entityId);
 
-		bool hasComponentChanges = s.isWriting ? !isRemoval : false;
+		bool hasComponentChanges = s.isWriting ? componentChanges != null : false;
 		s.Serialize(ref hasComponentChanges);
 
 		if (hasComponentChanges) {
-
-			// TODO Use this insead of the following code.
-			//s.Serialize(ref componentChanges);
-
-			int numComponentChanges = s.isWriting ? componentChanges.Length : 0;
-			s.Serialize(ref numComponentChanges);
-
-			if (s.isWriting) {
-				
-				for (int i = 0; i < numComponentChanges; ++i) {
-
-					componentChanges[i].Serialize(s);
-				}
-
-			} else {
-
-				componentChanges = new ComponentChange[numComponentChanges];
-				for (int i = 0; i < numComponentChanges; ++i) {
-
-					componentChanges[i] = ComponentChange.Deserialize(s);
-				}
-			}
+			
+			s.Serialize(ref componentChanges);
 		}
 	}
 

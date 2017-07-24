@@ -8,4 +8,8 @@ public abstract class WrapperComponent<T> : IComponent {
 	public static implicit operator T(WrapperComponent<T> component) {
 		return component.value;
 	}
+
+	public override string ToString() {
+		return value.ToString();
+	}
 }

@@ -10,8 +10,9 @@ public class EarlyNetworkSystems : MyFeature {
 		Add(new InitializeClientSystem(contexts));
 
 		// TODO Merge these two systems
-		Add(new ServerReceiveSystem(contexts));
-		Add(new ClientReceiveSystem(contexts));
+		//Add(new ServerReceiveSystem(contexts));
+		//Add(new ClientReceiveSystem(contexts));
+		Add(new NetworkReceiveSystem(contexts));
 
 		Add(new UpdateConnectionLatencySystem(contexts));
 

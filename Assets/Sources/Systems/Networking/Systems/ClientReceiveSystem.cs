@@ -25,32 +25,34 @@ public class ClientReceiveSystem : IExecuteSystem {
 		int receivedMessageSize;
 		byte errorCode;
 
-		var eventType = NetworkTransport.ReceiveFromHost(
-			networking.ids.host, 
-			out connectionId, out channelId, 
-			messageBuffer, messageBufferSize, out receivedMessageSize, 
-			out errorCode
-		);
+		while (true) {
 
-		var error = (NetworkError)errorCode;
-		if (error != NetworkError.Ok) {
-			Debug.LogError(error);
-		}
+			var eventType = NetworkTransport.ReceiveFromHost(
+				networking.ids.host, 
+				out connectionId, out channelId, 
+				messageBuffer, messageBufferSize, out receivedMessageSize, 
+				out errorCode
+			);
 
-		switch (eventType) {
-			case NetworkEventType.Nothing: 
-				break;
-			case NetworkEventType.ConnectEvent:
-				OnConnect(connectionId);
-				break;
-			case NetworkEventType.DisconnectEvent:
-				OnDisconnect(connectionId);
-				break;
-			case NetworkEventType.DataEvent:
-				OnReceive(connectionId, receivedMessageSize);
-				break;
-			default:
-				break;
+			var error = (NetworkError)errorCode;
+			if (error != NetworkError.Ok) Debug.LogError(error);
+
+			switch (eventType) {
+				
+				case NetworkEventType.Nothing: 
+					return;
+				case NetworkEventType.ConnectEvent:
+					OnConnect(connectionId);
+					break;
+				case NetworkEventType.DisconnectEvent:
+					OnDisconnect(connectionId);
+					break;
+				case NetworkEventType.DataEvent:
+					OnReceive(connectionId, receivedMessageSize);
+					break;
+				default:
+					break;
+			}
 		}
 	}
 		
@@ -81,11 +83,8 @@ public class ClientReceiveSystem : IExecuteSystem {
 		var bytes = new byte[receivedMessageSize]; 
 		Array.Copy(messageBuffer, bytes, receivedMessageSize);
 
-		var messages = NetworkMessageSerializer.Deserialize(bytes);
-		foreach (var message in messages) {
-
-			EnqueueIncomingMessage(message, connectionEntity);
-		}
+		var message = NetworkMessageSerializer.Deserialize(bytes);
+		EnqueueIncomingMessage(message, connectionEntity);
 	}
 
 	void EnqueueIncomingMessage(INetworkMessage message, NetworkingEntity e) {

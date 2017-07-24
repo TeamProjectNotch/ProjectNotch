@@ -11,38 +11,23 @@ public static class NetworkMessageSerializer {
 	public static readonly string[] messageTypeNames;
 	public static readonly Dictionary<Type, byte> messageTypeIndices = new Dictionary<Type, byte>();
 
-	public static byte[] Serialize(IEnumerable<INetworkMessage> messages) {
+	public static byte[] Serialize(INetworkMessage message) {
 
 		var outputStream = new MemoryStream();
 		using (var writer = new MyWriter(outputStream)) {
 
-			foreach (var message in messages) {
-
-				Serialize(message, writer);
-			}
+			Serialize(message, writer);
 		}
 
 		return outputStream.ToArray();
 	}
 
-	public static INetworkMessage[] Deserialize(byte[] bytes) {
-
-		var messages = new List<INetworkMessage>();
+	public static INetworkMessage Deserialize(byte[] bytes) {
 
 		using (var reader = new MyReader(new MemoryStream(bytes))) {
 
-			while (reader.BaseStream.Position < reader.BaseStream.Length) {
-
-				messages.Add(Deserialize(reader));
-			}
+			return Deserialize(reader);
 		}
-
-		return messages.ToArray();
-	}
-
-	public static byte[] Serialize(INetworkMessage message) {
-
-		return Serialize(new []{message});
 	}
 
 	static void Serialize(INetworkMessage message, MyWriter writer) {

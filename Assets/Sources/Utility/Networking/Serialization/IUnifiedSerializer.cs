@@ -9,6 +9,7 @@ using UnityEngine;
 public interface IUnifiedSerializer : IDisposable {
 
 	bool isWriting {get;}
+	bool isReading {get;}
 
 	void Serialize(ref bool    value);
 	void Serialize(ref byte    value);

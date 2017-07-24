@@ -5,7 +5,7 @@ using Entitas;
 using System.IO;
 
 [SystemAvailability(InstanceKind.Networked)]
-public class ComposeStateUpdateMessageSystem : /*MultiReactiveSystem<INetworkableEntity, Contexts>*/ IExecuteSystem {
+public class ComposeStateUpdateMessageSystem : IExecuteSystem {
 
 	const int preferredNumBytesPerMessage = 1024;
 	const int maxNumEntityChangesPerMessage = 5;
@@ -23,7 +23,7 @@ public class ComposeStateUpdateMessageSystem : /*MultiReactiveSystem<INetworkabl
 		}
 	}
 
-	public ComposeStateUpdateMessageSystem(Contexts contexts) /*: base(contexts)*/ {
+	public ComposeStateUpdateMessageSystem(Contexts contexts) {
 
 		this.contexts = contexts;
 		networkableContexts = contexts.GetNetworkableContexts();

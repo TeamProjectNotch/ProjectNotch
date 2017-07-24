@@ -37,19 +37,7 @@ public class ComponentChange : IUnifiedSerializable {
 		return change;
 	}
 
-	public static ComponentChange Deserialize<T>(T serializer) where T : IUnifiedSerializer {
-
-		if (serializer.isWriting) {
-			
-			throw new ArgumentException("Can't deserialize a ComponentChange using a reading serializer!");
-		}
-
-		var change = new ComponentChange();
-		change.Serialize(serializer);
-		return change;
-	}
-
-	ComponentChange() {}
+	public ComponentChange() {}
 
 	public void Apply(IEntity entity) {
 

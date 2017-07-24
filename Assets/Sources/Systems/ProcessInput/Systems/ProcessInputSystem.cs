@@ -46,7 +46,7 @@ public abstract class ProcessInputSystem : ReactiveSystem<InputEntity> {
 
 		var startTick = inputEntity.processInputs.startTick;
 		var currentTick = game.currentTick.value;
-		var inputsToProcess = inputEntity.playerInputs.inputs
+		var inputsToProcess = inputEntity.playerInputs.inputRecords
 			.Where(inputRecord => inputRecord.timestamp >= startTick && inputRecord.timestamp <= currentTick); // TEMP Unoptimized.
 
 		//Debug.LogFormat("Processing input since tick {0} to tick {1}", startTick, game.currentTick.value);
