@@ -6,7 +6,7 @@ using Entitas;
 /// For keeping track of Entities whose Components have changed.
 /// If flags[index] is true, then the IComponent with that index has been changed (added/removed/replaced).
 [Game, Input, Events]
-[NetworkSync(NetworkSyncTargets.None)]
+[NetworkSync(NetworkTargets.None)]
 public class ChangeFlagsComponent : IComponent {
 
 	public bool[] flags;

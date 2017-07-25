@@ -26,6 +26,7 @@ public class PlayerInputRecord : IUnifiedSerializable{
 
 /// Stores the inputs of a player matched with their timesteps.
 [Input]
+[NetworkSyncAttribute(NetworkTargets.Server)]
 public class PlayerInputsComponent : IComponent, IUnifiedSerializable {
 	
 	public List<PlayerInputRecord> inputRecords;

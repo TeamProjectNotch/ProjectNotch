@@ -72,10 +72,10 @@ public class ComposeStateUpdateMessageSystem : IExecuteSystem {
 			var e = entities[i];
 
 			var change = MakeChangeOf(e);
-			e.UnsetChangeFlags();
-			ResetPriorityOf(e);
-
 			changes.Add(change);
+
+			e.UnsetChangeFlags();
+			e.ResetNetworkPriority();
 
 			if (i > maxNumEntityChangesPerMessage) {
 
@@ -95,7 +95,7 @@ public class ComposeStateUpdateMessageSystem : IExecuteSystem {
 
 	/// Adds all Entities getting destroyed to the backlog.
 	void AddToBacklog(INetworkableEntity[] entities, int startingIndex) {
-
+		
 		for (int i = startingIndex; i < entities.Length; ++i) {
 
 			var e = entities[i];
@@ -138,18 +138,6 @@ public class ComposeStateUpdateMessageSystem : IExecuteSystem {
 		}
 
 		return componentChanges.ToArray();
-	}
-
-	/// Sets the accumulated priority of the given Entity to zero.
-	void ResetPriorityOf(INetworkableEntity e) {
-
-		if (e.hasNetworkUpdatePriority) {
-
-			e.ReplaceNetworkUpdatePriority(
-				newBasePriority: e.networkUpdatePriority.basePriority, 
-				newAccumulated: 0
-			);
-		}
 	}
 }
 

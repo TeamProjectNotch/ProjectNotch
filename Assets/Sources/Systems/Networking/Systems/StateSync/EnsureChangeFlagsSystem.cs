@@ -9,7 +9,7 @@ public class EnsureChangeFlagsSystem : AllEntitiesSystem<INetworkableEntity> {
 
 	public EnsureChangeFlagsSystem(Contexts contexts) : base(contexts) {}
 
-	protected override void Execute(INetworkableEntity e) {
+	protected override void Apply(INetworkableEntity e) {
 
 		// Flags all existing components.
 		var flags = new bool[e.totalComponents];

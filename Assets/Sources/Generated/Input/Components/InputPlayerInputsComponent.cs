@@ -11,17 +11,17 @@ public partial class InputEntity {
     public PlayerInputsComponent playerInputs { get { return (PlayerInputsComponent)GetComponent(InputComponentsLookup.PlayerInputs); } }
     public bool hasPlayerInputs { get { return HasComponent(InputComponentsLookup.PlayerInputs); } }
 
-    public void AddPlayerInputs(System.Collections.Generic.List<PlayerInputRecord> newInputs) {
+    public void AddPlayerInputs(System.Collections.Generic.List<PlayerInputRecord> newInputRecords) {
         var index = InputComponentsLookup.PlayerInputs;
         var component = CreateComponent<PlayerInputsComponent>(index);
-        component.inputRecords = newInputs;
+        component.inputRecords = newInputRecords;
         AddComponent(index, component);
     }
 
-    public void ReplacePlayerInputs(System.Collections.Generic.List<PlayerInputRecord> newInputs) {
+    public void ReplacePlayerInputs(System.Collections.Generic.List<PlayerInputRecord> newInputRecords) {
         var index = InputComponentsLookup.PlayerInputs;
         var component = CreateComponent<PlayerInputsComponent>(index);
-        component.inputRecords = newInputs;
+        component.inputRecords = newInputRecords;
         ReplaceComponent(index, component);
     }
 

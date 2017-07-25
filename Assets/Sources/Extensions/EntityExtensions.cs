@@ -14,4 +14,18 @@ public static class EntityExtensions {
 		flags.Fill(false);
 		e.ReplaceChangeFlags(flags);
 	}
+
+	/// Sets the accumulated network update priority of the given entity to zero.
+	public static void ResetNetworkPriority(this INetworkUpdatePriority e) {
+
+		if (!e.hasNetworkUpdatePriority) {
+
+			throw new InvalidOperationException("Can't reset network update priority bacause the given entity doesn't have it!");
+		}
+
+		e.ReplaceNetworkUpdatePriority(
+			newBasePriority: e.networkUpdatePriority.basePriority, 
+			newAccumulated: 0
+		);
+	}
 }

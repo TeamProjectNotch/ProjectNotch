@@ -11,7 +11,7 @@ public class EnsureNetworkUpdatePrioritySystem : AllEntitiesSystem<INetworkableE
 
 	public EnsureNetworkUpdatePrioritySystem(Contexts contexts) : base(contexts) {}
 
-	protected override void Execute(INetworkableEntity e) {
+	protected override void Apply(INetworkableEntity e) {
 
 		if (!e.hasNetworkUpdatePriority) {
 

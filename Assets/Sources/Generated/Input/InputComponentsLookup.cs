@@ -11,30 +11,22 @@ public static class InputComponentsLookup {
     public const int ChangeFlags = 0;
     public const int Destroy = 1;
     public const int Id = 2;
-    public const int Jump = 3;
-    public const int MouseMoveInput = 4;
-    public const int MoveInput = 5;
-    public const int NetworkUpdatePriority = 6;
-    public const int Owner = 7;
-    public const int Player = 8;
-    public const int PlayerInputs = 9;
-    public const int PressFire = 10;
-    public const int ProcessInputs = 11;
+    public const int NetworkUpdatePriority = 3;
+    public const int Owner = 4;
+    public const int Player = 5;
+    public const int PlayerInputs = 6;
+    public const int ProcessInputs = 7;
 
-    public const int TotalComponents = 12;
+    public const int TotalComponents = 8;
 
     public static readonly string[] componentNames = {
         "ChangeFlags",
         "Destroy",
         "Id",
-        "Jump",
-        "MouseMoveInput",
-        "MoveInput",
         "NetworkUpdatePriority",
         "Owner",
         "Player",
         "PlayerInputs",
-        "PressFire",
         "ProcessInputs"
     };
 
@@ -42,14 +34,10 @@ public static class InputComponentsLookup {
         typeof(ChangeFlagsComponent),
         typeof(DestroyComponent),
         typeof(IdComponent),
-        typeof(JumpComponent),
-        typeof(MouseMoveInput),
-        typeof(MoveInputComponent),
         typeof(NetworkUpdatePriorityComponent),
         typeof(OwnerComponent),
         typeof(PlayerComponent),
         typeof(PlayerInputsComponent),
-        typeof(PressFireComponent),
         typeof(ProcessInputsComponent)
     };
 }

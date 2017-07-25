@@ -6,7 +6,7 @@ using System.Linq;
 using Entitas;
 using UnityEngine;
 
-[SystemAvailability(InstanceKind.Client)]
+[SystemAvailability(InstanceKind.Networked)]
 public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, IInitializeSystem {
 
 	readonly Contexts contexts;
@@ -64,7 +64,7 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
 	void Process(EntityChange change) {
 
 		var contextIndex = change.contextIndex;
-		var processor = processors[change.contextIndex];
+		var processor = processors[contextIndex];
 		if (processor == null) {
 			throw new NullReferenceException(String.Format("Can't find entity change processor for contextIndex {0}", contextIndex));
 		}

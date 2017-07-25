@@ -21,16 +21,17 @@ public static class GameComponentsLookup {
     public const int Id = 10;
     public const int LookDirection = 11;
     public const int NetworkUpdatePriority = 12;
-    public const int Owner = 13;
-    public const int Player = 14;
-    public const int Prefab = 15;
-    public const int ProjectileSpeed = 16;
-    public const int RigidbodyState = 17;
-    public const int ScreenBuffer = 18;
-    public const int ThisPlayerId = 19;
-    public const int Transform = 20;
+    public const int NextId = 13;
+    public const int Owner = 14;
+    public const int Player = 15;
+    public const int Prefab = 16;
+    public const int ProjectileSpeed = 17;
+    public const int RigidbodyState = 18;
+    public const int ScreenBuffer = 19;
+    public const int ThisPlayerId = 20;
+    public const int Transform = 21;
 
-    public const int TotalComponents = 21;
+    public const int TotalComponents = 22;
 
     public static readonly string[] componentNames = {
         "Bullet",
@@ -46,6 +47,7 @@ public static class GameComponentsLookup {
         "Id",
         "LookDirection",
         "NetworkUpdatePriority",
+        "NextId",
         "Owner",
         "Player",
         "Prefab",
@@ -70,6 +72,7 @@ public static class GameComponentsLookup {
         typeof(IdComponent),
         typeof(LookDirectionComponent),
         typeof(NetworkUpdatePriorityComponent),
+        typeof(NextIdComponent),
         typeof(OwnerComponent),
         typeof(PlayerComponent),
         typeof(PrefabComponent),

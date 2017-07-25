@@ -25,7 +25,7 @@ public class IncreaseNetworkUpdatePrioritySystem : IExecuteSystem {
 
 		foreach (var e in entities) {
 
-			if (e.changeFlags.HasAnyFlagsSet) return;
+			if (!e.changeFlags.HasAnyFlagsSet) return;
 			
 			var p = e.networkUpdatePriority;
 			e.ReplaceNetworkUpdatePriority(p.basePriority, p.accumulated + p.basePriority);

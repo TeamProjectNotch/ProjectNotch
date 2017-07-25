@@ -45,4 +45,17 @@ public static class ProgramInstance {
 			_thisInstanceKind = value;
 		}
 	}
+
+	public static bool isClient {
+		get {return (thisInstanceKind & InstanceKind.Client) != 0;} 
+	}
+
+	public static bool isServer {
+		get {return (thisInstanceKind & InstanceKind.Server) != 0;} 
+	}
+
+	public static bool isClientOrServer {
+
+		get {return (thisInstanceKind & InstanceKind.Networked) != 0;}
+	}
 }

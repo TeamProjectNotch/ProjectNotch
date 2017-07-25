@@ -17,33 +17,24 @@ public static class ContextSyncInfo {
 
 	static void InitializeSyncMap() {
 
-		var allContexts = Contexts.sharedInstance.allContexts;
+		shouldSyncComponent = Contexts.sharedInstance.allContexts
+			.Select(GetShouldSyncContext)
+			.ToArray();
+	}
 
-		var numContexts = allContexts.Length;
-		shouldSyncComponent = new bool[numContexts][];
-		for (int contextIndex = 0; contextIndex < numContexts; ++contextIndex) {
-
-			var context = allContexts[contextIndex];
-			var numComponents = context.totalComponents;
-			shouldSyncComponent[contextIndex] = new bool[numComponents];
-			if (!context.IsNetworkable()) continue;
-
-			var componentTypes = context.contextInfo.componentTypes;
-			for (int componentIndex = 0; componentIndex < numComponents; ++componentIndex) {
-
-				var componentType = componentTypes[componentIndex];
-				var shouldSync = GetShouldSync(componentType);
-				shouldSyncComponent[contextIndex][componentIndex] = shouldSync;
-			}
+	static bool[] GetShouldSyncContext(IContext context) {
+		
+		if (!context.IsNetworkable()) {
+			
+			return new bool[context.totalComponents];
 		}
+
+		return context.contextInfo.componentTypes
+			.Select(GetShouldSyncComponent)
+			.ToArray();
 	}
 
-	static IContext[] GetNetworkableContexts() {
-
-		return Contexts.sharedInstance.GetNetworkableContexts();
-	}
-
-	static bool GetShouldSync(Type componentType) {
+	static bool GetShouldSyncComponent(Type componentType) {
 
 		var attributes = componentType.GetCustomAttributes(
 			typeof(NetworkSyncAttribute), 
@@ -54,11 +45,11 @@ public static class ContextSyncInfo {
 
 			var syncInfo = (NetworkSyncAttribute)attributes.Last();
 			return
-				((ProgramInstance.thisInstanceKind == InstanceKind.Server) && syncInfo.toClient) ||
-				((ProgramInstance.thisInstanceKind == InstanceKind.Client) && syncInfo.toServer);
+				(ProgramInstance.isServer && syncInfo.toClient) ||
+				(ProgramInstance.isClient && syncInfo.toServer);
 		} 
 
-		return (ProgramInstance.thisInstanceKind == InstanceKind.Server);
+		return ProgramInstance.isServer;
 	}
 }
 
