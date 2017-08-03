@@ -8,7 +8,7 @@ public class EnsureIdSystem : AllEntitiesSystem<IId> {
 
 	public EnsureIdSystem(Contexts contexts) : base(contexts) {
 
-		game = contexts.game;
+        game = contexts.game;
 	}
 
 	public override void Initialize() {
@@ -18,29 +18,22 @@ public class EnsureIdSystem : AllEntitiesSystem<IId> {
 			game.SetNextId(0ul);
 		}
 
-		if (ProgramInstance.isServer) {
-			
-			game.nextIdEntity.ReplaceNetworkUpdatePriority(int.MaxValue, 0);
-		}
+        if (ProgramInstance.isServer) {
+
+            // To make sure game.nextId is included in every message.
+            game.nextIdEntity.ReplaceNetworkUpdatePriority(int.MaxValue, 0);
+        }
 
 		base.Initialize();
 	}
 
 	protected override void Apply(IId entity) {
-		
-		if (entity.hasId) {
 
-			var entityId = entity.id.value;
-			if (entityId >= game.nextId) {
+        if (!entity.hasId) {
 
-				game.ReplaceNextId(entityId + 1ul);
-			}
-
-		} else {
-
-			var newId = game.nextId.value;
-			entity.AddId(newId);
-			game.ReplaceNextId(newId + 1ul);
-		}
+            var newId = game.nextId.value;
+            entity.AddId(newId);
+            game.ReplaceNextId(newId + 1ul);
+        }
 	}
 }
