@@ -37,9 +37,9 @@ public class GameController : MonoBehaviour {
 		systemsUpdate.Cleanup();
 	}
 
-	void OnDestroy() {
+    void OnDestroy() {
 
-		systemsFixedUpdate.TearDown();
-		systemsUpdate.TearDown();
-	}
+        systemsFixedUpdate.TearDown();
+        systemsUpdate.TearDown();
+    }
 }
