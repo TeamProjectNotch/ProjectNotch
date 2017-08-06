@@ -10,7 +10,6 @@ public class EarlyNetworkSystems : MyFeature {
         Add(new ConnectToServerSystem(contexts)); // Client-only
 
 		Add(new NetworkReceiveSystem(contexts));
-
 		Add(new UpdateConnectionLatencySystem(contexts));
 
 		Add(new HandleConnectingClientsSystem(contexts)); // Server
