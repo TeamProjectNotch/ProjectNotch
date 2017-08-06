@@ -2,11 +2,9 @@
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
-/// A context-global component that holds the data needed for networking, like host and channel ids.
-/// Connection id's of connections with clients or the server are in their respective Entities.
+/// A context-global component which stores the id of the host/socket from Unity's Transport Layer.
 [Networking, Unique]
-public class IdsComponent : IComponent {
+public class HostComponent : IComponent {
 
-	public int host = 0;
-	public int channelReliableFragmented, channelUnreliableFragmented;
+	public int id;
 }

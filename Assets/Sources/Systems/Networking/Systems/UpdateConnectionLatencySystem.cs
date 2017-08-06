@@ -20,7 +20,7 @@ public class UpdateConnectionLatencySystem : IExecuteSystem {
 		foreach (var e in connections.GetEntities()) {
 
 			byte errorCode;
-			int rtt = NetworkTransport.GetCurrentRTT(networking.ids.host, e.connection.id, out errorCode);
+			int rtt = NetworkTransport.GetCurrentRTT(networking.host.id, e.connection.id, out errorCode);
 			if ((NetworkError)errorCode != NetworkError.Ok) {
 
 				Debug.LogErrorFormat("Network error when trying to get current RTT: {0}", ((NetworkError)errorCode).ToString());

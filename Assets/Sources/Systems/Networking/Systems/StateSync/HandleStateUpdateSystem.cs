@@ -16,7 +16,7 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
 	public HandleStateUpdateSystem(Contexts contexts) : base(contexts.networking) {
 
 		this.contexts = contexts;
-	}
+    }
 
 	public void Initialize() {
 
@@ -49,7 +49,7 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
 			message.timestamp, 
 			game.hasCurrentTick ? game.currentTick.value.ToString() : (-1).ToString()
 		);*/
-
+        
 		message.changes.Each(Process);
 		//Debug.LogFormat("Changes applied this step: {0}", message.changes.Length);
 	}
@@ -58,7 +58,8 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
 		
 		var entityType = context.GetEntityType();
 		var processorType = typeof(EntityChangeProcessor<>).MakeGenericType(entityType);
-		return (IEntityChangeProcessor)Activator.CreateInstance(processorType, context);
+        var parameters = new object[] {contexts, context};
+		return (IEntityChangeProcessor)Activator.CreateInstance(processorType, parameters);
 	}
 
 	void Process(EntityChange change) {
@@ -78,33 +79,58 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
 	}
 	 
 	/// Processes entity changes in one context.
-	class EntityChangeProcessor<TEntity> : IEntityChangeProcessor where TEntity : class, IEntity {
+	class EntityChangeProcessor<TEntity> : IEntityChangeProcessor 
+        where TEntity : class, IEntity, INetworkableEntity {
 
+        readonly GameContext game;
 		readonly IContext<TEntity> context;
 		readonly PrimaryEntityIndex<TEntity, ulong> entityByIdIndex;
 
-		public EntityChangeProcessor(IContext<TEntity> context) {
+		public EntityChangeProcessor(Contexts contexts, IContext<TEntity> context) {
 
+            game = contexts.game;
 			this.context = context;
+
 			entityByIdIndex = (PrimaryEntityIndex<TEntity, ulong>)context.GetEntityIndex(Contexts.Id);
 		}
 
 		public void Process(EntityChange change) {
+            
+			var e = GetEntityFor(change);
+            if (e == null) return;
 
-			var e = entityByIdIndex.GetEntity(change.entityId);
-			if (e == null) {
+            change.Apply(e);
+            UpdateNextId(e);
+        }
 
-				if (change.isRemoval) {
+        TEntity GetEntityFor(EntityChange change) {
 
-					UnityEngine.Debug.Log("Can't apply an EntityChange (entity removal), since it's Entity doesn't exist.");
-					return;
-				}
+            var e = entityByIdIndex.GetEntity(change.entityId);
+            if (e == null) {
 
-				//Debug.LogFormat("Entity with id {0} not found. Creating...", change.entityId);
-				e = context.CreateEntity();
-			}
+                if (change.isRemoval) {
 
-			change.Apply(e);
-		}
+                    Debug.Log("Can't apply an EntityChange (entity removal), since it's Entity doesn't exist.");
+                    return null;
+                }
+
+                //Debug.LogFormat("Entity with id {0} not found. Creating...", change.entityId);
+                e = context.CreateEntity();
+            }
+
+            return e;
+        }
+
+        void UpdateNextId(TEntity e) {
+
+            if (e.hasId) {
+
+                ulong id = e.id.value;
+                if (id >= game.nextId.value) {
+
+                    game.ReplaceNextId(id + 1ul);
+                }
+            }
+        }
 	}
 }

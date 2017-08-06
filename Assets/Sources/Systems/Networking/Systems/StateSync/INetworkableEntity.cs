@@ -25,25 +25,4 @@ public static class ContextsExtensionsINetworkableEntity {
 		//UnityEngine.Debug.LogFormat("{0} is IContext<{1}>", context, entityType);
 		return networkableEntityType.IsAssignableFrom(entityType);
 	}
-
-	/// GameContext -> GameEntity, InputContext -> InputEntity etc.
-	public static Type GetEntityType(this IContext context) {
-
-		// IContext<GameEntity>, IContext<InputEntity> etc.
-		var interfaceType = context
-			.GetType()
-			.GetInterfaces()
-			.Where(type => type.IsGenericType)
-			.Where(type => type.GetGenericTypeDefinition() == typeof(IContext<>))
-			.SingleOrDefault();
-
-		if (interfaceType == null) {
-			throw new ArgumentException(String.Format("Given context {0} does not implement IContext<>!", context));
-		}
-
-		// IContext<GameEntity> -> GameEntity
-		// IContext<InputEntity> -> InputEntity
-		// IA<B> -> B
-		return interfaceType.GetGenericArguments()[0];
-	}
 }

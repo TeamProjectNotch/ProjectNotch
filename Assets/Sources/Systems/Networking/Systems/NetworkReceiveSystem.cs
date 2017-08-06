@@ -28,14 +28,17 @@ public class NetworkReceiveSystem : IExecuteSystem {
 		while (true) {
 
 			var eventType = NetworkTransport.ReceiveFromHost(
-				networking.ids.host, 
+				networking.host.id, 
 				out connectionId, out channelId, 
 				messageBuffer, messageBufferSize, out receivedMessageSize, 
 				out errorCode
 			);
 
 			var error = (NetworkError)errorCode;
-			if (error != NetworkError.Ok) Debug.LogError(error);
+			if (error != NetworkError.Ok) {
+
+                Debug.LogError($"Error when receiving from network: {error}");
+            }
 
 			switch (eventType) {
 				case NetworkEventType.Nothing: 
@@ -90,7 +93,7 @@ public class NetworkReceiveSystem : IExecuteSystem {
 		var bytes = new byte[receivedMessageSize]; 
 		Array.Copy(messageBuffer, bytes, receivedMessageSize);
 
-		var connectionEntity = networking.GetEntityWithConnection(connectionId);
+	    var connectionEntity = networking.GetEntityWithConnection(connectionId);
 		if (connectionEntity == null) return;
 
 		var message = NetworkMessageSerializer.Deserialize(bytes);

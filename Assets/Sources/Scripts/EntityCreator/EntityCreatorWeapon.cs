@@ -1,27 +1,31 @@
 ﻿using System;
 
-public class EntityCreatorWeapon : EntityCreator
-{
-    public float Damage = -1f;
-    public float FireRate = -1f;
-    public float ProjectileSpeed = -1f;
+public class EntityCreatorWeapon : EntityCreator {
 
-    public override GameEntity CreateEntity(Contexts contexts)
-    {
+    public float damage = -1f;
+    public float fireRate = -1f;
+    public float projectileSpeed = -1f;
+
+    public override GameEntity CreateEntity(Contexts contexts) {
+
         var e = contexts.game.CreateEntity();
+        contexts.AssignId(e);
 
-        if(Damage > 0)
-        {
-            e.AddDamage(Damage);
+        if (damage > 0) {
+
+            e.AddDamage(damage);
         }
-        if(FireRate > 0)
-        {
-            e.AddFireRate(FireRate);
+
+        if (fireRate > 0) {
+
+            e.AddFireRate(fireRate);
         }
-        if(ProjectileSpeed > 0)
-        {
-            e.AddProjectileSpeed(ProjectileSpeed);
+
+        if (projectileSpeed > 0) {
+
+            e.AddProjectileSpeed(projectileSpeed);
         }
+
         e.AddTransform(transform.GetState());
 
         return e;

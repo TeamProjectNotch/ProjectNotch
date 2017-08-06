@@ -32,12 +32,7 @@ public class InitializeServerSystem : IInitializeSystem {
 			maxNumConnections
 		);
 		var hostId = NetworkTransport.AddHost(topology, NetworkingHelper.serverPortNumber);
-
-		networking.SetIds(
-			hostId,
-			ClientServerConnectionConfig.reliableFragmentedChannelId,
-			ClientServerConnectionConfig.unreliableFragmentedChannelId
-		);
+        networking.SetHost(hostId);
 	}
 }
 

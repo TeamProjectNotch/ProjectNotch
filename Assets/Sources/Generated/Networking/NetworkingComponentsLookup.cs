@@ -10,7 +10,7 @@ public static class NetworkingComponentsLookup {
 
     public const int Client = 0;
     public const int Connection = 1;
-    public const int Ids = 2;
+    public const int Host = 2;
     public const int IncomingMessages = 3;
     public const int Latency = 4;
     public const int NextPlayerId = 5;
@@ -24,7 +24,7 @@ public static class NetworkingComponentsLookup {
     public static readonly string[] componentNames = {
         "Client",
         "Connection",
-        "Ids",
+        "Host",
         "IncomingMessages",
         "Latency",
         "NextPlayerId",
@@ -37,7 +37,7 @@ public static class NetworkingComponentsLookup {
     public static readonly System.Type[] componentTypes = {
         typeof(ClientComponent),
         typeof(ConnectionComponent),
-        typeof(IdsComponent),
+        typeof(HostComponent),
         typeof(IncomingMessagesComponent),
         typeof(LatencyComponent),
         typeof(NextPlayerIdComponent),

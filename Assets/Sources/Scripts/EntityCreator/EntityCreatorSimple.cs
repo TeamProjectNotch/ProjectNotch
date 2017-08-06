@@ -12,6 +12,7 @@ public class EntityCreatorSimple : EntityCreator {
 	public override GameEntity CreateEntity(Contexts contexts) {
 
 		var e = contexts.game.CreateEntity();
+        contexts.AssignId(e);
 
 		e.AddTransform(transform.GetState());
 		TryAddRigidbodyState(e);

@@ -5,13 +5,10 @@ public class EarlyNetworkSystems : MyFeature {
 
 	public EarlyNetworkSystems(Contexts contexts) : base("EarlyNetwork systems") {
 
-		// TODO Merge these two systems
-		Add(new InitializeServerSystem(contexts));
-		Add(new InitializeClientSystem(contexts));
+        Add(new InitializeNetworkingSystem(contexts));
 
-		// TODO Merge these two systems
-		//Add(new ServerReceiveSystem(contexts));
-		//Add(new ClientReceiveSystem(contexts));
+        Add(new ConnectToServerSystem(contexts)); // Client-only
+
 		Add(new NetworkReceiveSystem(contexts));
 
 		Add(new UpdateConnectionLatencySystem(contexts));
@@ -20,7 +17,6 @@ public class EarlyNetworkSystems : MyFeature {
 		Add(new HandleServerConnectionEstablishedSystem(contexts)); // Client
 
 		Add(new HandleTickUpdateSystem(contexts)); // Client
-
 		Add(new HandleStateUpdateSystem(contexts));
 	}
 }

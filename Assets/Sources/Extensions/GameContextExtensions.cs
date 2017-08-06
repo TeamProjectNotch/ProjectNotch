@@ -5,13 +5,32 @@ public static class GameContextExtensions {
 
 	const string monitorPrefabPath = "Monitor";
 
-	/// Creates a computer monitor with the specified transform and screen buffer contents.
-	public static GameEntity CreateMonitor(this GameContext game, 
+    /// Assigns a new unique id (game.nextId.value) to a given entity. Increments game.nextId.value by 1.
+    public static ulong AssignId(this GameContext game, IId entity) {
+
+        ulong newId = game.nextId.value;
+        game.ReplaceNextId(newId + 1ul);
+        entity.ReplaceId(newId);
+
+        return newId;
+    }
+
+    /// Creates an entity and assigns an id to it.
+    public static GameEntity CreateEntityWithId(this GameContext game) {
+    
+        var e = game.CreateEntity();
+        game.AssignId(e);
+        return e;
+    }
+
+    /// Creates a computer monitor with the specified transform and screen buffer contents.
+    public static GameEntity CreateMonitor(this GameContext game, 
 		TransformState transformState,
 		ScreenBufferState screenData
 	) {
 
-		var e = game.CreateEntity();
+		var e = game.CreateEntityWithId();
+
 		e.AddTransform(transformState);
 		e.AddScreenBuffer(screenData);
 		e.AddPrefab(monitorPrefabPath);
@@ -25,7 +44,8 @@ public static class GameContextExtensions {
         float damage
 	) {
 
-		var e = game.CreateEntity();
+		var e = game.CreateEntityWithId();
+
 		e.AddTransform(transformState);
 		e.AddRigidbodyState(rigidbodyState);
 		e.isGameObjectDriven = true;
@@ -45,7 +65,7 @@ public static class GameContextExtensions {
 		RigidbodyState rigidbodyState
 	) {
 		
-		var e = game.CreateEntity();
+		var e = game.CreateEntityWithId();
 
 		e.AddTransform(transformState);
 		e.AddRigidbodyState(rigidbodyState);

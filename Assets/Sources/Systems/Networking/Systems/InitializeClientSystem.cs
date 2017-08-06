@@ -31,20 +31,18 @@ public class InitializeClientSystem : IInitializeSystem {
 			maxNumConnections
 		);
 		var hostId = NetworkTransport.AddHost(topology);
-
-		networking.SetIds(
-			hostId,
-			ClientServerConnectionConfig.reliableFragmentedChannelId,
-			ClientServerConnectionConfig.unreliableFragmentedChannelId
-		);
+		networking.SetHost(hostId);
 	}
 
 	void ConnectToServer() {
 
-		var hostId = networking.ids.host;
+		var hostId = networking.host.id;
 
-		byte errorCode;
-		NetworkTransport.Connect(hostId, "127.0.0.1", NetworkingHelper.serverPortNumber, 0, out errorCode);
+        byte errorCode;
+		NetworkTransport.Connect(
+            networking.host.id, "127.0.0.1", NetworkingHelper.serverPortNumber, 0, 
+            out errorCode
+        );
 	}
 }
 

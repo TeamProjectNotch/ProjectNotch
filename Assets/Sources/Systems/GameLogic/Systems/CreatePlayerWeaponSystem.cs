@@ -41,7 +41,7 @@ public class CreatePlayerWeaponSystem : IInitializeSystem {
 
 	GameEntity CreateWeapon() {
 
-		var e = game.CreateEntity();
+		var e = game.CreateEntityWithId();
 
 		e.AddFireRate(10f);
 		e.AddDamage(5f);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using System.Reflection;
 using Entitas;
@@ -20,7 +19,7 @@ public class UpdateNextIdSystem : IInitializeSystem {
     public void Initialize() {
 
         contexts.allContexts
-            .Where(context => typeof(IId).IsAssignableFrom(context.GetEntityType()))
+            .Where(context => context.EntityIs<IId>())
             .Each(context => {
 
                 var method = GetHandlerFor(context);
@@ -43,10 +42,15 @@ public class UpdateNextIdSystem : IInitializeSystem {
         context.GetGroup(matcher).OnEntityAdded += (group, entity, index, component) => {
 
             var entityId = ((IdComponent)component).value;
-            if (entityId >= game.nextId.value) {
-
-                game.ReplaceNextId(entityId + 1ul);
-            }
+            IdAssigned(entityId);
         };
+    }
+
+    void IdAssigned(ulong entityId) {
+
+        if (entityId >= game.nextId.value) {
+
+            game.ReplaceNextId(entityId + 1ul);
+        }
     }
 }

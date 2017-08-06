@@ -12,32 +12,34 @@ public static class GameComponentsLookup {
     public const int ChangeFlags = 1;
     public const int CurrentTick = 2;
     public const int Damage = 3;
-    public const int Destroy = 4;
-    public const int FireRate = 5;
-    public const int GameObject = 6;
-    public const int GameObjectDriven = 7;
-    public const int Handheld = 8;
-    public const int Health = 9;
-    public const int Id = 10;
-    public const int LookDirection = 11;
-    public const int NetworkUpdatePriority = 12;
-    public const int NextId = 13;
-    public const int Owner = 14;
-    public const int Player = 15;
-    public const int Prefab = 16;
-    public const int ProjectileSpeed = 17;
-    public const int RigidbodyState = 18;
-    public const int ScreenBuffer = 19;
-    public const int ThisPlayerId = 20;
-    public const int Transform = 21;
+    public const int DCPU = 4;
+    public const int Destroy = 5;
+    public const int FireRate = 6;
+    public const int GameObject = 7;
+    public const int GameObjectDriven = 8;
+    public const int Handheld = 9;
+    public const int Health = 10;
+    public const int Id = 11;
+    public const int LookDirection = 12;
+    public const int NetworkUpdatePriority = 13;
+    public const int NextId = 14;
+    public const int Owner = 15;
+    public const int Player = 16;
+    public const int Prefab = 17;
+    public const int ProjectileSpeed = 18;
+    public const int RigidbodyState = 19;
+    public const int ScreenBuffer = 20;
+    public const int ThisPlayerId = 21;
+    public const int Transform = 22;
 
-    public const int TotalComponents = 22;
+    public const int TotalComponents = 23;
 
     public static readonly string[] componentNames = {
         "Bullet",
         "ChangeFlags",
         "CurrentTick",
         "Damage",
+        "DCPU",
         "Destroy",
         "FireRate",
         "GameObject",
@@ -63,6 +65,7 @@ public static class GameComponentsLookup {
         typeof(ChangeFlagsComponent),
         typeof(CurrentTickComponent),
         typeof(DamageComponent),
+        typeof(DCPUComponent),
         typeof(DestroyComponent),
         typeof(FireRateComponent),
         typeof(GameObjectComponent),

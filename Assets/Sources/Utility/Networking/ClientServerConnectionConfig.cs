@@ -14,5 +14,5 @@ public static class ClientServerConnectionConfig {
 		config = new ConnectionConfig();
 		reliableFragmentedChannelId = config.AddChannel(QosType.ReliableFragmented);
 		unreliableFragmentedChannelId = config.AddChannel(QosType.UnreliableFragmented);
-	}
+    }
 }

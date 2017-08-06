@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Entitas;
 
 public static class ContextExtensions {
@@ -42,5 +43,36 @@ public static class ContextExtensions {
 
 		return (IEntity)result;
 	}
+
+    /// GameContext -> GameEntity, InputContext -> InputEntity etc.
+	public static Type GetEntityType(this IContext context) {
+
+        // IContext<GameEntity>, IContext<InputEntity> etc.
+        var interfaceType = context
+            .GetType()
+            .GetInterfaces()
+            .Where(type => type.IsGenericType)
+            .Where(type => type.GetGenericTypeDefinition() == typeof(IContext<>))
+            .SingleOrDefault();
+
+        if (interfaceType == null) {
+            throw new ArgumentException(String.Format("Given context {0} does not implement IContext<>!", context));
+        }
+
+        // IContext<GameEntity> -> GameEntity
+        // IContext<InputEntity> -> InputEntity
+        // IA<B> -> B
+        return interfaceType.GetGenericArguments()[0];
+    }
+
+    public static bool EntityIs(this IContext context, Type type) {
+
+        return type.IsAssignableFrom(context.GetEntityType());
+    }
+
+    public static bool EntityIs<T>(this IContext context) {
+        
+        return context.EntityIs(typeof(T));
+    }
 }
 

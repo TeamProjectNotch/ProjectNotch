@@ -12,8 +12,6 @@ public class SendQueuedMessagesSystem : IExecuteSystem {
 	readonly NetworkingContext networking;
 	readonly IGroup<NetworkingEntity> entities;
 
-	IdsComponent ids;
-
 	public SendQueuedMessagesSystem(Contexts contexts) {
 
 		networking = contexts.networking;
@@ -23,8 +21,6 @@ public class SendQueuedMessagesSystem : IExecuteSystem {
 	}
 
 	public void Execute() {
-
-		ids = networking.ids;
 
 		foreach (var e in entities.GetEntities()) Process(e);
 	}
@@ -49,9 +45,13 @@ public class SendQueuedMessagesSystem : IExecuteSystem {
 		var channelId = ClientServerConnectionConfig.unreliableFragmentedChannelId;
 
 		byte errorCode;
-		NetworkTransport.Send(ids.host, connectionId, channelId, bytes, bytes.Length, out errorCode);
+		NetworkTransport.Send(
+            networking.host.id, connectionId, channelId, 
+            bytes, bytes.Length, 
+            out errorCode
+        );
 
-		Debug.LogFormat("Sending {0} bytes to connection {1}", bytes.Length, connectionId);
+		Debug.LogFormat("Sending {0} bytes to connection ({1})", bytes.Length, connectionId);
 
 		var error = (NetworkError)errorCode;
 		if (error != NetworkError.Ok) {

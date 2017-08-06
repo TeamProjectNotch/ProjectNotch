@@ -1,18 +1,18 @@
 ﻿using System;
 using Entitas;
 
-public class CreateWeaponSystem : IInitializeSystem
-{
-    private readonly Contexts context;
+public class CreateWeaponSystem : IInitializeSystem {
 
-    public CreateWeaponSystem(Contexts context)
-    {
-        this.context = context;
+    private readonly Contexts contexts;
+
+    public CreateWeaponSystem(Contexts context) {
+
+        this.contexts = context;
     }
 
-    public void Initialize()
-    {
-        var entity = context.game.CreateEntity();
+    public void Initialize() {
+
+        var entity = contexts.game.CreateEntityWithId();
         entity.AddPrefab("Weapon");
     }
 }
