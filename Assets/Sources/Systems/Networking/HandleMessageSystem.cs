@@ -3,7 +3,7 @@ using Entitas;
 using UnityEngine;
 
 /// An abstract system to inherit from if you want to create a system for handling messages.
-/// Similar to ReactiveSystem.
+/// Similar to ReactiveSystem. Processes one TMessage at top of the message queue.
 public abstract class HandleMessageSystem<TMessage> : IExecuteSystem 
 	where TMessage : class, INetworkMessage {
 

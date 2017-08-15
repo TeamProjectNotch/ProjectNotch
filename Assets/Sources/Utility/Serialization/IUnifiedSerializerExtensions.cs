@@ -89,7 +89,7 @@ public static class IUnifiedSerializerExtensions {
 
 				var element = new T();
 				element.Serialize(s);
-				list[i] = element;
+                list.Add(element);
 			}
 		}
 	}

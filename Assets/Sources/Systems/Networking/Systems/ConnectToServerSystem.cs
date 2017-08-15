@@ -20,8 +20,6 @@ public class ConnectToServerSystem : IInitializeSystem {
 
     void ConnectToServer() {
 
-        var hostId = networking.host.id;
-
         byte errorCode;
         NetworkTransport.Connect(
             networking.host.id, "127.0.0.1", NetworkingHelper.serverPortNumber, 0,

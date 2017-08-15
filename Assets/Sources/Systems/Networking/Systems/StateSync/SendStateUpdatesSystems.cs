@@ -10,6 +10,7 @@ public class SendStateUpdatesSystems : MyFeature {
 		Add(new EnsureNetworkUpdatePrioritySystem(contexts));
 		Add(new IncreaseNetworkUpdatePrioritySystem(contexts));
 
+        Add(new UpdateEntitiesToSendSystems(contexts));
 		Add(new ComposeStateUpdateMessageSystem(contexts));
 	}
 }

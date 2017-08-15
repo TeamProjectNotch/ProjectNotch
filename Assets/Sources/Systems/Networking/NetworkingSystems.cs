@@ -12,7 +12,10 @@ public class EarlyNetworkSystems : MyFeature {
 		Add(new NetworkReceiveSystem(contexts));
 		Add(new UpdateConnectionLatencySystem(contexts));
 
-		Add(new HandleConnectingClientsSystem(contexts)); // Server
+        // Handle Connecting Clients (Server-only)
+		Add(new HandleConnectingClientsSystem(contexts));
+        Add(new MarkAllEntitiesForNetworkSync(contexts));
+
 		Add(new HandleServerConnectionEstablishedSystem(contexts)); // Client
 
 		Add(new HandleTickUpdateSystem(contexts)); // Client

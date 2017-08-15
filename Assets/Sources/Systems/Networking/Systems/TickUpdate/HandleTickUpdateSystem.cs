@@ -23,17 +23,28 @@ public class HandleTickUpdateSystem : HandleMessageSystem<TickUpdateMessage> {
 
 	protected override void Process(TickUpdateMessage message, NetworkingEntity source) {
 
-		var messageDelay = source.hasLatency ? source.latency.ticks : 0;
-		var messageDelayTicks = (ulong)Math.Round(messageDelay);
-		var newCurrentTick = message.tick + messageDelayTicks;
-
-		if (game.currentTick.value <= newCurrentTick) {
-			Debug.LogFormat("Server is {0} ticks ahead of client", newCurrentTick - game.currentTick.value);
-		} else {
-			Debug.LogFormat("Server is {0} ticks behind client", game.currentTick.value - newCurrentTick);
-		}
-		//Debug.LogFormat("Replacing currentTick {0} with {1}.", game.currentTick.value, newCurrentTick);
-
-		game.ReplaceCurrentTick(newCurrentTick);
+        UpdateCurrentTick(message, source);
+        UpdateNextId     (message, source);
 	}
+
+    void UpdateCurrentTick(TickUpdateMessage message, NetworkingEntity source) {
+
+        float messageDelay = source.hasLatency ? source.latency.ticks : 0;
+        ulong messageDelayTicks = (ulong)Math.Round(messageDelay);
+        ulong newCurrentTick = message.tick + messageDelayTicks;
+
+        if (newCurrentTick >= game.currentTick.value) {
+            Debug.Log($"Server is {newCurrentTick - game.currentTick.value} ticks ahead of client");
+        } else {
+            Debug.Log($"Server is {game.currentTick.value - newCurrentTick} ticks behind the client");
+        }
+
+        //Debug.LogFormat("Replacing currentTick {0} with {1}.", game.currentTick.value, newCurrentTick);
+        game.ReplaceCurrentTick(newCurrentTick);
+    }
+
+    void UpdateNextId(TickUpdateMessage message, NetworkingEntity source) {
+
+        game.ReplaceNextId(message.nextId);
+    }
 }

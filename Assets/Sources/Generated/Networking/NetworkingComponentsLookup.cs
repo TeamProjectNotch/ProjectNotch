@@ -10,20 +10,24 @@ public static class NetworkingComponentsLookup {
 
     public const int Client = 0;
     public const int Connection = 1;
-    public const int Host = 2;
-    public const int IncomingMessages = 3;
-    public const int Latency = 4;
-    public const int NextPlayerId = 5;
-    public const int OutgoingMessages = 6;
-    public const int Owner = 7;
-    public const int Player = 8;
-    public const int Server = 9;
+    public const int DestroyedEntitiesBacklog = 2;
+    public const int EntitiesToSend = 3;
+    public const int Host = 4;
+    public const int IncomingMessages = 5;
+    public const int Latency = 6;
+    public const int NextPlayerId = 7;
+    public const int OutgoingMessages = 8;
+    public const int Owner = 9;
+    public const int Player = 10;
+    public const int Server = 11;
 
-    public const int TotalComponents = 10;
+    public const int TotalComponents = 12;
 
     public static readonly string[] componentNames = {
         "Client",
         "Connection",
+        "DestroyedEntitiesBacklog",
+        "EntitiesToSend",
         "Host",
         "IncomingMessages",
         "Latency",
@@ -37,6 +41,8 @@ public static class NetworkingComponentsLookup {
     public static readonly System.Type[] componentTypes = {
         typeof(ClientComponent),
         typeof(ConnectionComponent),
+        typeof(DestroyedEntitiesBacklogComponent),
+        typeof(EntitiesToSendComponent),
         typeof(HostComponent),
         typeof(IncomingMessagesComponent),
         typeof(LatencyComponent),

@@ -3,7 +3,7 @@ using Entitas;
 
 public static class EntityExtensions {
 	
-	public static void UnsetChangeFlags(this IChangeFlags e) {
+    public static void UnsetChangeFlags(this IChangeFlags e) {
 
 		if (!e.hasChangeFlags) {
 

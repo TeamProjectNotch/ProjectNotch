@@ -1,4 +1,5 @@
-﻿using System;
+﻿﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Entitas;
 
@@ -6,16 +7,18 @@ using Entitas;
 /// Assigns ids to clients as connections with them are created. 
 /// Sends a ServerConnectionEstablishedMessage to each such client.
 /// Creates a player GameEntity with that id.
+/// Marks all entities the new client needs to know about for sending over the network.
 [SystemAvailability(InstanceKind.Server)]
 public class HandleConnectingClientsSystem : ReactiveSystem<NetworkingEntity> {
 
+    readonly Contexts contexts;
 	readonly NetworkingContext networking;
 	readonly GameContext game;
 
 	public HandleConnectingClientsSystem(Contexts contexts) : base(contexts.networking) {
 
 		networking = contexts.networking;
-		game = contexts.game;
+        game = contexts.game;
 	}
 
 	protected override ICollector<NetworkingEntity> GetTrigger(IContext<NetworkingEntity> context) {
@@ -27,20 +30,19 @@ public class HandleConnectingClientsSystem : ReactiveSystem<NetworkingEntity> {
 
 	protected override void Execute(List<NetworkingEntity> newClients) {
 
-		var nextPlayerId = networking.nextPlayerId.value;
+		int nextPlayerId = networking.nextPlayerId.value;
 
 		foreach (var client in newClients) {
 
-			var playerId = nextPlayerId++;
+			int playerId = nextPlayerId++;
 
 			client.AddPlayer(playerId);
+            client.EnqueueOutgoingMessage(new ServerConnectionEstablishedMessage() {
+				playerId = playerId,
+				currentTick = game.currentTick
+			});
 
-			var message = new ServerConnectionEstablishedMessage();
-			message.playerId = playerId;
-			message.currentTick = game.currentTick.value;
-			client.EnqueueOutgoingMessage(message);
-
-			CreatePlayerWith(playerId);
+            CreatePlayerWith(playerId);
 		}
 
 		networking.ReplaceNextPlayerId(nextPlayerId);

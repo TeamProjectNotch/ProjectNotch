@@ -1,6 +1,7 @@
 ﻿using System;
-using Entitas;
+using System.Collections.Generic;
 using System.Linq;
+using Entitas;
 
 /// An entity whose state can be synced across the network.
 public interface INetworkableEntity : IEntity, IId, IChangeFlags, INetworkUpdatePriority, IDestroy {}
@@ -21,8 +22,36 @@ public static class ContextsExtensionsINetworkableEntity {
 	/// Do entities in this context implement INetworkableEntity?
 	public static bool IsNetworkable(this IContext context) {
 
-		var entityType = context.GetEntityType();
-		//UnityEngine.Debug.LogFormat("{0} is IContext<{1}>", context, entityType);
-		return networkableEntityType.IsAssignableFrom(entityType);
-	}
+        return context.EntityIs(networkableEntityType);
+    }
+
+}
+
+public static class ContextsExtensionsGetNetworkableEntities {
+
+    static Func<IEnumerable<INetworkableEntity>> getter;
+
+    public static IEnumerable<INetworkableEntity> GetNetworkableEntities(this Contexts contexts) {
+
+        return getter();
+    }
+
+    static ContextsExtensionsGetNetworkableEntities() {
+
+        var getters = Contexts
+            .sharedInstance
+            .GetNetworkableContexts()
+            .Select(MakeGetterForContext)
+            .ToArray();
+
+        getter = () => getters.SelectMany(contextGetter => contextGetter());
+    }
+
+    static Func<INetworkableEntity[]> MakeGetterForContext(IContext context) {
+
+        return (Func<INetworkableEntity[]>)Delegate.CreateDelegate(
+            typeof(Func<INetworkableEntity[]>), 
+            context, "GetEntities"
+        );
+    }
 }

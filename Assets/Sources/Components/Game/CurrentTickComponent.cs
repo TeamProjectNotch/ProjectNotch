@@ -4,9 +4,8 @@ using Entitas.CodeGeneration.Attributes;
 
 [Game]
 [Unique]
-public class CurrentTickComponent : IComponent/*, IUnifiedSerializable*/ {
-	
-	public ulong value;
+[NetworkSync(NetworkTargets.None)]
+public class CurrentTickComponent : WrapperComponent<ulong>, IUnifiedSerializable {
 
 	public void Serialize<T>(T s) where T : IUnifiedSerializer {
 

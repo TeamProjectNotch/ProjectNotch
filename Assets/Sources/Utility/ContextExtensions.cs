@@ -27,7 +27,7 @@ public static class ContextExtensions {
 		return context.FindIndexOfComponent(typeof(TComponent));
 	}
 
-	/// A moderately hackish way to get all entities in any context.
+	/// A hackish way to get all entities in any context.
 	public static TEntity[] GetEntities<TEntity>(this IContext context) where TEntity : IEntity {
 
 		var methodInfo = context.GetType().GetMethod("GetEntities");
@@ -36,13 +36,14 @@ public static class ContextExtensions {
 		return (TEntity[])result;
 	}
 
-	public static IEntity CreateEntity(this IContext context) {
+    /// A hackish way to create an entity in any context.
+    public static IEntity CreateEntity(this IContext context) {
 
-		var methodInfo = context.GetType().GetMethod("CreateEntity");
-		var result = methodInfo.Invoke(context, parameters: null);
+        var methodInfo = context.GetType().GetMethod("CreateEntity");
+        var result = methodInfo.Invoke(context, parameters: null);
 
-		return (IEntity)result;
-	}
+        return (IEntity)result;
+    }
 
     /// GameContext -> GameEntity, InputContext -> InputEntity etc.
 	public static Type GetEntityType(this IContext context) {

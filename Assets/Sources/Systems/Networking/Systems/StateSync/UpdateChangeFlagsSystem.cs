@@ -34,11 +34,11 @@ public class UpdateChangeFlagsSystem : IInitializeSystem {
 		for (int contextIndex = 0; contextIndex < numContexts; ++contextIndex) {
 
 			var context = allContexts[contextIndex];
-			if (!context.IsNetworkable()) continue;
+            if (!context.IsNetworkable()) continue;
 
 			InitializeEntityEventsHandlersFor(contextIndex);
 
-			// Copy the variable as a way force lambda to capture it by value.
+			// Copy the variable as a way force lambdas to capture it by value.
 			int contextIndexCopy = contextIndex;
 			context.GetEntities<INetworkableEntity>().Each(entity => SubscribeToEntityEvents(entity, context, contextIndexCopy));
 			context.OnEntityCreated += (ctx, entity) => SubscribeToEntityEvents(entity, ctx, contextIndexCopy);

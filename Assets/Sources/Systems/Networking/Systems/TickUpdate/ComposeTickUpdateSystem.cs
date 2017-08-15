@@ -26,15 +26,17 @@ public class ComposeTickUpdateSystem : IExecuteSystem {
 
 		foreach (var e in clients.GetEntities()) {
 
-			var queue = e.outgoingMessages.queue;
-			queue.Enqueue(message);
-			e.ReplaceOutgoingMessages(queue);
+            e.EnqueueOutgoingMessage(message);
 		}
 	}
 
 	INetworkMessage MakeMessage() {
 
-		return new TickUpdateMessage(game.currentTick.value);
+        return new TickUpdateMessage() {
+            
+            tick   = game.currentTick,
+            nextId = game.nextId
+        };
 	}
 }
 
