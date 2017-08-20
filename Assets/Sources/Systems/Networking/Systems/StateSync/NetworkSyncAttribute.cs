@@ -7,8 +7,8 @@ public enum NetworkTargets {
 
 	None = 0,
 
-	Client = 1,
-	Server = 2,
+	Server = 1,
+	Client = 2,
 
 	All = Client | Server
 }
@@ -18,8 +18,8 @@ public class NetworkSyncAttribute : Attribute {
 
 	public NetworkTargets targets;
 
-	public bool toClient {get {return (targets & NetworkTargets.Client) != 0;}}
-	public bool toServer {get {return (targets & NetworkTargets.Server) != 0;}}
+    public bool toClient => (targets & NetworkTargets.Client) != 0;
+    public bool toServer => (targets & NetworkTargets.Server) != 0;
 
 	public NetworkSyncAttribute(NetworkTargets targets) {
 

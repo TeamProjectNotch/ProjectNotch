@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Entitas;
 
+/// Composes an entity change, given an entity and a connection id of a 
+/// network target this change is meant for.
 public class EntityChangeComposer {
 
     public EntityChange Compose(ChangedEntityRecord entityRecord, int connectionId) {

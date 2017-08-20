@@ -6,6 +6,8 @@ using System.Linq;
 using Entitas;
 using UnityEngine;
 
+using NM = NetworkingMatcher;
+
 [SystemAvailability(InstanceKind.Networked)]
 public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, IInitializeSystem {
 
@@ -35,9 +37,9 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
 
 	protected override IGroup<NetworkingEntity> GetMessageSources(IContext<NetworkingEntity> context) {
 
-		var matcher = (ProgramInstance.thisInstanceKind == InstanceKind.Server) ?
-			NetworkingMatcher.AllOf(NetworkingMatcher.Client, NetworkingMatcher.IncomingMessages) :
-			NetworkingMatcher.AllOf(NetworkingMatcher.Server, NetworkingMatcher.IncomingMessages);
+        var matcher = ProgramInstance.isServer ?
+			NM.AllOf(NM.Client, NM.IncomingMessages) :
+			NM.AllOf(NM.Server, NM.IncomingMessages);
 
 		return context.GetGroup(matcher);
 	}
@@ -51,7 +53,10 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
 		);*/
         
 		message.changes.Each(Process);
-		//Debug.LogFormat("Changes applied this step: {0}", message.changes.Length);
+        Debug.LogFormat(
+            "HandleStateUpdateSystem: Applied changes this tick: {0}", 
+            message.changes.Length
+        );
 	}
 
 	IEntityChangeProcessor MakeChangeProcessor(IContext context) {
@@ -67,7 +72,11 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
 		var contextIndex = change.contextIndex;
 		var processor = processors[contextIndex];
 		if (processor == null) {
-			throw new NullReferenceException(String.Format("Can't find entity change processor for contextIndex {0}", contextIndex));
+            throw new NullReferenceException(
+                "HandleStateUpdateSystem: no processor " +
+                $"for contextIndex {contextIndex} " +
+                $"(context {contexts.allContexts[contextIndex]})"
+            );
 		}
 
 		processor.Process(change);
@@ -91,7 +100,9 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
             game = contexts.game;
 			this.context = context;
 
-			entityByIdIndex = (PrimaryEntityIndex<TEntity, ulong>)context.GetEntityIndex(Contexts.Id);
+			entityByIdIndex = 
+                (PrimaryEntityIndex<TEntity, ulong>)
+                context.GetEntityIndex(Contexts.Id);
 		}
 
 		public void Process(EntityChange change) {
@@ -110,11 +121,17 @@ public class HandleStateUpdateSystem : HandleMessageSystem<StateUpdateMessage>, 
 
                 if (change.isRemoval) {
 
-                    Debug.Log("Can't apply an EntityChange (entity removal), since it's Entity doesn't exist.");
+                    Debug.LogError(
+                        "EntityChangeProcessor: " +
+                        $"Entity (id: {change.entityId}) not found for removal!"
+                    );
                     return null;
                 }
 
-                //Debug.LogFormat("Entity with id {0} not found. Creating...", change.entityId);
+                Debug.Log(
+                    "EntityChangeProcessor: " +
+                    $"Entity (id: {change.entityId}) created" 
+                );
                 e = context.CreateEntity();
             }
 

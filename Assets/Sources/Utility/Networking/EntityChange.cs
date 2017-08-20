@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 using Entitas;
-using Entitas.Blueprints;
-
-using fNbt;
 
 /// A change in the state of a particular Entity.
-/// If componentChanges is null, then the object is just a message that the Entity it refers to has been destroyed.
+/// If componentChanges is null, then the object is just a message that 
+/// the Entity it refers to has been destroyed.
 [Serializable]
 public class EntityChange : IUnifiedSerializable {
 
@@ -18,52 +13,54 @@ public class EntityChange : IUnifiedSerializable {
 	public ulong entityId;
 	public ComponentChange[] componentChanges;
 
-	public bool isRemoval {get {return componentChanges == null;}}
+	public bool isRemoval => componentChanges == null;
 
-	public static EntityChange MakeRemoval(int contextId, ulong entityId) {
+	public static EntityChange MakeRemoval(int contextIndex, ulong entityId) {
 
-		var change = new EntityChange();
+        var change = new EntityChange {
+            contextIndex = contextIndex,
+            entityId = entityId,
+            componentChanges = null
+        };
 
-		change.contextIndex = contextId;
-		change.entityId = entityId;
-
-		return change;
+        return change;
 	}
 
-	public static EntityChange MakeUpdate(int contextId, ulong entityId, ComponentChange[] componentChanges) {
-		
-		var change = new EntityChange();
+    public static EntityChange MakeUpdate(
+        int contextIndex, ulong entityId, 
+        ComponentChange[] componentChanges
+    ) {
 
-		change.contextIndex = contextId;
-		change.entityId = entityId;
-		change.componentChanges = componentChanges;
-
-		return change;
+        return new EntityChange() {
+            contextIndex = contextIndex,
+            entityId = entityId,
+            componentChanges = componentChanges
+        };
 	}
 
-	/// For later deserialization only.
+	/// For deserialization only.
 	public EntityChange() {}
 
 	public void Apply(IEntity entity) {
 
-		if (isRemoval) {
+        if (isRemoval) {
 
-			Destroy(entity);
+            Destroy(entity);
+            Debug.Log($"EntityChange: (id : {entityId}) destroyed");
 
-			Debug.LogFormat("EntityChange destroyed Entity with id: {0}", entityId);
-			return;
-		}
+        } else {
 
-		for (int i = 0; i < componentChanges.Length; ++i) {
+            foreach (var componentChange in componentChanges) {
 
-			var componentChange = componentChanges[i];
-			if (componentChange == null) continue;
+                componentChange.Apply(entity);
+            }
 
-			componentChange.Apply(entity);
-		}
-
-		//Debug.LogFormat("EntityChange applied changes to Entity with id: {0}", entityId);
-	}
+            Debug.Log(
+                $"EntityChange: (id : {entityId}) " +
+                $"applied {componentChanges.Length} component changes"
+            );
+        }
+    }
 
 	public void Serialize<T>(T s) where T : IUnifiedSerializer {
 
@@ -72,7 +69,6 @@ public class EntityChange : IUnifiedSerializable {
 
 		bool hasComponentChanges = s.isWriting ? componentChanges != null : false;
 		s.Serialize(ref hasComponentChanges);
-
 		if (hasComponentChanges) {
 			
 			s.Serialize(ref componentChanges);
@@ -87,18 +83,5 @@ public class EntityChange : IUnifiedSerializable {
 		} else {
 			entity.Destroy();
 		}
-	}
-
-	int GetNumComponentChanges() {
-
-		int count = 0;
-		for (int i = 0; i < componentChanges.Length; ++i) {
-
-			if (componentChanges[i] != null) {
-				++count;
-			}
-		}
-
-		return count;
 	}
 }

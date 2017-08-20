@@ -11,12 +11,6 @@ public class StateUpdateMessage : INetworkMessage {
 
 	public StateUpdateMessage() {}
 
-	public StateUpdateMessage(ulong timestamp, EntityChange[] changes) {
-
-		this.timestamp = timestamp;
-		this.changes = changes;
-	}
-
 	public void Serialize<T>(T s) where T : IUnifiedSerializer {
 
 		s.Serialize(ref timestamp);

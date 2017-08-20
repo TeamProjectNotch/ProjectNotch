@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Entitas;
+using UnityEngine;
 
 using NM = NetworkingMatcher;
 
@@ -30,18 +31,20 @@ public class ComposeStateUpdateMessageSystem : IExecuteSystem {
 
         foreach (var target in targets) {
 
-            var entityChanges = GetEntityChanges(target);
-            if (entityChanges.Count <= 0) continue;
+            var entityChanges = GetEntityChangesFor(target);
+            if (entityChanges.Count == 0) continue;
 
-            target.EnqueueOutgoingMessage(new StateUpdateMessage() {
+            var message = new StateUpdateMessage() {
                 timestamp = contexts.game.currentTick,
                 changes = entityChanges.ToArray()
-            });
-        }
+            };
 
-        // Notes on the hieararchy: ???
-        // ContextChange *> EntityChange *> ComponentChange ?
-        // ContextStateUpdate *> EntityStateUpdate *> ComponentStateUpdate ?
+            target.EnqueueOutgoingMessage(message);
+            Debug.Log(
+                $"ComposeStateUpdateMessageSystem composed " +
+                $"{entityChanges.Count} changes"
+            );
+        }
     }
 
     IGroup<NetworkingEntity> GetMessageTargets() {
@@ -55,7 +58,7 @@ public class ComposeStateUpdateMessageSystem : IExecuteSystem {
         return contexts.networking.GetGroup(matcher);
     }
 
-    List<EntityChange> GetEntityChanges(NetworkingEntity target) {
+    List<EntityChange> GetEntityChangesFor(NetworkingEntity target) {
         
         var changes = new List<EntityChange>();
         int byteLimit = preferredNumBytesPerMessage;
