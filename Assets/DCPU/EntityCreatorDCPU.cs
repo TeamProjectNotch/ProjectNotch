@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityCreatorDCPU : EntityCreator {
+    
     public override GameEntity CreateEntity(Contexts contexts) {
+        
         var e = contexts.game.CreateEntity();
         ContextsIdExtensions.AssignId(contexts, e);
-        e.AddDCPU(new dcpuState());
+        e.AddDCPU(new DCPUState());
         return e;
     }
-
-    void Start () {
-		
-	}
 }

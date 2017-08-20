@@ -11,7 +11,7 @@ public abstract class Peripheral : MonoBehaviour{
         this.manufacturer = manufacturer;
     }
 
-    public abstract void sendInterrupt(dcpuState state);
+    public abstract void sendInterrupt(DCPUState state);
 
     public abstract void updatePeripheral();
 

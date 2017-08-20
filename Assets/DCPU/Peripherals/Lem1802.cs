@@ -148,7 +148,7 @@ public class Lem1802 : Peripheral {
 
     }
 
-    public override void sendInterrupt(dcpuState state){
+    public override void sendInterrupt(DCPUState state){
         switch (state.registers[DCPU.A_REG]){
             case 0:
                 screen_Reg = state.registers[DCPU.B_REG];

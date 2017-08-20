@@ -7,14 +7,14 @@ using System;
 using System.Diagnostics;
 
 public class DCPU_Controller : MonoBehaviour {
-    public dcpuState state;
+    public DCPUState state;
     private bool running = false;
     private Thread thread;
 
     public List<Peripheral> peripherals = new List<Peripheral>();
 
     private void Start(){
-        state = new dcpuState();
+        state = new DCPUState();
 
         for(int i = 0; i < peripherals.Count; i++){
             peripherals[i].dcpuController = this;

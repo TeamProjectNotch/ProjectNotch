@@ -25,7 +25,7 @@ public class DCPU{
     // takes the current dcpu state 
     // moves it one cycle forward
     // and returns a  new state
-    public static dcpuState step(dcpuState state){
+    public static DCPUState step(DCPUState state){
         aRef  = 0;  bRef = 0;
         aMode = 0; bMode = 0;
         ushort addr = state.memory[state.PC++];
@@ -59,7 +59,7 @@ public class DCPU{
 
 
     //helper functions for basic op codes
-    private static ushort handleVar(dcpuState state, ushort value, ushort nxtVal, bool isB){
+    private static ushort handleVar(DCPUState state, ushort value, ushort nxtVal, bool isB){
         if(value <= 0x07){ // register (A, B, C, X, Y, Z, I, J)
             if (isB){
                 bMode = (ushort)varMode.REG_MODE;
@@ -149,7 +149,7 @@ public class DCPU{
         }
         return 0;
     }
-    private static void handleOpCode(dcpuState state, ushort op, ushort b, ushort a){
+    private static void handleOpCode(DCPUState state, ushort op, ushort b, ushort a){
 
         ushort res = 0; // temp container for result
         bool needsProcessing = true; // this will only be true if data needs to be stored back to the dcpu
@@ -337,7 +337,7 @@ public class DCPU{
     }
 
     //helper functions for advanced op codes
-    private static void handleSpecialOpCode(dcpuState state, ushort op, ushort a){
+    private static void handleSpecialOpCode(DCPUState state, ushort op, ushort a){
         bool needsProcessing = false;
         ushort res = 0;
         switch (op){
@@ -422,7 +422,7 @@ public class DCPU{
             }else{}
         }
     }
-    private static ushort handleSpecialVar(dcpuState state, ushort value, ushort nxtVal){
+    private static ushort handleSpecialVar(DCPUState state, ushort value, ushort nxtVal){
         if (value <= 0x07){ // register (A, B, C, X, Y, Z, I, J)
             aMode = (ushort)varMode.REG_MODE;
             aRef = value;
@@ -497,7 +497,7 @@ public class DCPU{
         return 0;
     }    
     //utils
-    private static void tick(dcpuState state, int n = 1){
+    private static void tick(DCPUState state, int n = 1){
         state.ticks += n;
     }
 
@@ -508,7 +508,7 @@ public class DCPU{
         return false;
     }
 
-    private static ushort ifJumpNum(dcpuState state){
+    private static ushort ifJumpNum(DCPUState state){
         ushort amount = 1;
         ushort addr = state.memory[state.PC];
         ushort aa = (ushort)((addr >> 10) & 0x3F), bb = (ushort)((addr >> 5) & 0x1F);
