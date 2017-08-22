@@ -14,6 +14,7 @@ public class ComponentChange : IUnifiedSerializable {
 
 	public int componentIndex;
 
+    // TODO Extract a ComponentData class to hold these two fields.
 	Type   componentType;
 	byte[] componentData;
 
@@ -44,47 +45,10 @@ public class ComponentChange : IUnifiedSerializable {
 
 	public void Apply(IEntity e) {
 
-        if (isRemoval) {
-
-            if (e.HasComponent(componentIndex)) {
-                
-                e.RemoveComponent(componentIndex);
-
-                Debug.LogFormat(
-                    "ComponentChange: removed {0}",
-                    e.contextInfo.componentNames[componentIndex]
-                );
-            } else {
-                
-                Debug.Log(
-                    "ComponentChange: " +
-                    "component not found, can't remove " +
-                    $"{NameOfComponent(e, componentIndex)}"
-                );
-            }
-        } else {
-
-            var component = e.CreateComponent(componentIndex, componentType);
-            var asSerializable = component as IUnifiedSerializable;
-
-            if (asSerializable == null) {
-                Debug.Log(
-                    $"ComponentChange: trying to deserialize component " +
-                    "of type ({component.GetType()}), which is " +
-                    "not IUnifiedSerializable!"
-                );
-            }
-
-            using (var reader = new MyReader(new MemoryStream(componentData))) {
-
-                asSerializable.Serialize(reader);
-                e.ReplaceComponent(componentIndex, component);
-                Debug.LogFormat(
-                    "ComponentChange: deserialized {0}", 
-                    e.contextInfo.componentNames[componentIndex]
-                );
-            }
-        }
+        if (isRemoval) 
+            ApplyRemove(e);
+        else 
+            ApplyReplace(e);
 	}
 
 	public void Serialize<T>(T s) where T : IUnifiedSerializer {
@@ -156,5 +120,51 @@ public class ComponentChange : IUnifiedSerializable {
     string NameOfComponent(IEntity e, int componentIndex) {
 
         return e.contextInfo.componentNames[componentIndex];
+    }
+
+    void ApplyRemove(IEntity e) {
+
+        if (e.HasComponent(componentIndex)) {
+
+            e.RemoveComponent(componentIndex);
+
+            Debug.LogFormat(
+                "ComponentChange: removed {0}",
+                e.contextInfo.componentNames[componentIndex]
+            );
+
+        } else {
+
+            Debug.Log(
+                "ComponentChange: " +
+                "component not found, can't remove " +
+                $"{NameOfComponent(e, componentIndex)}"
+            );
+        }
+    }
+
+    void ApplyReplace(IEntity e) {
+
+        var component = e.CreateComponent(componentIndex, componentType);
+        var asSerializable = component as IUnifiedSerializable;
+
+        if (asSerializable == null) {
+            Debug.LogError(
+                "ComponentChange: " +
+                $"component type {component.GetType()} " +
+                "is not IUnifiedSerializable, can't deserialize"
+            );
+            return;
+        }
+
+        using (var reader = new MyReader(new MemoryStream(componentData))) {
+
+            asSerializable.Serialize(reader);
+            e.ReplaceComponent(componentIndex, component);
+            Debug.Log(
+                "ComponentChange: " +
+                $"deserialized {NameOfComponent(e, componentIndex)}"
+            );
+        }
     }
 }
