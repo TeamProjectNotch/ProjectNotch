@@ -6,7 +6,7 @@ public class GameLogicSystems : MyFeature {
 
 		// Initialize systems
 		Add(new CreatePlayerWeaponSystem(contexts));
-		Add(new TestCreateMonitorEntitySystem(contexts));
+		//Add(new TestCreateMonitorEntitySystem(contexts));
 		// Initialize systems
 
 		// Execute systems

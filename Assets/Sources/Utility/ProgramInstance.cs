@@ -4,6 +4,7 @@
 /// Also a bitmask of things a system may be available on. 
 /// So `InstanceKind.Server | InstanceKind.Singleplayer` means a system
 /// is available on a server or a singleplayer instance, but not a client one.
+[Flags]
 public enum InstanceKind {
 
 	None = 0,
