@@ -4,7 +4,7 @@ using Entitas;
 using UnityEngine;
 
 /// Tries to create a monitor entity.
-[SystemAvailability(InstanceKind.Server | InstanceKind.Singleplayer)]
+[SystemAvailability(InstanceKind.ServerAndSingleplayer)]
 public class TestCreateMonitorEntitySystem : IInitializeSystem {
 
 	readonly GameContext game;
@@ -16,27 +16,24 @@ public class TestCreateMonitorEntitySystem : IInitializeSystem {
 
 	public void Initialize() {
 
-		var transformState = GettransformState();
-		var screenData = GetScreenBufferState();
+		var transformState = GetTransformState();
+        var screenState = GetScreenBufferState();
 
-		game.CreateMonitor(transformState, screenData);
+		game.CreateMonitor(transformState, screenState);
 	}
 
-	TransformState GettransformState() {
+    TransformState GetTransformState() {
 
-		var data = new TransformState(
+		return new TransformState(
 			new Vector3D(-10, 2, 0),
 			Quaternion.Euler(0f, -30f, 0f),
 			Vector3D.one
 		);
-
-		return data;
 	}
 
 	ScreenBufferState GetScreenBufferState() {
 
-		var data = new ScreenBufferState(new Vector2Int(64, 48));
-		return data;
+		return new ScreenBufferState(new Vector2Int(64, 48));
 	}
 }
 
