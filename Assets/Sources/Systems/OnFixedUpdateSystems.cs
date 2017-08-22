@@ -8,7 +8,6 @@
 /// 3. Compose and send state changes. (Late networking)
 /// 4. Destroy entities marked for destruction.
 /// 5. Increment tick.
-/// 
 public class OnFixedUpdateSystems : MyFeature {
 
 	public OnFixedUpdateSystems(Contexts contexts) : base("On FixedUpdate systems") {

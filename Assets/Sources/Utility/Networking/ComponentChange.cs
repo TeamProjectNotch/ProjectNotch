@@ -14,7 +14,7 @@ public class ComponentChange : IUnifiedSerializable {
 
 	public int componentIndex;
 
-	Type componentType;
+	Type   componentType;
 	byte[] componentData;
 
     public bool isRemoval => componentData == null;
@@ -24,6 +24,7 @@ public class ComponentChange : IUnifiedSerializable {
         var change = new ComponentChange() {
             componentIndex = componentIndex
         };
+        //Debug.Log($"ComponentChange: made removal {change}");
 
         return change;
 	}
@@ -33,8 +34,8 @@ public class ComponentChange : IUnifiedSerializable {
         var change = new ComponentChange() {
             componentIndex = componentIndex
         };
-
         change.SaveState(newComponent);
+        //Debug.Log($"ComponentChange: made update {change}");
 
 		return change;
 	}
@@ -92,7 +93,25 @@ public class ComponentChange : IUnifiedSerializable {
 			s.Serialize(ref componentDataLength);
 			s.Serialize(ref componentData, componentDataLength);
 		}
+
+        //Debug.Log($"ComponentChange: serialized {this.ToString()}");
 	}
+
+    public override string ToString() {
+
+        var str = $"[ComponentChange: componentIndex : {componentIndex}, ";
+
+        if (isRemoval) {
+            str += "removal";
+        } else {
+            str += $"componentType : {componentType}, ";
+            str += $"componentData : {componentData}";
+        }
+
+        str += "]";
+
+        return str;
+    }
 
     void SerializeComponentType<T>(T s) where T : IUnifiedSerializer {
 

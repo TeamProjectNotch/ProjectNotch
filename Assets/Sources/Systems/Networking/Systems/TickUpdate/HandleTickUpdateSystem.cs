@@ -34,9 +34,18 @@ public class HandleTickUpdateSystem : HandleMessageSystem<TickUpdateMessage> {
         ulong newCurrentTick = message.tick + messageDelayTicks;
 
         if (newCurrentTick >= game.currentTick.value) {
-            Debug.Log($"Server is {newCurrentTick - game.currentTick.value} ticks ahead of client");
+            
+            Debug.Log(
+                $"HandleTickUpdateSystem: " +
+                $"Server is {newCurrentTick - game.currentTick.value} " +
+                "ticks ahead of client"
+            );
         } else {
-            Debug.Log($"Server is {game.currentTick.value - newCurrentTick} ticks behind the client");
+            Debug.Log(
+                $"HandleTickUpdateSystem: " +
+                $"Server is {game.currentTick.value - newCurrentTick} " +
+                "ticks behind client"
+            );
         }
 
         //Debug.LogFormat("Replacing currentTick {0} with {1}.", game.currentTick.value, newCurrentTick);

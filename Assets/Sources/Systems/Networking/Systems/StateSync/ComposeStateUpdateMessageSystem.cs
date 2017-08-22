@@ -41,7 +41,7 @@ public class ComposeStateUpdateMessageSystem : IExecuteSystem {
 
             target.EnqueueOutgoingMessage(message);
             Debug.Log(
-                $"ComposeStateUpdateMessageSystem composed " +
+                $"ComposeStateUpdateMessageSystem: composed " +
                 $"{entityChanges.Count} changes"
             );
         }

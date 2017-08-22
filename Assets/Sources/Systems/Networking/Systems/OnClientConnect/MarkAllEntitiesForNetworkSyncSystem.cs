@@ -22,14 +22,6 @@ public class MarkAllEntitiesForNetworkSync : ReactiveSystem<NetworkingEntity> {
             .ToArray();
     }
 
-    Func<INetworkableEntity[]> MakeEntitiesGetter(IContext context) {
-
-        return (Func<INetworkableEntity[]>)Delegate.CreateDelegate(
-            typeof(Func<INetworkableEntity[]>), 
-            context, "GetEntities"
-        );
-    }
-
     protected override ICollector<NetworkingEntity> GetTrigger(IContext<NetworkingEntity> context) {
 
         return context.CreateCollector(NetworkingMatcher.Client);
@@ -45,6 +37,14 @@ public class MarkAllEntitiesForNetworkSync : ReactiveSystem<NetworkingEntity> {
         }
     }
 
+    Func<INetworkableEntity[]> MakeEntitiesGetter(IContext context) {
+
+        return (Func<INetworkableEntity[]>)Delegate.CreateDelegate(
+            typeof(Func<INetworkableEntity[]>), 
+            context, "GetEntities"
+        );
+    }
+
     void MarkEntitiesToBeNetworkedTo(NetworkingEntity client) {
         
         foreach (var contextIndex in networkableContextIndices) {
@@ -55,7 +55,11 @@ public class MarkAllEntitiesForNetworkSync : ReactiveSystem<NetworkingEntity> {
             foreach (var e in entities) {
 
                 var flags = e.changeFlags.flags;
-                shouldSyncComponentMap.CopyTo(flags, index: 0);
+
+                // Marks all components the entity has for sending.
+                e.GetComponentIndices()
+                 .Each(i => flags[i] = shouldSyncComponentMap[i]);
+
                 e.ReplaceChangeFlags(flags);
             }
         }
