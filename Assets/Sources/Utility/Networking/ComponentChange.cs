@@ -42,20 +42,29 @@ public class ComponentChange : IUnifiedSerializable {
 
 	public ComponentChange() {}
 
-	public void Apply(IEntity entity) {
+	public void Apply(IEntity e) {
 
         if (isRemoval) {
 
-            entity.RemoveComponent(componentIndex);
+            if (e.HasComponent(componentIndex)) {
+                
+                e.RemoveComponent(componentIndex);
 
-            Debug.LogFormat(
-                "ComponentChange: removed {0}", 
-                entity.contextInfo.componentNames[componentIndex]
-            );
-
+                Debug.LogFormat(
+                    "ComponentChange: removed {0}",
+                    e.contextInfo.componentNames[componentIndex]
+                );
+            } else {
+                
+                Debug.Log(
+                    "ComponentChange: " +
+                    "component not found, can't remove " +
+                    $"{NameOfComponent(e, componentIndex)}"
+                );
+            }
         } else {
 
-            var component = entity.CreateComponent(componentIndex, componentType);
+            var component = e.CreateComponent(componentIndex, componentType);
             var asSerializable = component as IUnifiedSerializable;
 
             if (asSerializable == null) {
@@ -69,10 +78,10 @@ public class ComponentChange : IUnifiedSerializable {
             using (var reader = new MyReader(new MemoryStream(componentData))) {
 
                 asSerializable.Serialize(reader);
-                entity.ReplaceComponent(componentIndex, component);
+                e.ReplaceComponent(componentIndex, component);
                 Debug.LogFormat(
                     "ComponentChange: deserialized {0}", 
-                    entity.contextInfo.componentNames[componentIndex]
+                    e.contextInfo.componentNames[componentIndex]
                 );
             }
         }
@@ -143,4 +152,9 @@ public class ComponentChange : IUnifiedSerializable {
 			componentData = stream.ToArray();
 		}
 	}
+
+    string NameOfComponent(IEntity e, int componentIndex) {
+
+        return e.contextInfo.componentNames[componentIndex];
+    }
 }
