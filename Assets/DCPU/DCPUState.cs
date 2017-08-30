@@ -13,6 +13,7 @@ public class DCPUState {
     public int iqIndex;
 
     public List<Peripheral> peripherals = new List<Peripheral>();
+    public List<ulong> peripheralIds = new List<ulong>();
 
     public DCPUState() {
         

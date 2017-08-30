@@ -382,28 +382,28 @@ public class DCPU{
                 break;
 
             case (ushort)spOpCodes.HWN:
-                res = (ushort)state.peripherals.Count;
+                res = (ushort)state.peripheralIds.Count;
                 tick(state, 2);
                 needsProcessing = true;
                 break;
 
             case (ushort)spOpCodes.HWQ:
-                if(a < state.peripherals.Count){
+                if(a < state.peripheralIds.Count){
                     //id
-                    state.registers[DCPU.A_REG] = (ushort)(state.peripherals[a].id & 0xFFFF);
-                    state.registers[DCPU.B_REG] = (ushort)((state.peripherals[a].id >> 16) & 0xFFFF);
+                    state.registers[DCPU.A_REG] = (ushort)(state.peripheralIds[a].id & 0xFFFF);
+                    state.registers[DCPU.B_REG] = (ushort)((state.peripheralIds[a].id >> 16) & 0xFFFF);
                     //version
-                    state.registers[DCPU.C_REG] = (ushort)(state.peripherals[a].version);
+                    state.registers[DCPU.C_REG] = (ushort)(state.peripheralIds[a].version);
                     //manufacturer
-                    state.registers[DCPU.X_REG] = (ushort)(state.peripherals[a].manufacturer & 0xFFFF);
-                    state.registers[DCPU.Y_REG] = (ushort)((state.peripherals[a].manufacturer >> 16) & 0xFFFF);
+                    state.registers[DCPU.X_REG] = (ushort)(state.peripheralIds[a].manufacturer & 0xFFFF);
+                    state.registers[DCPU.Y_REG] = (ushort)((state.peripheralIds[a].manufacturer >> 16) & 0xFFFF);
                 }
                 tick(state, 4);
                 break;
 
             case (ushort)spOpCodes.HWI:
-                if(a < state.peripherals.Count){
-                    state.peripherals[a].sendInterrupt(state);
+                if(a < state.peripheralIds.Count){
+                    state.peripheralIds[a].sendInterrupt(state);
                 }
                 tick(state, 4);
                 break;
